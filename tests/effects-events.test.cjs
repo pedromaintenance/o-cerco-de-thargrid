@@ -6,7 +6,7 @@ const fs=require('node:fs');
 const path=require('node:path');
 const vm=require('node:vm');
 const base=path.resolve(__dirname,'..');
-const content=['data.js','core/combat.js','core/actions.js','core/effects.js','app.js']
+const content=['data.js','core/combat.js','core/actions.js','core/effects.js','core/rounds.js','app.js']
  .map(name=>({name,source:fs.readFileSync(path.join(base,name),'utf8')}));
 function runtime(seed=808){
  const saved=new Map();let state=seed>>>0;
