@@ -57,6 +57,51 @@ const address = 'http://127.0.0.1:4173';
     await page.waitForFunction(()=>document.body.classList.contains('phaser-live'));
     const resumed=await page.evaluate(()=>JSON.parse(localStorage.getItem('thargrid_phaser_preview_save_v1')));
     assert.deepEqual(resumed,after,'Reload must not change any battle or campaign state');
+    // Controlled in-battle fixture: verify skill and item menus dispatch to canvas targets.
+    await page.evaluate(()=>{S.battle.active='eirik';render();});
+    await page.click('[data-a="battleSkills"]');
+    await page.click('[data-a="battleSkill"][data-v="arcaneBolt"]');
+    await page.waitForSelector('.beta-targeting');
+    const selectedSpell=await page.$eval('.beta-targeting',el=>el.textContent);
+    assert.match(selectedSpell,/Dardo arcano/);
+    const spellBefore=await page.evaluate(()=>({hp:S.battle.foes[0].hp,mp:S.heroes.eirik.mp}));
+    await page.$eval('#phaser-surface canvas',el=>el.scrollIntoView({block:'center'}));
+    const enemyBox=await page.$eval('#phaser-surface canvas',el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height};});
+    await page.mouse.click(enemyBox.x+57*enemyBox.width/480,enemyBox.y+158*enemyBox.height/560);
+    await page.waitForFunction(hp=>S.battle.foes[0].hp<hp,{timeout:10000},spellBefore.hp);
+    assert.ok(await page.evaluate(mp=>S.heroes.eirik.mp<mp,spellBefore.mp));
+    assert.equal(await page.$('.beta-targeting'),null);
+
+    // Healing and reviving allies by touching their figures, not the old HTML list.
+    await page.evaluate(()=>{S.battle.active='serena';S.heroes.brunna.hp=15;render();});
+    await page.click('[data-a="battleSkills"]');
+    await page.click('[data-a="battleSkill"][data-v="heal"]');
+    await page.waitForSelector('.beta-targeting');
+    await page.$eval('#phaser-surface canvas',el=>el.scrollIntoView({block:'center'}));
+    const allyBox=await page.$eval('#phaser-surface canvas',el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height};});
+    await page.mouse.click(allyBox.x+57*allyBox.width/480,allyBox.y+377*allyBox.height/560);
+    await page.waitForFunction(()=>S.heroes.brunna.hp>15,{timeout:10000});
+
+    await page.evaluate(()=>{S.battle.active='serena';S.heroes.brunna.hp=0;save();render();});
+    const phoenixBefore=await page.evaluate(()=>S.inventory.phoenix);
+    await page.click('[data-a="battleItems"]');
+    await page.click('[data-a="battleItem"][data-v="phoenix"]');
+    await page.waitForSelector('.beta-targeting');
+    await page.$eval('#phaser-surface canvas',el=>el.scrollIntoView({block:'center'}));
+    const reviveBox=await page.$eval('#phaser-surface canvas',el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height};});
+    await page.mouse.click(reviveBox.x+57*reviveBox.width/480,reviveBox.y+377*reviveBox.height/560);
+    await page.waitForFunction(()=>S.heroes.brunna.hp>0,{timeout:10000});
+    assert.equal(await page.evaluate(()=>S.inventory.phoenix),phoenixBefore-1);
+
+    await page.evaluate(()=>{S.battle.active='eirik';render();});
+    await page.click('[data-a="battleSkills"]');
+    await page.click('[data-a="battleSkill"][data-v="arcaneBolt"]');
+    await page.waitForSelector('.beta-targeting');
+    const cancelMP=await page.evaluate(()=>S.heroes.eirik.mp);
+    await page.click('[data-beta-cancel]');
+    assert.equal(await page.$('.beta-targeting'),null);
+    assert.equal(await page.evaluate(()=>S.heroes.eirik.mp),cancelMP);
+    console.log((mobile?'MOBILE':'DESKTOP')+' PASS canvas spell + heal + phoenix + cancel');
     // The classic route still starts independently even with a saved Phaser beta in this browser.
     const classic=await context.newPage();
     const classicErrors=[];
