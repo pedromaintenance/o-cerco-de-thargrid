@@ -82,7 +82,8 @@ const address = 'http://127.0.0.1:4173';
     }});
     console.log((mobile?'MOBILE':'DESKTOP')+' SPELL POST',await page.evaluate(()=>({
       living:S.battle.foes.map(f=>({uid:f.uid,hp:f.hp})),actor:S.battle.active,
-      pending:document.querySelector('.beta-targeting')?.textContent||'',scrollY
+      pending:document.querySelector('.beta-targeting')?.textContent||'',scrollY,
+      pointer:window.__thargridPointerTrace||null
     })));
     await page.waitForFunction(o=>S.battle.foes[o.index].hp<o.hp,{timeout:10000},spellBefore);
     assert.ok(await page.evaluate(mp=>S.heroes.eirik.mp<mp,spellBefore.mp));
