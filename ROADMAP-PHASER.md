@@ -199,3 +199,47 @@ Um primeiro protótipo gráfico **não** prova a paridade: a primeira entrega jo
 ### Histórico
 
 - **17/10/2026 — planejamento inicial:** auditoria do repositório clássico, comparação de três ports da Carcaça, consulta à documentação oficial e definição de marcos. **Somente documentação; nenhum código de produção ou save foi alterado.**
+
+
+## Implementação — 17/10/2026 — M0 parcial + M2 inicial + M3a visual jogável
+
+**Branch:** [feat/phaser-preview-m0-m3a](https://github.com/pedromaintenance/o-cerco-de-thargrid/tree/feat/phaser-preview-m0-m3a) · **PR:** [#2](https://github.com/pedromaintenance/o-cerco-de-thargrid/pull/2).  
+**CI inicial verde:** [GitHub Actions run #39026102179](https://github.com/pedromaintenance/o-cerco-de-thargrid/actions/runs/39026102179) — **6/6 testes** e validação da instalação de Phaser **4.2.1** no runner.  
+**URL planejada da beta após publicação:** https://pedromaintenance.github.io/o-cerco-de-thargrid/phaser-preview/?demo=1  
+**Produção preservada:** https://pedromaintenance.github.io/o-cerco-de-thargrid/
+
+### O que foi implementado de verdade
+
+- [x] Página **beta paralela**, própria, em \`phaser-preview/index.html\`, com banner/rota de retorno ao clássico, manifesto distinto e explicação de isolamento do save.
+- [x] **Phaser 4.2.1 como viewport de batalha**: cenário procedural de montanhas/muralhas, combatentes desenhados no canvas, PV e MP visíveis, barreiras, efeitos de status, iniciativa/ator corrente, animação de dano/cura e **toque no inimigo para atacar**. Alvos de magia/item continuam selecionáveis no modal HTML existente.
+- [x] **Adaptação não invasiva:** \`phaser-preview/bridge.js\` mantém os objetos Phaser vivos entre mudanças de DOM, atualiza combatentes pela snapshot do estado e chama o dispatcher legado \`handle('targetenemy')\`. O cálculo de resultado permanece exclusivamente em \`app.js\`.
+- [x] **Beta usa todas as telas e regras atuais** da campanha por compartilhar \`../data.js\`, \`../app.js\` e \`../style.css\`. O campo é Phaser; menus/conselho/reino/preparação ainda são HTML.
+- [x] O atributo explícito \`data-phaser-preview="true"\` ativa **\`thargrid_phaser_preview_save_v1\`** em lugar de \`thargrid_siege_save_v1\`. Importação/exportação legadas persistem na beta sem sobrescrever progresso clássico.
+- [x] Corrigida divergência do cache clássico \`thargrid-pwa-v1.0.0\` vs \`v1.0.1\`: ambos os lados agora usam \`v1.0.2\`. O SW raiz não intercepta a pasta da beta; beta tem SW/manifest próprios.
+- [x] \`.github/workflows/phaser-preview.yml\` verifica sintaxe, executa testes e baixa \`phaser@4.2.1\` para gerar um arquivo **vendor local** destinado a \`phaser-preview/vendor/phaser.min.js\` depois do merge. O fallback CDN existe apenas para situações em que o vendor ainda não foi servido: se usado, **não há garantia offline**.
+- [x] \`tests/legacy-baseline.test.cjs\`: seis verificações com Node \`vm\` e RNG reproduzível (tabelas; save beta × clássico; conselho obrigatório; replay real de batalha do dia 1; caches; adaptador visual).
+- [x] Em PR, CI verde com **6/6**; engine instalada e artefato vendor testado, antes de incorporar documentação desta entrega.
+
+### Gates e status reais
+
+| Gate | Situação em 17/10/2026 | Falta para encerrar |
+|---|---|---|
+| G0 / M0 | **Parcial**: baseline de conteúdo, isolamento de save e replay de batalha automatizado | Fixtures de dias críticos, 10 chefes, save em múltiplas fases, perícias/projetos, robustez e sequência de 60 dias |
+| G1 / M1 | **Pendente** | Extração de regras sem DOM, injeção de RNG no core e comparação clássica × core |
+| G2 / M2 | **Parcial avançado**: fonte/viewport Phaser, SW beta e workflow de vendor | Confirmar vendor persistido em main, Pages entregue, navegador e offline reais |
+| G3 / M3 | **Parcial (M3a)**: interface de batalha usa Phaser, toque para ataque, ações clássicas compartilhadas | QA visual em Android e desktop, efeitos de habilidades variados, fluxo completo com save/reload, navegação inteiramente no canvas |
+| G4–G8 | **Pendente** | Não afirmar paridade completa por causa de seis testes verdes |
+
+### Teste manual recomendado (após Pages estar atualizado)
+
+1. Abra a [beta](https://pedromaintenance.github.io/o-cerco-de-thargrid/phaser-preview/?demo=1). Um jogo novo de dificuldade História é criado **somente se a beta ainda não tiver um save**.
+2. Abra o **Conselho** do primeiro ato, selecione uma decisão, prepare a equipe e toque **Soar o sino**. Não há atalho para ignorar a decisão obrigatória.
+3. O cenário Phaser deve substituir os cartões de unidades; os **botões clássicos abaixo do canvas** seguem disponíveis e continuam resolvendo ações pelo motor original.
+4. No turno de um herói, toque em um inimigo no canvas para atacar. Confirme queda de PV, fila de iniciativa, rodadas, habilidades, itens, proteção, cura, conclusão e pós-batalha.
+5. Exporte o JSON da beta, entre na versão clássica e confirme que o save clássico não foi afetado.
+6. Após confirmado que \`vendor/phaser.min.js\` está acessível e que o SW beta instalou, repita **em modo avião**. Se a tela avisar uso de CDN, ainda **não** declare suporte offline.
+7. Registre modelo de celular/navegador, data do teste e qualquer discrepância; **não há certificação de QA físico** nesta entrega.
+
+### Próxima atividade
+
+Executar **M0b → M1a**: criar snapshots verificados de combates de chefes (especialmente dias 6 e 60), extração de RNG e \`dispatch\` de batalha sem dependência de DOM. Incrementar teste de campo visual com Playwright Chromium mobile/desktop, verificando tamanho de canvas e seleção, antes de expandir artes. Evitar substituir a rota clássica por entusiasmo com o primeiro canvas.
