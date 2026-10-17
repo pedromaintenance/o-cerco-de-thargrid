@@ -20,7 +20,7 @@ function runtime(seed=7, preview=false) {
   const random = () => ((state = (Math.imul(state,1664525)+1013904223)>>>0) / 4294967296);
   const math = Object.create(Math);
   math.random = random;
-  const element = () => ({innerHTML:'',className:'',textContent:'',classList:{add(){},remove(){},toggle(){}},dataset:{}});
+  const element = () => ({innerHTML:'',className:'',textContent:'',remove(){},classList:{add(){},remove(){},toggle(){}},dataset:{}});
   const doc = {
     documentElement:{dataset:preview?{phaserPreview:'true'}:{}},
     getElementById(id){if(!nodes.has(id))nodes.set(id,element());return nodes.get(id);},
@@ -100,8 +100,8 @@ test('root and beta cache versions are distinct; root excludes preview path',()=
 test('Phaser adapter never changes damage, status, battle turns or saves',()=>{
  const bridge=fs.readFileSync(path.join(ROOT,'phaser-preview/bridge.js'),'utf8');
  assert.doesNotMatch(bridge,/localStorage\.setItem\(/);
- assert.doesNotMatch(bridge,/\.hp\s*[-+*/]?=/);
- assert.doesNotMatch(bridge,/\.mp\s*[-+*/]?=/);
+ assert.doesNotMatch(bridge,/\.hp\s*(?:[-+*/]=|=(?!=))/);
+ assert.doesNotMatch(bridge,/\.mp\s*(?:[-+*/]=|=(?!=))/);
  assert.match(bridge,/handle\('targetenemy'/);
  assert.match(bridge,/new Phaser\.Game/);
 });
