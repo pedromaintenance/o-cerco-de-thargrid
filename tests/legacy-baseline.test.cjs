@@ -99,10 +99,10 @@ test('replayed first siege with seeded random is deterministic and persists its 
  assert.equal(a.state.version,1);
 });
 test('root and beta cache versions are distinct; root excludes preview path',()=>{
- assert.match(serviceWorker,/thargrid-pwa-v1\.0\.5/);
- assert.match(app,/caches\.open\('thargrid-pwa-v1\.0\.5'\)/);
+ assert.match(serviceWorker,/thargrid-pwa-v1\.0\.6/);
+ assert.match(app,/caches\.open\('thargrid-pwa-v1\.0\.6'\)/);
  assert.match(serviceWorker,/u\.pathname\.startsWith\(previewPath\)/);
- assert.match(betaWorker,/thargrid-phaser-beta-v4/);
+ assert.match(betaWorker,/thargrid-phaser-beta-v5/);
  assert.match(betaWorker,/\.\/vendor\/phaser\.min\.js/);
 });
 test('Phaser adapter never changes damage, status, battle turns or saves',()=>{
