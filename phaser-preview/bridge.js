@@ -21,7 +21,8 @@
     var html = originalBattle();
     var prompt = pending ? '<div class="beta-targeting" role="status"><strong>' +
       esc('Selecione no cenário: ' + pending.label) +
-      '</strong><button type="button" data-beta-cancel="1">Cancelar</button></div>' : '';
+      '</strong><span class="beta-target-controls"><button type="button" data-beta-list="1">Lista de alvos</button>' +
+      '<button type="button" data-beta-cancel="1">Cancelar</button></span></div>' : '';
     return html.replace('<div class="battle-wrap">',
       '<div class="battle-wrap"><section class="beta-battle" aria-label="Campo de batalha em Phaser">' +
       '<div class="beta-caption"><strong>CAMPO DE BATALHA · PHASER 4</strong><span>' +
@@ -61,6 +62,13 @@
   }
 
   document.addEventListener('click',function(event){
+    var list=event.target.closest('[data-beta-list]');
+    if(list && pending) {
+      var choice=pending;
+      pending=null;
+      render();
+      return originalTargets(choice.kind,choice.key); // Keyboard/screen-reader fallback
+    }
     if (!event.target.closest('[data-beta-cancel]')) return;
     pending=null;
     render();
