@@ -1,6 +1,6 @@
 {
   "source_commit": "9feb1b888370087e8cabc433202c9521238e5a7c",
-  "description": "Golden original enemy AI, status ticks and multi-actor advanceTurn prior to M1d; deterministic LCG Math.random seeded per scenario.",
+  "description": "Golden original M1c (commit 9feb1b88) enemy AI, status ticks and multi-actor advanceTurn, with Math parameter bound to deterministic LCG seeded individually per scenario.",
   "fixtures": [
     {
       "scenario": {
@@ -38,7 +38,7 @@
           ],
           "queue": [],
           "logs": [
-            "☠ Arauto de Teste atinge Brunna Rompeferro (18 dano).",
+            "☠ Arauto de Teste atinge Brunna Rompeferro (20 dano).",
             "Início da prova."
           ],
           "finished": false
@@ -46,7 +46,7 @@
         "heroes": [
           {
             "id": "brunna",
-            "hp": 95,
+            "hp": 93,
             "mp": 12,
             "status": {},
             "barrier": 0,
@@ -120,7 +120,7 @@
           ],
           "queue": [],
           "logs": [
-            "☠ Arauto de Teste atinge Brunna Rompeferro (8 dano).",
+            "☠ Arauto de Teste atinge Brunna Rompeferro (6 dano).",
             "Início da prova."
           ],
           "finished": false
@@ -128,11 +128,12 @@
         "heroes": [
           {
             "id": "brunna",
-            "hp": 105,
+            "hp": 107,
             "mp": 12,
             "status": {
               "defUp": 2,
-              "weak": 2
+              "weak": 2,
+              "bleed": 3
             },
             "barrier": 0,
             "injured": 1,
@@ -204,7 +205,7 @@
           ],
           "queue": [],
           "logs": [
-            "☠ Arauto de Teste atinge Brunna Rompeferro (17 dano).",
+            "☠ Arauto de Teste atinge Brunna Rompeferro (21 dano).",
             "Início da prova."
           ],
           "finished": false
@@ -212,9 +213,11 @@
         "heroes": [
           {
             "id": "brunna",
-            "hp": 96,
+            "hp": 92,
             "mp": 12,
-            "status": {},
+            "status": {
+              "weak": 2
+            },
             "barrier": 0,
             "injured": 0,
             "alive": true
@@ -285,7 +288,7 @@
           ],
           "queue": [],
           "logs": [
-            "☠ Arauto de Teste atinge a companhia inteira (51 dano).",
+            "☠ Arauto de Teste atinge a companhia inteira (55 dano).",
             "Início da prova."
           ],
           "finished": false
@@ -293,7 +296,7 @@
         "heroes": [
           {
             "id": "brunna",
-            "hp": 104,
+            "hp": 103,
             "mp": 12,
             "status": {},
             "barrier": 0,
@@ -302,7 +305,7 @@
           },
           {
             "id": "dara",
-            "hp": 64,
+            "hp": 63,
             "mp": 16,
             "status": {},
             "barrier": 0,
@@ -311,7 +314,7 @@
           },
           {
             "id": "eirik",
-            "hp": 35,
+            "hp": 34,
             "mp": 49,
             "status": {},
             "barrier": 0,
@@ -320,7 +323,7 @@
           },
           {
             "id": "serena",
-            "hp": 63,
+            "hp": 62,
             "mp": 45,
             "status": {},
             "barrier": 0,
@@ -449,7 +452,7 @@
           ],
           "queue": [],
           "logs": [
-            "☠ Arauto de Teste atinge Eirik Sigilano (25 dano).",
+            "☠ Arauto de Teste atinge Brunna Rompeferro (21 dano).",
             "Início da prova."
           ],
           "finished": false
@@ -457,8 +460,8 @@
         "heroes": [
           {
             "id": "brunna",
-            "hp": 113,
-            "mp": 12,
+            "hp": 92,
+            "mp": 7,
             "status": {},
             "barrier": 0,
             "injured": 0,
@@ -475,8 +478,8 @@
           },
           {
             "id": "eirik",
-            "hp": 25,
-            "mp": 44,
+            "hp": 50,
+            "mp": 49,
             "status": {},
             "barrier": 0,
             "injured": 0,
@@ -531,7 +534,7 @@
           "queue": [],
           "logs": [
             "A manifestação da Rainha deixa fogo sombrio no campo.",
-            "☠ Arauto de Teste atinge Brunna Rompeferro (22 dano).",
+            "☠ Arauto de Teste atinge Brunna Rompeferro (23 dano).",
             "Início da prova."
           ],
           "finished": false
@@ -539,7 +542,7 @@
         "heroes": [
           {
             "id": "brunna",
-            "hp": 91,
+            "hp": 90,
             "mp": 12,
             "status": {
               "burn": 2
@@ -607,7 +610,7 @@
               "ai": "guard",
               "type": "shadow",
               "status": {},
-              "barrier": 11,
+              "barrier": 0,
               "stage": 1,
               "dead": false
             }
@@ -695,7 +698,7 @@
           ],
           "queue": [],
           "logs": [
-            "☠ Arauto de Teste atinge Brunna Rompeferro (21 dano).",
+            "☠ Arauto de Teste atinge Brunna Rompeferro (23 dano).",
             "Início da prova."
           ],
           "finished": false
@@ -703,7 +706,7 @@
         "heroes": [
           {
             "id": "brunna",
-            "hp": 92,
+            "hp": 90,
             "mp": 12,
             "status": {},
             "barrier": 0,
@@ -776,7 +779,7 @@
           ],
           "queue": [],
           "logs": [
-            "☠ Arauto de Teste atinge a companhia inteira (71 dano).",
+            "☠ Arauto de Teste atinge a companhia inteira (51 dano).",
             "Início da prova."
           ],
           "finished": false
@@ -784,7 +787,7 @@
         "heroes": [
           {
             "id": "brunna",
-            "hp": 99,
+            "hp": 104,
             "mp": 12,
             "status": {},
             "barrier": 0,
@@ -793,7 +796,7 @@
           },
           {
             "id": "dara",
-            "hp": 59,
+            "hp": 64,
             "mp": 16,
             "status": {},
             "barrier": 0,
@@ -802,7 +805,7 @@
           },
           {
             "id": "eirik",
-            "hp": 30,
+            "hp": 35,
             "mp": 49,
             "status": {},
             "barrier": 0,
@@ -811,7 +814,7 @@
           },
           {
             "id": "serena",
-            "hp": 58,
+            "hp": 63,
             "mp": 45,
             "status": {},
             "barrier": 0,
@@ -858,7 +861,7 @@
           ],
           "queue": [],
           "logs": [
-            "☠ Arauto de Teste atinge Brunna Rompeferro (9 dano).",
+            "☠ Arauto de Teste atinge Brunna Rompeferro (7 dano).",
             "Início da prova."
           ],
           "finished": false
@@ -866,7 +869,7 @@
         "heroes": [
           {
             "id": "brunna",
-            "hp": 104,
+            "hp": 106,
             "mp": 12,
             "status": {
               "defUp": 2,
@@ -1228,27 +1231,27 @@
             {
               "side": "hero",
               "id": "dara",
-              "spd": 23.998089055528055
-            },
-            {
-              "side": "enemy",
-              "id": "e0",
-              "spd": 16.72937105930871
-            },
-            {
-              "side": "hero",
-              "id": "serena",
-              "spd": 16.551147172809237
+              "spd": 21.011630679946393
             },
             {
               "side": "hero",
               "id": "eirik",
-              "spd": 13.52581212455051
+              "spd": 17.97394560649991
+            },
+            {
+              "side": "hero",
+              "id": "serena",
+              "spd": 13.227067100349814
+            },
+            {
+              "side": "enemy",
+              "id": "e0",
+              "spd": 11.28161761071533
             },
             {
               "side": "hero",
               "id": "brunna",
-              "spd": 8.21596673241876
+              "spd": 7.4605888137593865
             }
           ],
           "logs": [
