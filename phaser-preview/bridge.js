@@ -227,6 +227,12 @@
     S = fresh('story'); screen = 'game'; save();
   }
   wrapRender();
+  // Dedicated preview scope. This does not register the production Service Worker.
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js', {scope:'./'}).catch(function (error) {
+      console.warn('Preview offline worker unavailable', error);
+    });
+  }
   if (!loading) {
     loading = true;
     loadEngine('./vendor/phaser.min.js', function () {
