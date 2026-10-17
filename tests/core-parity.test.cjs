@@ -94,7 +94,9 @@ test('the Night Queen survives death once at 46% health and dies after stage II'
  assert.equal(require('../core/combat.js').secondPhase(0,'nightavatar',1,100).status.atkUp,5);
  assert.equal(exec('S.battle.foes[0].dead'),false);
  assert.equal(exec('S.mode'),'battle');
- exec("S.battle.foes.slice(1).forEach(e=>{e.hp=0;e.dead=true});S.battle.foes[0].hp=1;S.battle.active='dara';doSkill('attack','e0')");
+ // The stage II foe may down a level-1 test hero immediately; restore the actor
+ // so the fixture tests the boss transition rather than survival at level 1 on day 60.
+ exec("S.heroes.dara.hp=1000;S.heroes.dara.alive=true;S.battle.foes.slice(1).forEach(e=>{e.hp=0;e.dead=true});S.battle.foes[0].barrier=0;S.battle.foes[0].hp=1;S.battle.active='dara';doSkill('attack','e0')");
  assert.equal(exec('S.battle.foes[0].dead'),true);
  assert.equal(exec('S.mode'),'aftermath');
  assert.equal(exec('S.victories'),1);
