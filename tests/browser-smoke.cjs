@@ -64,7 +64,21 @@ const address = 'http://127.0.0.1:4173';
     await page.reload({waitUntil:'domcontentloaded'});
     await page.waitForSelector('[data-a="continue"]',{timeout:12000});
     await page.click('[data-a="continue"]');
-    await page.waitForSelector('#phaser-surface canvas',{timeout:25000});
+    try {
+      await page.waitForSelector('#phaser-surface canvas',{timeout:12000});
+    }catch(error){
+      console.error('RESUME DIAGNOSTICS',await page.evaluate(()=>({
+        mode:S?.mode,day:S?.day,round:S?.battle?.round,
+        active:S?.battle?.active,party:S?.battle?.party,
+        foes:S?.battle?.foes?.map(f=>({uid:f.uid,hp:f.hp})),
+        betaStatus:document.querySelector('#beta-status')?.textContent,
+        phaserPresent:typeof Phaser,corePresent:typeof ThargridRounds,
+        domText:document.body.innerText.slice(0,900),
+        isLive:document.body.classList.contains('phaser-live'),
+        saveExists:!!localStorage.getItem('thargrid_phaser_preview_save_v1')
+      })),errors);
+      throw error;
+    }
     await page.waitForFunction(()=>document.body.classList.contains('phaser-live'));
     const resumed=await page.evaluate(()=>JSON.parse(localStorage.getItem('thargrid_phaser_preview_save_v1')));
     assert.deepEqual(resumed,after,'Reload must not change any battle or campaign state');
