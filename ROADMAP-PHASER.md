@@ -243,3 +243,13 @@ Um primeiro protótipo gráfico **não** prova a paridade: a primeira entrega jo
 ### Próxima atividade
 
 Executar **M0b → M1a**: criar snapshots verificados de combates de chefes (especialmente dias 6 e 60), extração de RNG e \`dispatch\` de batalha sem dependência de DOM. Incrementar teste de campo visual com Playwright Chromium mobile/desktop, verificando tamanho de canvas e seleção, antes de expandir artes. Evitar substituir a rota clássica por entusiasmo com o primeiro canvas.
+
+
+### Publicação validada pelo GitHub Actions — 17/10/2026
+
+- **PR #2 integrado à \`main\`** por squash: \`f59272a2dc7c4ead3ffb66acdf2602fbc1622e81\`. Raiz clássica mantida.
+- **Verificação de engenharia e navegador:** [CI #39026640475](https://github.com/pedromaintenance/o-cerco-de-thargrid/actions/runs/39026640475), verde, com **6/6 testes Node** e fluxos Chrome **DESKTOP PASS / MOBILE PASS**. O teste executou conselho → equipe → primeira batalha → ataque real pelo canvas → verificação do save separado. Foi necessário rolar o botão de preparação para o centro da viewport mobile devido à barra inferior fixa; testes agora exercitam esse cuidado de layout.
+- **Vendor local incluído na \`main\`:** \`phaser-preview/vendor/phaser.min.js\` (**1.375.976 bytes**), gerado por [CI #39026696583](https://github.com/pedromaintenance/o-cerco-de-thargrid/actions/runs/39026696583) a partir de \`phaser@4.2.1\`. O teste Chromium já carregou essa mesma distribuição local, bloqueando dependências externas durante a execução.
+- **GitHub Pages:** [build/deploy #39026715979](https://github.com/pedromaintenance/o-cerco-de-thargrid/actions/runs/39026715979) concluído com sucesso incluindo o vendor. **[ABRIR BETA PHASER](https://pedromaintenance.github.io/o-cerco-de-thargrid/phaser-preview/?demo=1)**. A verificação independente do endereço por HTTP externo não foi possível nesta sessão; o resultado atesta a implantação reportada pelo GitHub, não uma certificação em aparelho físico.
+- **Escopo homologado:** MVP do primeiro combate visual e isolamento de saves. **Não** declarar M1, G3 completo, campanha de 60 dias ou offline físico concluídos.
+- **Próximo PR:** M0b/M1a — fixtures de 10 chefes e saves intercalados; extração de RNG e dispatcher sem DOM. Acrescentar QA real de toque e offline no Pages e validar mais que o dia 1.
