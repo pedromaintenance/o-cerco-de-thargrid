@@ -89,7 +89,9 @@ test('the Night Queen survives death once at 46% health and dies after stage II'
  exec("S.battle.active='dara';S.battle.foes[0].hp=1;doSkill('attack','e0')");
  assert.equal(exec('S.battle.foes[0].stage'),2);
  assert.equal(exec('S.battle.foes[0].hp'),exec('Math.round(S.battle.foes[0].maxhp*.46)'));
- assert.equal(exec('S.battle.foes[0].status.atkUp'),5);
+ // Depending on initiative, the enemy's next activation already consumes one buff turn.
+ assert.ok([4,5].includes(exec('S.battle.foes[0].status.atkUp')));
+ assert.equal(require('../core/combat.js').secondPhase(0,'nightavatar',1,100).status.atkUp,5);
  assert.equal(exec('S.battle.foes[0].dead'),false);
  assert.equal(exec('S.mode'),'battle');
  exec("S.battle.foes.slice(1).forEach(e=>{e.hp=0;e.dead=true});S.battle.foes[0].hp=1;S.battle.active='dara';doSkill('attack','e0')");
@@ -112,7 +114,9 @@ test('midbattle save resumes the exact queue, hero state and remaining opponents
  assert.deepEqual(json(resumed.exec('S')),before);
  const foe=before.battle.foes.find(e=>e.hp>0).uid;
  for (const run of [first,resumed]) {
-  run.exec("S.battle.active='dara';doSkill('attack',"+JSON.stringify(foe)+")");
+  // Live saves preserve battle state, not the internal Math.random state.
+  // Inject an equal next roll in both runtimes to compare rule outcomes exactly.
+  run.exec("ThargridCore.setRandomSource(ThargridCore.seededRandom(888));S.battle.active='dara';doSkill('attack',"+JSON.stringify(foe)+")");
  }
  assert.deepEqual(json(first.exec('S')),json(resumed.exec('S')));
  assert.equal(resumed.saved.has('thargrid_siege_save_v1'),false);
