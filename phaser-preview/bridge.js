@@ -108,9 +108,15 @@
     // One stable scene-level pointer listener. Per-unit zones were recreated during
     // render and could miss the first mobile touch after a modal closed.
     this.input.on('pointerdown', function(pointer){
-      var x=pointer.x,y=pointer.y;
-      // Temporary pointer trace for browser smoke diagnosis; removed after mobile verification.
-      window.__thargridPointerTrace={x:x,y:y,targets:this.hitTargets.map(function(t){return {x:t.x,y:t.y,id:t.id,side:t.side}})};
+      // Mobile Chrome with a scrolled Phaser canvas may report pointer.y offset
+      // from the actual touch (observed ~77 game pixels). Normalize DOM coordinates
+      // against the live canvas bounds for both desktop and touch devices.
+      var rect=this.game.canvas.getBoundingClientRect();
+      var ev=pointer.event;
+      var x=ev&&typeof ev.clientX==='number'&&rect.width ?
+        (ev.clientX-rect.left)*RENDER_W/rect.width : pointer.x;
+      var y=ev&&typeof ev.clientY==='number'&&rect.height ?
+        (ev.clientY-rect.top)*RENDER_H/rect.height : pointer.y;
       var chosen=this.hitTargets.find(function(t){return Math.abs(x-t.x)<=t.width/2 && Math.abs(y-t.y)<=t.height/2;});
       if(chosen)selectFighter(chosen.side,chosen.id);
     }, this);
