@@ -331,3 +331,35 @@ Executar **M0b → M1a**: criar snapshots verificados de combates de chefes (esp
 - **Validação na main:** [CI #39034015796](https://github.com/pedromaintenance/o-cerco-de-thargrid/actions/runs/39034015796) — sucesso.
 - **GitHub Pages:** [deploy #39034015663](https://github.com/pedromaintenance/o-cerco-de-thargrid/actions/runs/39034015663) concluído com sucesso. [**Abrir beta Phaser**](https://pedromaintenance.github.io/o-cerco-de-thargrid/phaser-preview/?demo=1). A confirmação é do GitHub Actions; QA em dispositivo físico continua pendente.
 - **Rollback:** a versão clássica em `/` mantém save `thargrid_siege_save_v1` e permanece separada; beta em `/phaser-preview/` usa `thargrid_phaser_preview_save_v1`.
+
+
+## Implementação M1c — efeitos imutáveis e eventos de combate (17/10/2026)
+
+**PR:** [#5 — núcleo de efeitos e eventos](https://github.com/pedromaintenance/o-cerco-de-thargrid/pull/5).
+**CI verificado:** [#39035378089](https://github.com/pedromaintenance/o-cerco-de-thargrid/actions/runs/39035378089): **46/46 testes Node e Chromium desktop/mobile aprovados**. Verificação posterior também exige que eventos de ataque mágico sejam entregues à camada visual.
+**Beta para testar após integração:** https://pedromaintenance.github.io/o-cerco-de-thargrid/phaser-preview/?demo=1
+
+### Implementado
+
+- [x] **Módulo `core/effects.js`**: `applySkill` e `applyItem` aplicam uma ação previamente aprovada por `core/actions.js` sobre **cópia profunda do estado**, retornando `{state, events}`. Sem DOM, Phaser, armazenamento, alteração direta do save original ou UI. Suas dependências (classes, heróis, habilidades, loja, núcleo de combate e hazard) são recebidas como argumentos.
+- [x] **Efeitos extraídos de `app.js`:** ataque e dano, absorção de barreiras, defesa, cura, limpeza, ressurreição, bônus de status, efeitos de fogo, consumíveis, primeira transição de morte da Rainha para a fase II, custos em MP e itens e mensagens de combate. Continua válido o fluxo clássico de turnos após a aplicação do novo estado.
+- [x] **Eventos explícitos, derivados dos resultados mecânicos:** `damage`, `heal`, `revive`, `shield`, `status`, `phase`, `cleanse`, `mana`, `item`, `defeat` e `log`. **Eventos não resolvem ataques ou curas na UI**; só comunicam o que a regra já fez, com side/target/amount/key e duração quando aplicável.
+- [x] **Feedback Phaser por evento:** etiqueta transitória com ação/efeito na cena; a animação de variação de PV existente permanece. As ações inimigas ainda são representadas por comparação entre snapshots, porque seu executor não migrou.
+- [x] **Testes da extração:** 14 golden fixtures de resultados de magia/itens capturadas antes da extração de M1b; 12 snapshots de batalha inicial (dez chefes inclusos); cinco novos testes de estado imutável, barreira/ação defensiva, cura, cinza da chama, mudança de fase da Rainha e emissão dos eventos. Total preliminar: **46 testes**.
+- [x] **CI Chromium mobile e desktop:** continua passando pela abertura da campanha, Conselho, ataques Phaser, save/reload, magia, cura, ressurreição e lista de alvos. Foi acrescentada verificação de evento semântico de dano produzido por magia lançada via toque.
+- [x] **SW/Cache atualizados:** clássico `thargrid-pwa-v1.0.5`, beta `thargrid-phaser-beta-v4`, incluindo `core/effects.js` nos recursos locais. Chave de salvamento clássico e chave da beta continuam independentes.
+
+### Gates e pendências
+
+| Marco | Resultado atual | Ainda falta |
+|---|---|---|
+| M1c | **Parcial avançado:** habilidades e itens com executor imutável + eventos | Extrair ações da IA, dano/status inicial de turno, escalonamento de rodadas, vitórias e derrota num reducer único |
+| M3c | **Parcial:** feedback da cena ligado a eventos reais de ações dos jogadores | Eventos de inimigos, timeline/animações específicas por magia, sprites e UI completa Phaser |
+| M0 | **Baseline ampliada:** 46 testes automatizados + golden de chefes/ações | Simulação completa dos dez chefes e 60 dias em cenários econômicos plausíveis |
+| M2 | **PWA versionada + CI** | Instalação/offline em dispositivos físicos e homologação visual manual |
+
+**Precisão de escopo:** `core/effects.js` não é ainda um reducer integral de combate; o `app.js` ainda coordena turnos, IA, resultado da batalha e persistência. `ThargridCore` permanece como fonte da aleatoriedade durante a execução de habilidades; a sequência interna de RNG não é gravada no save nesta etapa. O resultado numérico das ações não foi intencionalmente rebalanceado.
+
+### Próximo marco M1d
+
+Extrair **efeitos de status e ataque inimigo** para uma transição pura e eventos, com fixtures multi-rodadas e simulações de chefes, mantendo os tempos e a ordem de sorteios. Em paralelo, experimentar efeitos visuais por categoria de magia, mas sem duplicar regras no Phaser.
