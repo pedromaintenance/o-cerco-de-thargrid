@@ -235,18 +235,24 @@
       self.tweens.add({targets:label,y:label.y-35,alpha:0,duration:850,onComplete:function(){label.destroy();}});
     });
     previous = next;
-    // Semantic effects are emitted by the pure combat reducer. This cue never
-    // recalculates a hit, status or resource; enemy actions still use HP diffs.
+    // Both hero actions and enemy turns emit semantic events. The Phaser scene
+    // only describes outcomes; it never recomputes damage or status effects.
     if(typeof combatFeedback!=='undefined' && combatFeedback.seq>this.feedbackSeq) {
       this.feedbackSeq=combatFeedback.seq;
-      var details=combatFeedback.events.filter(function(e){
-        return ['damage','heal','revive','shield','status','phase','cleanse'].includes(e.type);
-      }).slice(0,2).map(function(e){
-        var name=(SKILLS[e.key]&&SKILLS[e.key].name)||(STORE[e.key]&&STORE[e.key].name)||'Ação';
-        var sign=e.type==='damage'?'−':'+';
+      var candidates=combatFeedback.events.filter(function(e){
+        return ['damage','heal','revive','shield','status','phase','cleanse','down'].includes(e.type);
+      });
+      // Show a representative player effect and the most recent enemy effect
+      // when both occur in one action cycle. Avoid flooding the small viewport.
+      var selected=candidates.slice(0,2);
+      var latestEnemy=candidates.filter(function(e){return !!e.source;}).slice(-1)[0];
+      if(latestEnemy && candidates.length>2)selected=[candidates[0],latestEnemy];
+      var details=selected.map(function(e){
+        var name=e.source?'Hostes da Corte':
+          (SKILLS[e.key]&&SKILLS[e.key].name)||(STORE[e.key]&&STORE[e.key].name)||'Ação';
         var detail=e.type==='phase'?'FASE II':e.type==='status'?e.status:
           e.type==='cleanse'?'PURIFICADO':e.type==='revive'?'RESSUSCITOU':
-          sign+(e.amount||0);
+          e.type==='down'?'CAIU':(e.type==='damage'?'−':'+')+(e.amount||0);
         return name+' · '+detail;
       });
       if(details.length) {
