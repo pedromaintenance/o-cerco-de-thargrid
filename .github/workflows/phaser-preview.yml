@@ -40,11 +40,16 @@ jobs:
         run: node --test tests/*.test.cjs
       - name: Fetch locally hosted Phaser 4.2.1
         run: |
-          npm install --no-save --ignore-scripts --no-fund --no-audit phaser@4.2.1
+          npm install --no-save --ignore-scripts --no-fund --no-audit phaser@4.2.1 puppeteer-core@24.22.0
           test -s node_modules/phaser/dist/phaser.min.js
           mkdir -p phaser-preview/vendor
           cp node_modules/phaser/dist/phaser.min.js phaser-preview/vendor/phaser.min.js
           test -s phaser-preview/vendor/phaser.min.js
+      - name: Chromium desktop and mobile battle smoke
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/thargrid-http.log 2>&1 &
+          sleep 2
+          node tests/browser-smoke.cjs
       - name: Upload tested Phaser vendor
         uses: actions/upload-artifact@v4
         with:
