@@ -88,6 +88,22 @@ const address = 'http://127.0.0.1:4173';
     assert.ok(!semantic.events.some(e=>e.type==='log'),'logs should not appear as visual effects');
     assert.equal(await page.$('.beta-targeting'),null);
 
+    // Controlled enemy turn: the same pure executor that runs during initiative
+    // must publish semantic damage/status events that the Phaser scene consumes.
+    const enemySemantic=await page.evaluate(()=>{
+      const foe=S.battle.foes.find(f=>f.hp>0);
+      if(!foe)throw Error('Need a living foe for enemy semantic smoke');
+      foe.ai='final';foe.atk=7;S.battle.round=2;
+      const previousSeq=combatFeedback.seq;
+      enemyAction(foe);render();
+      return {previousSeq,currentSeq:combatFeedback.seq,events:combatFeedback.events,
+        visual:document.body.classList.contains('phaser-live')};
+    });
+    assert.ok(enemySemantic.currentSeq>enemySemantic.previousSeq);
+    assert.ok(enemySemantic.events.some(e=>e.type==='damage'&&e.side==='hero'&&e.source));
+    assert.ok(enemySemantic.events.some(e=>e.type==='status'&&e.status==='burn'&&e.side==='hero'));
+    assert.ok(enemySemantic.visual);
+
     // Healing and reviving allies by touching their figures, not the old HTML list.
     await page.evaluate(()=>{S.battle.active='serena';S.heroes.brunna.hp=15;render();});
     await page.click('[data-a="battleSkills"]');

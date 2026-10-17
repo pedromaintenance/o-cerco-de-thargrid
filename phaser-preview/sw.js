@@ -1,5 +1,5 @@
 /* Isolated beta PWA scope: /phaser-preview/. Root production SW never captures this path. */
-const CACHE='thargrid-phaser-beta-v4';
+const CACHE='thargrid-phaser-beta-v5';
 const ASSETS=[
  './','./index.html','./preview.css','./bridge.js','./manifest.webmanifest',
  './vendor/phaser.min.js','../data.js','../core/combat.js','../core/actions.js','../core/effects.js','../app.js','../style.css',

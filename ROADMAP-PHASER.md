@@ -372,3 +372,36 @@ Extrair **efeitos de status e ataque inimigo** para uma transição pura e event
 - **GitHub Pages:** [build/deploy #39035708712](https://github.com/pedromaintenance/o-cerco-de-thargrid/actions/runs/39035708712) concluído com sucesso. **[Testar beta Phaser M1c](https://pedromaintenance.github.io/o-cerco-de-thargrid/phaser-preview/?demo=1)**. A confirmação do deploy e dos navegadores é do GitHub Actions; ainda não constitui homologação em dispositivo físico.
 - **Regra de segurança:** jogo clássico mantém rota `/` e chave `thargrid_siege_save_v1`; beta mantém rota `/phaser-preview/` e `thargrid_phaser_preview_save_v1`. Não há cópia, sincronização ou conversão automática de saves.
 - **Próximo objetivo (M1d):** trazer turnos inimigos e efeitos de status para executor independente com eventos, ampliar testes de rodadas completas e chefes até a vitória e validar instalação/offline real.
+
+
+## Implementação M1d — IA inimiga e efeitos de início de turno (17/10/2026)
+
+**PR:** [#6 — efeitos de IA/turno em núcleo puro](https://github.com/pedromaintenance/o-cerco-de-thargrid/pull/6).
+**Validação:** [CI #39038583057](https://github.com/pedromaintenance/o-cerco-de-thargrid/actions/runs/39038583057): 65/65 testes Node; testes Chromium desktop e mobile aprovados. Smoke adicional de eventos de IA em andamento no PR.
+**Prévia após merge:** [Phaser no GitHub Pages](https://pedromaintenance.github.io/o-cerco-de-thargrid/phaser-preview/?demo=1).
+
+### Entregas
+
+- [x] **`core/effects.js` — `applyEnemyAction` e `applyTurnStart`:** ataques da IA e efeitos de início de turno agora retornam `{state, events}` sem alterar o estado de entrada, acessar DOM, armazenar dados ou executar cenas Phaser.
+- [x] **Paridade com o jogo existente:** o executor mantém a prioridade de ataque ao alvo ferido, chance de selecionar outro, dano com defesa/escudo, dano em área a cada três rodadas de magos/chefes, efeitos de veneno, sangramento, fraqueza, lentidão, drenagem de MP, fogo sombrio, proteção e regeneração. Mantém duração de status, dano periódico, regeneração e registros textuais na mesma ordem.
+- [x] **Fila de turnos estabilizada:** `advanceTurn` recupera referências à nova cópia do estado após efeitos de início de turno/ataques. Evita atualizar uma fila antiga ao usar transições imutáveis.
+- [x] **Eventos semânticos de aliados e inimigos:** `damage`, `heal`, `status`, `mana`, `shield`, `down` e `log` seguem para o Phaser sem cálculos duplicados. Os eventos visuais são acumulados durante a resolução da ação do herói e dos turnos inimigos subsequentes.
+- [x] **Phaser agora apresenta feedback da IA:** o aviso transitório distingue ações das Hostes da Corte e pode exibir o efeito do herói junto ao último efeito da reação inimiga; a animação existente de alteração de PV permanece.
+- [x] **15 golden fixtures M1c anteriores ao refactor:** `tests/fixtures/enemy-turn-golden-m1c.json` registra IA com diferentes perfis, golpes em área, dano mitigado, estados periódicos e sequência inimigo → herói. Geração corrigida para realmente injetar `Math.random` determinístico no código do commit `9feb1b88`; não são números recalculados pelo módulo novo.
+- [x] **Testes adicionais:** reprodução exata de 15 fixtures; imutabilidade dos executores, eventos da IA, dano periódico e preservação das mensagens; verificação de acúmulo de eventos de jogador/inimigo. Bateria com **65/65 testes** aprovada na CI.
+- [x] **PWA renovada:** cache clássico `thargrid-pwa-v1.0.6` e cache da beta `thargrid-phaser-beta-v5`, mantendo escopo da PWA e salvamentos independentes.
+
+### Estado e limites
+
+| Marco | Estado após M1d | Ainda falta |
+|---|---|---|
+| M1d | **Executado para IA e efeitos de início de turno** | Extrair escalonamento de rodadas, perigos ambientais, vitórias/derrotas e economia do pós-batalha para reducer integral |
+| M3c | **Feedback semântico para jogador e inimigo** | Animações específicas por efeito, sprites, acessibilidade/arte final e mais UI nativa Phaser |
+| M0 | **65 testes + snapshots originais** | Cenários integrais de múltiplos dias/chefes e save sob muitos efeitos/turnos |
+| M2 | **Prévia em Pages com cache versionada** | QA em navegadores de dispositivos reais e offline sem rede comprovado em aparelho |
+
+**Observações:** esse marco não significa que a campanha de 60 dias foi portada inteiramente. O `app.js` ainda controla rounds, condições de vitória, recompensas, derrota e gerenciamento do reino. A aleatoriedade padrão do jogo continua sem o estado RNG persistido no save. As fixture de status incluem um caso com morte por efeitos periódicos; salvar e retomar batalha continua coberto nos testes de navegador.
+
+### Próximo marco M1e
+
+Separar perigo ambiental e geração da fila de iniciativas por rodada, preservar semântica de `checkBattle()` e realizar simulações guiadas de dias críticos (6, 30, 60) até o resultado. Depois, integrar sprites e animações de habilidades usando exclusivamente eventos de combate.

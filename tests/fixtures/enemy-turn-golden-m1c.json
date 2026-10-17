@@ -1,0 +1,1316 @@
+{
+  "source_commit": "9feb1b888370087e8cabc433202c9521238e5a7c",
+  "description": "Golden original M1c (commit 9feb1b88) enemy AI, status ticks and multi-actor advanceTurn, with Math parameter bound to deterministic LCG seeded individually per scenario.",
+  "fixtures": [
+    {
+      "scenario": {
+        "id": "poison-basic",
+        "kind": "enemy",
+        "ai": "poison",
+        "day": 1,
+        "round": 1,
+        "seed": 3
+      },
+      "expected": {
+        "day": 1,
+        "mode": "battle",
+        "battle": {
+          "round": 1,
+          "ptr": 0,
+          "active": null,
+          "foes": [
+            {
+              "uid": "e0",
+              "id": "fixture",
+              "name": "Arauto de Teste",
+              "icon": "☠",
+              "hp": 94,
+              "maxhp": 110,
+              "atk": 27,
+              "spd": 11,
+              "ai": "poison",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            }
+          ],
+          "queue": [],
+          "logs": [
+            "☠ Arauto de Teste atinge Brunna Rompeferro (20 dano).",
+            "Início da prova."
+          ],
+          "finished": false
+        },
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 93,
+            "mp": 12,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "mp": 16,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          },
+          {
+            "id": "serena",
+            "hp": 76,
+            "mp": 45,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          }
+        ]
+      }
+    },
+    {
+      "scenario": {
+        "id": "bleed-shielded",
+        "kind": "enemy",
+        "ai": "bleed",
+        "day": 6,
+        "round": 1,
+        "seed": 21,
+        "defenses": true
+      },
+      "expected": {
+        "day": 6,
+        "mode": "battle",
+        "battle": {
+          "round": 1,
+          "ptr": 0,
+          "active": null,
+          "foes": [
+            {
+              "uid": "e0",
+              "id": "fixture",
+              "name": "Arauto de Teste",
+              "icon": "☠",
+              "hp": 94,
+              "maxhp": 110,
+              "atk": 27,
+              "spd": 11,
+              "ai": "bleed",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            }
+          ],
+          "queue": [],
+          "logs": [
+            "☠ Arauto de Teste atinge Brunna Rompeferro (6 dano).",
+            "Início da prova."
+          ],
+          "finished": false
+        },
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 107,
+            "mp": 12,
+            "status": {
+              "defUp": 2,
+              "weak": 2,
+              "bleed": 3
+            },
+            "barrier": 0,
+            "injured": 1,
+            "alive": true
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "mp": 16,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          },
+          {
+            "id": "serena",
+            "hp": 76,
+            "mp": 45,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          }
+        ]
+      }
+    },
+    {
+      "scenario": {
+        "id": "curse-target",
+        "kind": "enemy",
+        "ai": "curse",
+        "day": 12,
+        "round": 2,
+        "seed": 5
+      },
+      "expected": {
+        "day": 12,
+        "mode": "battle",
+        "battle": {
+          "round": 2,
+          "ptr": 0,
+          "active": null,
+          "foes": [
+            {
+              "uid": "e0",
+              "id": "fixture",
+              "name": "Arauto de Teste",
+              "icon": "☠",
+              "hp": 94,
+              "maxhp": 110,
+              "atk": 27,
+              "spd": 11,
+              "ai": "curse",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            }
+          ],
+          "queue": [],
+          "logs": [
+            "☠ Arauto de Teste atinge Brunna Rompeferro (21 dano).",
+            "Início da prova."
+          ],
+          "finished": false
+        },
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 92,
+            "mp": 12,
+            "status": {
+              "weak": 2
+            },
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "mp": 16,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          },
+          {
+            "id": "serena",
+            "hp": 76,
+            "mp": 45,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          }
+        ]
+      }
+    },
+    {
+      "scenario": {
+        "id": "mage-aoe",
+        "kind": "enemy",
+        "ai": "mage",
+        "day": 18,
+        "round": 3,
+        "seed": 67
+      },
+      "expected": {
+        "day": 18,
+        "mode": "battle",
+        "battle": {
+          "round": 3,
+          "ptr": 0,
+          "active": null,
+          "foes": [
+            {
+              "uid": "e0",
+              "id": "fixture",
+              "name": "Arauto de Teste",
+              "icon": "☠",
+              "hp": 94,
+              "maxhp": 110,
+              "atk": 27,
+              "spd": 11,
+              "ai": "mage",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            }
+          ],
+          "queue": [],
+          "logs": [
+            "☠ Arauto de Teste atinge a companhia inteira (55 dano).",
+            "Início da prova."
+          ],
+          "finished": false
+        },
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 103,
+            "mp": 12,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          },
+          {
+            "id": "dara",
+            "hp": 63,
+            "mp": 16,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          },
+          {
+            "id": "eirik",
+            "hp": 34,
+            "mp": 49,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          },
+          {
+            "id": "serena",
+            "hp": 62,
+            "mp": 45,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          }
+        ]
+      }
+    },
+    {
+      "scenario": {
+        "id": "snare-target",
+        "kind": "enemy",
+        "ai": "snare",
+        "day": 24,
+        "round": 2,
+        "seed": 8
+      },
+      "expected": {
+        "day": 24,
+        "mode": "battle",
+        "battle": {
+          "round": 2,
+          "ptr": 0,
+          "active": null,
+          "foes": [
+            {
+              "uid": "e0",
+              "id": "fixture",
+              "name": "Arauto de Teste",
+              "icon": "☠",
+              "hp": 94,
+              "maxhp": 110,
+              "atk": 27,
+              "spd": 11,
+              "ai": "snare",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            }
+          ],
+          "queue": [],
+          "logs": [
+            "☠ Arauto de Teste atinge Brunna Rompeferro (17 dano).",
+            "Início da prova."
+          ],
+          "finished": false
+        },
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 96,
+            "mp": 12,
+            "status": {
+              "slow": 2
+            },
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "mp": 16,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          },
+          {
+            "id": "serena",
+            "hp": 76,
+            "mp": 45,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          }
+        ]
+      }
+    },
+    {
+      "scenario": {
+        "id": "drain-target",
+        "kind": "enemy",
+        "ai": "drain",
+        "day": 30,
+        "round": 1,
+        "seed": 15
+      },
+      "expected": {
+        "day": 30,
+        "mode": "battle",
+        "battle": {
+          "round": 1,
+          "ptr": 0,
+          "active": null,
+          "foes": [
+            {
+              "uid": "e0",
+              "id": "fixture",
+              "name": "Arauto de Teste",
+              "icon": "☠",
+              "hp": 94,
+              "maxhp": 110,
+              "atk": 27,
+              "spd": 11,
+              "ai": "drain",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            }
+          ],
+          "queue": [],
+          "logs": [
+            "☠ Arauto de Teste atinge Brunna Rompeferro (21 dano).",
+            "Início da prova."
+          ],
+          "finished": false
+        },
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 92,
+            "mp": 7,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "mp": 16,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          },
+          {
+            "id": "serena",
+            "hp": 76,
+            "mp": 45,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          }
+        ]
+      }
+    },
+    {
+      "scenario": {
+        "id": "final-burning",
+        "kind": "enemy",
+        "ai": "final",
+        "day": 60,
+        "round": 2,
+        "seed": 7
+      },
+      "expected": {
+        "day": 60,
+        "mode": "battle",
+        "battle": {
+          "round": 2,
+          "ptr": 0,
+          "active": null,
+          "foes": [
+            {
+              "uid": "e0",
+              "id": "fixture",
+              "name": "Arauto de Teste",
+              "icon": "☠",
+              "hp": 94,
+              "maxhp": 110,
+              "atk": 27,
+              "spd": 11,
+              "ai": "final",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            }
+          ],
+          "queue": [],
+          "logs": [
+            "A manifestação da Rainha deixa fogo sombrio no campo.",
+            "☠ Arauto de Teste atinge Brunna Rompeferro (23 dano).",
+            "Início da prova."
+          ],
+          "finished": false
+        },
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 90,
+            "mp": 12,
+            "status": {
+              "burn": 2
+            },
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "mp": 16,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          },
+          {
+            "id": "serena",
+            "hp": 76,
+            "mp": 45,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          }
+        ]
+      }
+    },
+    {
+      "scenario": {
+        "id": "guard-protect",
+        "kind": "enemy",
+        "ai": "guard",
+        "day": 36,
+        "round": 2,
+        "seed": 17
+      },
+      "expected": {
+        "day": 36,
+        "mode": "battle",
+        "battle": {
+          "round": 2,
+          "ptr": 0,
+          "active": null,
+          "foes": [
+            {
+              "uid": "e0",
+              "id": "fixture",
+              "name": "Arauto de Teste",
+              "icon": "☠",
+              "hp": 94,
+              "maxhp": 110,
+              "atk": 27,
+              "spd": 11,
+              "ai": "guard",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            }
+          ],
+          "queue": [],
+          "logs": [
+            "☠ Arauto de Teste atinge Brunna Rompeferro (22 dano).",
+            "Início da prova."
+          ],
+          "finished": false
+        },
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 91,
+            "mp": 12,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "mp": 16,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          },
+          {
+            "id": "serena",
+            "hp": 76,
+            "mp": 45,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          }
+        ]
+      }
+    },
+    {
+      "scenario": {
+        "id": "regenerate-ward",
+        "kind": "enemy",
+        "ai": "regenerate",
+        "day": 42,
+        "round": 2,
+        "seed": 29
+      },
+      "expected": {
+        "day": 42,
+        "mode": "battle",
+        "battle": {
+          "round": 2,
+          "ptr": 0,
+          "active": null,
+          "foes": [
+            {
+              "uid": "e0",
+              "id": "fixture",
+              "name": "Arauto de Teste",
+              "icon": "☠",
+              "hp": 94,
+              "maxhp": 110,
+              "atk": 27,
+              "spd": 11,
+              "ai": "regenerate",
+              "type": "shadow",
+              "status": {},
+              "barrier": 4,
+              "stage": 1,
+              "dead": false
+            }
+          ],
+          "queue": [],
+          "logs": [
+            "☠ Arauto de Teste atinge Brunna Rompeferro (23 dano).",
+            "Início da prova."
+          ],
+          "finished": false
+        },
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 90,
+            "mp": 12,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "mp": 16,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          },
+          {
+            "id": "serena",
+            "hp": 76,
+            "mp": 45,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          }
+        ]
+      }
+    },
+    {
+      "scenario": {
+        "id": "boss-aoe",
+        "kind": "enemy",
+        "ai": "boss",
+        "day": 54,
+        "round": 3,
+        "seed": 65
+      },
+      "expected": {
+        "day": 54,
+        "mode": "battle",
+        "battle": {
+          "round": 3,
+          "ptr": 0,
+          "active": null,
+          "foes": [
+            {
+              "uid": "e0",
+              "id": "fixture",
+              "name": "Arauto de Teste",
+              "icon": "☠",
+              "hp": 94,
+              "maxhp": 110,
+              "atk": 27,
+              "spd": 11,
+              "ai": "boss",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            }
+          ],
+          "queue": [],
+          "logs": [
+            "☠ Arauto de Teste atinge a companhia inteira (51 dano).",
+            "Início da prova."
+          ],
+          "finished": false
+        },
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 104,
+            "mp": 12,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          },
+          {
+            "id": "dara",
+            "hp": 64,
+            "mp": 16,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          },
+          {
+            "id": "eirik",
+            "hp": 35,
+            "mp": 49,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          },
+          {
+            "id": "serena",
+            "hp": 63,
+            "mp": 45,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          }
+        ]
+      }
+    },
+    {
+      "scenario": {
+        "id": "mitigated-attack",
+        "kind": "enemy",
+        "ai": "basic",
+        "day": 6,
+        "round": 1,
+        "seed": 34,
+        "defenses": true
+      },
+      "expected": {
+        "day": 6,
+        "mode": "battle",
+        "battle": {
+          "round": 1,
+          "ptr": 0,
+          "active": null,
+          "foes": [
+            {
+              "uid": "e0",
+              "id": "fixture",
+              "name": "Arauto de Teste",
+              "icon": "☠",
+              "hp": 94,
+              "maxhp": 110,
+              "atk": 27,
+              "spd": 11,
+              "ai": "basic",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            }
+          ],
+          "queue": [],
+          "logs": [
+            "☠ Arauto de Teste atinge Brunna Rompeferro (7 dano).",
+            "Início da prova."
+          ],
+          "finished": false
+        },
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 106,
+            "mp": 12,
+            "status": {
+              "defUp": 2,
+              "weak": 2
+            },
+            "barrier": 0,
+            "injured": 1,
+            "alive": true
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "mp": 16,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          },
+          {
+            "id": "serena",
+            "hp": 76,
+            "mp": 45,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          }
+        ]
+      }
+    },
+    {
+      "scenario": {
+        "id": "hero-dot-and-regen",
+        "kind": "tickHero",
+        "ai": "basic",
+        "day": 12,
+        "round": 3,
+        "seed": 31,
+        "dot": true
+      },
+      "expected": {
+        "day": 12,
+        "mode": "battle",
+        "battle": {
+          "round": 3,
+          "ptr": 0,
+          "active": null,
+          "foes": [
+            {
+              "uid": "e0",
+              "id": "fixture",
+              "name": "Arauto de Teste",
+              "icon": "☠",
+              "hp": 94,
+              "maxhp": 110,
+              "atk": 27,
+              "spd": 11,
+              "ai": "basic",
+              "type": "shadow",
+              "status": {
+                "burn": 2,
+                "poison": 2,
+                "bleed": 1,
+                "regen": 2,
+                "stun": 2
+              },
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            }
+          ],
+          "queue": [],
+          "logs": [
+            "Dara Passo-de-Folha sangra (4).",
+            "Dara Passo-de-Folha sofre 5 de veneno.",
+            "Dara Passo-de-Folha sofre 6 de queimadura.",
+            "Início da prova."
+          ],
+          "finished": false
+        },
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 113,
+            "mp": 12,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          },
+          {
+            "id": "dara",
+            "hp": 33,
+            "mp": 16,
+            "status": {
+              "burn": 1,
+              "poison": 2,
+              "regen": 1,
+              "stun": 1
+            },
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          },
+          {
+            "id": "serena",
+            "hp": 76,
+            "mp": 45,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          }
+        ]
+      }
+    },
+    {
+      "scenario": {
+        "id": "enemy-dot-and-regen",
+        "kind": "tickEnemy",
+        "ai": "regenerate",
+        "day": 42,
+        "round": 3,
+        "seed": 13,
+        "dot": true
+      },
+      "expected": {
+        "day": 42,
+        "mode": "battle",
+        "battle": {
+          "round": 3,
+          "ptr": 0,
+          "active": null,
+          "foes": [
+            {
+              "uid": "e0",
+              "id": "fixture",
+              "name": "Arauto de Teste",
+              "icon": "☠",
+              "hp": 77,
+              "maxhp": 110,
+              "atk": 27,
+              "spd": 11,
+              "ai": "regenerate",
+              "type": "shadow",
+              "status": {
+                "burn": 1,
+                "poison": 1,
+                "regen": 1,
+                "stun": 1
+              },
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            }
+          ],
+          "queue": [],
+          "logs": [
+            "Arauto de Teste sangra (7).",
+            "Arauto de Teste sofre 7 de veneno.",
+            "Arauto de Teste sofre 9 de queimadura.",
+            "Início da prova."
+          ],
+          "finished": false
+        },
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 113,
+            "mp": 12,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          },
+          {
+            "id": "dara",
+            "hp": 42,
+            "mp": 16,
+            "status": {
+              "burn": 2,
+              "poison": 3,
+              "bleed": 1,
+              "regen": 2,
+              "stun": 2
+            },
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          },
+          {
+            "id": "serena",
+            "hp": 76,
+            "mp": 45,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          }
+        ]
+      }
+    },
+    {
+      "scenario": {
+        "id": "fallen-status-tick",
+        "kind": "tickHero",
+        "ai": "basic",
+        "day": 60,
+        "round": 3,
+        "seed": 2,
+        "fallen": true
+      },
+      "expected": {
+        "day": 60,
+        "mode": "battle",
+        "battle": {
+          "round": 3,
+          "ptr": 0,
+          "active": null,
+          "foes": [
+            {
+              "uid": "e0",
+              "id": "fixture",
+              "name": "Arauto de Teste",
+              "icon": "☠",
+              "hp": 94,
+              "maxhp": 110,
+              "atk": 27,
+              "spd": 11,
+              "ai": "basic",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            }
+          ],
+          "queue": [],
+          "logs": [
+            "Dara Passo-de-Folha cai.",
+            "Dara Passo-de-Folha sangra (8).",
+            "Dara Passo-de-Folha sofre 9 de veneno.",
+            "Dara Passo-de-Folha sofre 11 de queimadura.",
+            "Início da prova."
+          ],
+          "finished": false
+        },
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 113,
+            "mp": 12,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          },
+          {
+            "id": "dara",
+            "hp": 0,
+            "mp": 16,
+            "status": {
+              "burn": 1,
+              "poison": 2,
+              "bleed": 2
+            },
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          },
+          {
+            "id": "serena",
+            "hp": 76,
+            "mp": 45,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          }
+        ]
+      }
+    },
+    {
+      "scenario": {
+        "id": "full-enemy-hero-turn",
+        "kind": "advance",
+        "ai": "mage",
+        "day": 18,
+        "round": 3,
+        "seed": 19,
+        "dot": true
+      },
+      "expected": {
+        "day": 18,
+        "mode": "battle",
+        "battle": {
+          "round": 4,
+          "ptr": 1,
+          "active": "dara",
+          "foes": [
+            {
+              "uid": "e0",
+              "id": "fixture",
+              "name": "Arauto de Teste",
+              "icon": "☠",
+              "hp": 84,
+              "maxhp": 110,
+              "atk": 27,
+              "spd": 11,
+              "ai": "mage",
+              "type": "shadow",
+              "status": {
+                "burn": 1,
+                "poison": 1,
+                "regen": 1
+              },
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            }
+          ],
+          "queue": [
+            {
+              "side": "hero",
+              "id": "dara",
+              "spd": 21.011630679946393
+            },
+            {
+              "side": "hero",
+              "id": "eirik",
+              "spd": 17.97394560649991
+            },
+            {
+              "side": "hero",
+              "id": "serena",
+              "spd": 13.227067100349814
+            },
+            {
+              "side": "enemy",
+              "id": "e0",
+              "spd": 11.28161761071533
+            },
+            {
+              "side": "hero",
+              "id": "brunna",
+              "spd": 7.4605888137593865
+            }
+          ],
+          "logs": [
+            "Dara Passo-de-Folha sofre 5 de veneno.",
+            "Dara Passo-de-Folha sofre 6 de queimadura.",
+            "Dara Passo-de-Folha perde a vez por atordoamento.",
+            "Dara Passo-de-Folha sangra (5).",
+            "Dara Passo-de-Folha sofre 5 de veneno.",
+            "Dara Passo-de-Folha sofre 6 de queimadura.",
+            "Arauto de Teste perde a vez por atordoamento.",
+            "Arauto de Teste sangra (5).",
+            "Arauto de Teste sofre 5 de veneno.",
+            "Arauto de Teste sofre 6 de queimadura.",
+            "Início da prova.",
+            "— Rodada 4 —"
+          ],
+          "finished": false
+        },
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 113,
+            "mp": 12,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          },
+          {
+            "id": "dara",
+            "hp": 27,
+            "mp": 16,
+            "status": {
+              "poison": 1
+            },
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          },
+          {
+            "id": "serena",
+            "hp": 76,
+            "mp": 45,
+            "status": {},
+            "barrier": 0,
+            "injured": 0,
+            "alive": true
+          }
+        ]
+      }
+    }
+  ]
+}

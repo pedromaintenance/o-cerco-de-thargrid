@@ -153,5 +153,98 @@
   b.active=null;
   return {state:s,events:events};
  }
- return Object.freeze({applySkill:applySkill,applyItem:applyItem,heroMaxHP:heroMaxHP,heroMaxMP:heroMaxMP,stat:stat});
+
+ /* Enemy AI and turn-start damage: same RNG call order and combatLog messages
+  * as the M1c classic app.js. State cloned exactly once per transition. */
+ function applyEnemyAction(state,enemyUid,data){
+  var s=clone(state),b=s.battle,e=b.foes.find(function(f){return f.uid===enemyUid});
+  var events=[],core=data.core,heroes=b.party.map(function(id){return s.heroes[id]})
+    .filter(function(h){return h.alive&&h.hp>0});
+  if(!e||!heroes.length)return {state:s,events:events};
+  var sorted=heroes.slice().sort(function(a,z){
+    return a.hp/heroMaxHP(a,data)-z.hp/heroMaxHP(z,data);
+  });
+  var t=sorted[core.random()<.68?0:core.integer(0,sorted.length-1)];
+  var all=(e.ai==='boss'||e.ai==='mage'||e.ai==='final')&&b.round%3===0;
+  var amt=core.enemyBaseDamage(e.atk,b.round,all,core.integer(-3,4));
+  var effect=e.ai;
+  function applyTo(x){
+    var val=core.enemyTakenDamage(amt,stat(s,x,'def',data),x.status,x.klass,x.injured);
+    if(x.barrier){
+      var abs=core.absorbBarrier(val,x.barrier);
+      x.barrier=abs.barrier;val=abs.damage;
+    }
+    var previous=x.hp;
+    x.hp=Math.max(0,x.hp-val);
+    events.push({type:'damage',side:'hero',target:x.id,amount:previous-x.hp,source:e.uid,key:effect});
+    if(!all&&x.hp<=0)appendLog(s,events,x.name+' cai em batalha!');
+    return val; // Original log reports effective damage after barrier, before HP clamping.
+  }
+  var list=all?heroes:[t],sum=0;
+  list.forEach(function(x){sum+=applyTo(x)});
+  appendLog(s,events,e.icon+' '+e.name+' '+(all?'atinge a companhia inteira':'atinge '+t.name)+' ('+sum+' dano).');
+  function debuff(condition,chance,key,duration){
+    if(condition&&core.random()<chance){
+      t.status[key]=duration;
+      events.push({type:'status',side:'hero',target:t.id,status:key,duration:duration,source:e.uid});
+    }
+  }
+  debuff(effect==='poison',.5,'poison',3);
+  debuff(effect==='bleed',.4,'bleed',3);
+  debuff(effect==='curse'||effect==='mage',.33,'weak',2);
+  debuff(effect==='snare',.38,'slow',2);
+  if(effect==='drain'&&core.random()<.4){
+    var beforeMP=t.mp;t.mp=Math.max(0,t.mp-5);
+    events.push({type:'mana',side:'hero',target:t.id,amount:t.mp-beforeMP,source:e.uid});
+  }
+  if(effect==='final'&&b.round%2===0){
+    t.status.burn=2;
+    events.push({type:'status',side:'hero',target:t.id,status:'burn',duration:2,source:e.uid});
+    appendLog(s,events,'A manifestação da Rainha deixa fogo sombrio no campo.');
+  }
+  if(effect==='guard'&&core.random()<.4){
+    var shield=8+Math.floor(s.day/10);e.barrier+=shield;
+    events.push({type:'shield',side:'enemy',target:e.uid,amount:shield,source:e.uid});
+  }
+  if(effect==='regenerate'&&b.round%2===0){
+    e.barrier+=4;
+    events.push({type:'shield',side:'enemy',target:e.uid,amount:4,source:e.uid});
+  }
+  return {state:s,events:events};
+ }
+ function applyTurnStart(state,side,id,data){
+  var s=clone(state),u=side==='hero'?s.heroes[id]:
+    s.battle.foes.find(function(f){return f.uid===id});
+  var events=[];
+  if(!u)return {state:s,events:events};
+  function damage(status,amount,text){
+    if(!u.status[status])return;
+    var before=u.hp;u.hp=Math.max(0,u.hp-amount);
+    events.push({type:'damage',side:side,target:id,amount:before-u.hp,status:status});
+    appendLog(s,events,text);
+  }
+  damage('burn',5+Math.floor(s.day/10),u.name+' sofre '+(5+Math.floor(s.day/10))+' de queimadura.');
+  damage('poison',4+Math.floor(s.day/12),u.name+' sofre '+(4+Math.floor(s.day/12))+' de veneno.');
+  damage('bleed',4+Math.floor(s.day/13),u.name+' sangra ('+(4+Math.floor(s.day/13))+').');
+  if(u.status.regen&&u.hp>0){
+    var before=u.hp;
+    u.hp=Math.min(side==='hero'?heroMaxHP(u,data):u.maxhp,u.hp+6);
+    events.push({type:'heal',side:side,target:id,amount:u.hp-before,status:'regen'});
+  }
+  if(side==='enemy'&&u.ai==='regenerate'&&u.hp>0&&!u.status.burn){
+    var previous=u.hp;u.hp=Math.min(u.maxhp,u.hp+Math.ceil(u.maxhp*.07));
+    events.push({type:'heal',side:side,target:id,amount:u.hp-previous,status:'regenerate'});
+    appendLog(s,events,u.name+' regenera ferimentos.');
+  }
+  Object.keys(u.status).forEach(function(key){u.status[key]--});
+  Object.keys(u.status).forEach(function(key){if(u.status[key]<=0)delete u.status[key]});
+  if(u.hp<=0){
+    if(side==='enemy')u.dead=true;
+    events.push({type:'down',side:side,target:id});
+    appendLog(s,events,u.name+' cai.');
+  }
+  return {state:s,events:events};
+ }
+
+ return Object.freeze({applySkill:applySkill,applyItem:applyItem,applyEnemyAction:applyEnemyAction,applyTurnStart:applyTurnStart,heroMaxHP:heroMaxHP,heroMaxMP:heroMaxMP,stat:stat});
 });
