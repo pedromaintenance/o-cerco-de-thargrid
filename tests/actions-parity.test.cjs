@@ -23,7 +23,7 @@ function runtime(seed=555){
  const ctx=vm.createContext({document,Math:m,navigator:{},console:{warn(){},log(){},error(){}},
   localStorage:{getItem:k=>saved.get(k)||null,setItem:(k,v)=>saved.set(k,v),removeItem:k=>saved.delete(k)},
   setTimeout(){},clearTimeout(){},Blob:class{},URL:class{}});
- for(const file of ['data.js','core/combat.js','core/actions.js','app.js']){
+ for(const file of ['data.js','core/combat.js','core/actions.js','core/effects.js','app.js']){
   vm.runInContext(fs.readFileSync(path.join(ROOT,file),'utf8'),ctx,{filename:file});
  }
  return {exec:code=>vm.runInContext(code,ctx),saved};

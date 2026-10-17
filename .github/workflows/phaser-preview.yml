@@ -34,6 +34,7 @@ jobs:
         run: |
           node --check core/combat.js
           node --check core/actions.js
+          node --check core/effects.js
           node --check app.js
           node --check data.js
           node --check sw.js

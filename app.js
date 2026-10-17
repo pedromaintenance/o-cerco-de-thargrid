@@ -101,20 +101,33 @@ function physicalHeroDamage(h,sk,t){
   forge:S.projects.forge||0,hazard:raid().hazard
  });
 }
-function doSkill(key,target){const plan=ThargridActions.planSkill(S,key,target,SKILLS,CLASSES);if(!plan.ok){if(plan.reason)notify(plan.reason);return}
- const b=S.battle,h=hero(b.active),sk=SKILLS[key];const targets=plan.targets.map(id=>plan.type==='enemy'||plan.type==='allEnemies'?b.foes.find(e=>e.uid===id):hero(id));h.mp-=sk.cost;
- let parts=[];
- if(key==='guard'){h.barrier+=Math.round(19+stat(h,'def')*.7);h.mp=Math.min(maxMP(h),h.mp+3);parts.push('assume posição defensiva')}
- else if(sk.type==='heal'){targets.forEach(x=>{let heal=Math.max(7,Math.round((stat(h,'mag')*1.4+h.level*3+10)*(sk.power||1)));x.hp=Math.min(maxHP(x),x.hp+heal);if(sk.effect==='cleanse'){x.status={};}parts.push(`${x.name} +${heal} PV`)})}
- else if(sk.type==='revive'){targets.forEach(x=>{let num=Math.ceil(maxHP(x)*.32);x.hp=num;x.status={};x.injured=2;parts.push(`${x.name} retorna com ${num} PV`)})}
- else if(sk.type==='support'){targets.forEach(x=>{if(sk.effect==='shield'){let shield=Math.round((sk.power||18)+stat(h,'mag')*.3);x.barrier+=shield;parts.push(`${x.name} +${shield} de escudo`)}else {x.status[sk.effect]=3;parts.push(`${x.name} recebe ${sk.effect==='atkUp'?'Fúria/Coragem':'Defesa'} por 3 turnos`)}})}
- else{targets.forEach(t=>{let dmg=physicalHeroDamage(h,sk,t);if(t.barrier){let absorb=ThargridCore.absorbBarrier(dmg,t.barrier);t.barrier=absorb.barrier;dmg=absorb.damage;}t.hp=Math.max(0,t.hp-dmg);parts.push(`${t.name} −${dmg} PV`);if(t.hp<=0){const phase=ThargridCore.secondPhase(t.hp,t.id,t.stage,t.maxhp);if(phase.triggered){t.stage=phase.stage;t.hp=phase.hp;t.status=phase.status;combatLog('A NOITE SE REFAZ! A manifestação entra na segunda fase.');}else{t.dead=true;combatLog(`${t.name} foi derrotado.`)}}else if(sk.effect&&ThargridCore.random()<(sk.chance||0)){t.status[sk.effect]=sk.effect==='stun'?1:sk.effect==='mark'?4:3;}
- if(sk.type==='fire')delete t.status.regen;})}
- combatLog(`${h.name} usa ${sk.name}: ${parts.join(' · ')}.`);
- b.active=null;battleSelect=null;closeModal();if(checkBattle()){save();render();return}advanceTurn();save();render()}
-function useCombatItem(key,target){const plan=ThargridActions.planItem(S,key,target);if(!plan.ok){if(plan.reason)notify(plan.reason);return}
- let b=S.battle,t=hero(plan.targets[0]);S.inventory[key]--;let detail='';if(key==='tonic'){t.hp=Math.min(maxHP(t),t.hp+46);detail=`${t.name} recupera 46 PV`}if(key==='ether'){t.mp=Math.min(maxMP(t),t.mp+24);detail=`${t.name} recupera 24 MP`}if(key==='phoenix'){t.hp=Math.ceil(maxHP(t)*.28);t.status={};t.injured=2;detail=`${t.name} regressa ao combate`}if(key==='antidote'){t.status={};detail=`${t.name} foi purificado`}
- combatLog(`${hero(b.active).name} usa ${STORE[key].name}: ${detail}.`);b.active=null;closeModal();advanceTurn();save();render()}
+// Action validation and effect execution share the same save-compatible state.
+let combatFeedback={seq:0,events:[]};
+function publishCombatFeedback(events){
+ combatFeedback={seq:combatFeedback.seq+1,events:events.filter(e=>e.type!=='log')};
+}
+function doSkill(key,target){
+ const plan=ThargridActions.planSkill(S,key,target,SKILLS,CLASSES);
+ if(!plan.ok){if(plan.reason)notify(plan.reason);return}
+ const outcome=ThargridEffects.applySkill(S,plan,key,{
+   skills:SKILLS,classes:CLASSES,heroes:HEROES,core:ThargridCore,hazard:raid().hazard
+ });
+ S=outcome.state;
+ publishCombatFeedback(outcome.events);
+ battleSelect=null;closeModal();
+ if(checkBattle()){save();render();return}
+ advanceTurn();save();render();
+}
+function useCombatItem(key,target){
+ const plan=ThargridActions.planItem(S,key,target);
+ if(!plan.ok){if(plan.reason)notify(plan.reason);return}
+ const outcome=ThargridEffects.applyItem(S,plan,key,{
+   classes:CLASSES,heroes:HEROES,store:STORE
+ });
+ S=outcome.state;
+ publishCombatFeedback(outcome.events);
+ closeModal();advanceTurn();save();render();
+}
 function victory(){let b=S.battle;if(!b||b.finished)return;b.finished=true;S.mode='aftermath';S.victories++;let evt=raid();let gold=12+Math.floor(S.day*.90)+(S.projects.scouts||0)*4,ore=3+Math.floor(S.day/14);let reward={gold,ore,hope:evt.boss?5:1};grant(reward);
  let xp=23+S.day*2+(evt.boss?45:0);let dead=[];
  b.party.forEach(id=>{let h=hero(id);if(h.hp<=0){h.alive=false;dead.push(h.name);S.casualties++;return}gainXP(h,xp);h.fatigue=clamp(h.fatigue+15+(evt.boss?8:3),0,100);if(h.hp/maxHP(h)<.31)h.injured=Math.max(1,h.injured)});
@@ -222,5 +235,5 @@ function handle(a,v){switch(a){
  case 'newgame':S=fresh(S?.difficulty||startDifficulty);screen='game';save();closeModal();render();break;
  }}
 document.addEventListener('click',e=>{const bt=e.target.closest('[data-a]');if(!bt||bt.disabled)return;let a=bt.dataset.a,v=bt.dataset.v||'';try{handle(a,v)}catch(err){console.error(err);notify('Erro detectado: '+err.message)}});
-function registerOffline(){if(IS_PHASER_PREVIEW||!('serviceWorker' in navigator)){return}navigator.serviceWorker.register('./sw.js',{scope:'./'}).then(async r=>{await navigator.serviceWorker.ready;let cache=await caches.open('thargrid-pwa-v1.0.4');const required=['./','./index.html','./style.css','./data.js','./core/combat.js','./core/actions.js','./app.js','./manifest.webmanifest','./icons/icon-192.png','./icons/icon-512.png'];let ready=(await Promise.all(required.map(s=>cache.match(new URL(s,location.href))))).every(Boolean);availableOffline=ready;let el=document.querySelector('#offline-note');if(el&&ready)el.textContent='✓ INSTALADO PARA USO OFFLINE · O app já pode funcionar sem internet.'}).catch(e=>console.warn('offline',e))}
+function registerOffline(){if(IS_PHASER_PREVIEW||!('serviceWorker' in navigator)){return}navigator.serviceWorker.register('./sw.js',{scope:'./'}).then(async r=>{await navigator.serviceWorker.ready;let cache=await caches.open('thargrid-pwa-v1.0.5');const required=['./','./index.html','./style.css','./data.js','./core/combat.js','./core/actions.js','./core/effects.js','./app.js','./manifest.webmanifest','./icons/icon-192.png','./icons/icon-512.png'];let ready=(await Promise.all(required.map(s=>cache.match(new URL(s,location.href))))).every(Boolean);availableOffline=ready;let el=document.querySelector('#offline-note');if(el&&ready)el.textContent='✓ INSTALADO PARA USO OFFLINE · O app já pode funcionar sem internet.'}).catch(e=>console.warn('offline',e))}
 load();render();registerOffline();

@@ -78,6 +78,14 @@ const address = 'http://127.0.0.1:4173';
     }});
     await page.waitForFunction(o=>S.battle.foes[o.index].hp<o.hp,{timeout:10000},spellBefore);
     assert.ok(await page.evaluate(mp=>S.heroes.eirik.mp<mp,spellBefore.mp));
+    const semantic=await page.evaluate(()=>({
+      seq:combatFeedback.seq,events:combatFeedback.events,
+      hp:S.battle.foes.find(e=>e.uid==='e0')?.hp
+    }));
+    assert.ok(semantic.seq>0,'action must publish semantic feedback');
+    assert.ok(semantic.events.some(e=>e.type==='damage'&&e.key==='arcaneBolt'&&e.side==='enemy'),
+      'Phaser should receive structured spell damage events');
+    assert.ok(!semantic.events.some(e=>e.type==='log'),'logs should not appear as visual effects');
     assert.equal(await page.$('.beta-targeting'),null);
 
     // Healing and reviving allies by touching their figures, not the old HTML list.
