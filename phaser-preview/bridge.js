@@ -248,7 +248,7 @@
       var latestEnemy=candidates.filter(function(e){return !!e.source;}).slice(-1)[0];
       if(latestEnemy && candidates.length>2)selected=[candidates[0],latestEnemy];
       var details=selected.map(function(e){
-        var name=e.source?'Hostes da Corte':
+        var name=e.source==='hazard'?'Perigo ambiental':e.source?'Hostes da Corte':
           (SKILLS[e.key]&&SKILLS[e.key].name)||(STORE[e.key]&&STORE[e.key].name)||'Ação';
         var detail=e.type==='phase'?'FASE II':e.type==='status'?e.status:
           e.type==='cleanse'?'PURIFICADO':e.type==='revive'?'RESSUSCITOU':
