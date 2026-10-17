@@ -414,3 +414,37 @@ Separar perigo ambiental e geração da fila de iniciativas por rodada, preserva
 - **GitHub Pages:** [build e deploy #39038766447](https://github.com/pedromaintenance/o-cerco-de-thargrid/actions/runs/39038766447) concluídos com sucesso. **[Abrir beta M1d](https://pedromaintenance.github.io/o-cerco-de-thargrid/phaser-preview/?demo=1)**. A publicação foi confirmada pelo GitHub; QA manual em dispositivo físico segue pendente.
 - **Compatibilidade:** rota clássica `/` continua usando `thargrid_siege_save_v1`; beta `/phaser-preview/` continua usando `thargrid_phaser_preview_save_v1`. Nenhum salvamento é migrado automaticamente.
 - **Próximo marco:** M1e — extrair geração de rodadas, perigos ambientais e iniciativa da camada de interface, então validar batalhas de chefes até o resultado.
+
+
+## Implementação M1e — perigos ambientais, rodadas e iniciativa (17/10/2026)
+
+**PR:** [#7 — motor de rodadas e perigos ambientais](https://github.com/pedromaintenance/o-cerco-de-thargrid/pull/7).
+**Primeira CI verde:** [#39045440225](https://github.com/pedromaintenance/o-cerco-de-thargrid/actions/runs/39045440225), **88/88 testes Node** e Chromium desktop/mobile aprovados. CI após ajuste de compatibilidade do evento de batalha será usada como gate de publicação.
+**Prévia após integração:** [GitHub Pages — Beta Phaser](https://pedromaintenance.github.io/o-cerco-de-thargrid/phaser-preview/?demo=1).
+
+### Alterações efetivamente implementadas
+
+- [x] **Novo módulo `core/rounds.js`:** `applyRoundStart(state, hazard, data)` devolve `{state, events}` sem modificar o estado de entrada nem consultar DOM/Phaser/localStorage. Usa o RNG de `core/combat.js` preservando quantidade e ordem de sorteios.
+- [x] **Iniciativa extraída de `app.js`:** reconstrução da fila em ordem de membros da companhia e adversários vivos, considerando velocidade, fadiga, ferimentos, lentidão e iniciativa com aleatoriedade controlada. Ponteiro `ptr` é reiniciado conforme a regra original.
+- [x] **Perigos ambientais extraídos:** neve (perda de MP), veneno, sombra da Corte, água/lentidão, fogo/queimadura, máquinas/escudos inimigos, estilhaços de pedra/cerco e hazards sem efeito. Mantém a periodicidade de três rodadas, escolha aleatória do defensor e mensagens originais, inclusive quando o perigo não afeta ninguém.
+- [x] **Integração segura com transições imutáveis:** `app.js` repõe a referência de `S.battle` após reconstruir a rodada. A escolha do perigo consulta **o evento salvo em `S.battle.event`**, não apenas o dia atual, como no código pré-refactor.
+- [x] **Eventos observáveis sem recalcular regras:** emite eventos `round`, `status`, `mana`, `shield` e `log` para a apresentação. A beta Phaser distingue **Perigo ambiental** de Hostes da Corte; o número da rodada aparece no cabeçalho. Continua disponível a renderização clássica.
+- [x] **20 snapshots canônicos anteriores à extração:** `tests/fixtures/rounds-golden-m1d.json`, gerados do commit `9758dc92` com Math.random determinístico. Incluem dias 1, 6, 30 e 60; nove tipos de perigo ativo; rodada sem gatilho; lentidão/fadiga, inimigo morto, ausência de sobreviventes e rodada avançada com ações inimigas.
+- [x] **Testes adicionais em `tests/rounds-parity.test.cjs`:** compara estado e ordem da fila byte-a-byte em dados estruturados com 20 fixtures M1d, testa ausência de mutação, eventos ambientais e acúmulo dos eventos. CI ampliada de 65 para **88 testes**.
+- [x] **Smoke Chromium desktop/mobile:** confirma que a rota Phaser recebe eventos reais da terceira rodada e de reforço da hoste por máquinas, além de continuar testando magia, cura, ressurreição, save/reload e chave de salvamento independente.
+- [x] **Caches:** clássico `thargrid-pwa-v1.0.7`, beta `thargrid-phaser-beta-v6` com `core/rounds.js` incluído entre recursos locais. Engine Phaser 4.2.1 segue hospedada no repositório.
+
+### Gates e riscos conhecidos
+
+| Marco | Estado após M1e | Pendente |
+|---|---|---|
+| M1e | **Concluído no escopo de criação de rodada, perigos e iniciativa** | Transição pura de vitória/derrota, recompensa e pós-batalha; `advanceTurn` ainda controla o fluxo principal no `app.js` |
+| M0 | **88 testes de paridade e regressão** | Simular lutas de chefes até o desfecho e evolução econômica da campanha de 60 dias |
+| M3 | **Phaser apresenta eventos de heróis, IA e ambiente** | Arte/sprites definitivos, animação especializada e interface de menus totalmente Phaser |
+| M2 | **Prévia PWA testada no Chromium CI** | Certificar instalação/offline em Android e iOS físicos e QA visual manual no Pages |
+
+**Não foi homologada a campanha de 60 dias:** as fixtures dos dias 6, 30 e 60 validam abertura de combate e/ou criação de rodadas, não o resultado integral de cada chefe. A aleatoriedade é injetável para testes, mas a produção ainda não grava o estado interno do RNG no save. Mudanças de balanceamento não foram pretendidas.
+
+### Próximo marco M1f
+
+Isolar resultado de combate (vitória, derrota, segunda fase, saque, experiência e continuidade do dia) de `app.js` em um núcleo testável por estados/eventos. Adicionar simulações controladas de **chefes até a vitória ou derrota**, começando pelos dias 6, 30 e 60, antes de substituir mais componentes de interface.
