@@ -104,6 +104,14 @@
     g.fillStyle(0x19202a, 0.9); g.fillRoundedRect(10, 486, 460, 63, 4);
     g.lineStyle(1, 0x786958, 0.6); g.strokeRoundedRect(10, 486, 460, 63, 4);
     this.units = this.add.container(0, 0);
+    this.hitTargets = [];
+    // One stable scene-level pointer listener. Per-unit zones were recreated during
+    // render and could miss the first mobile touch after a modal closed.
+    this.input.on('pointerdown', function(pointer){
+      var x=pointer.x,y=pointer.y;
+      var chosen=this.hitTargets.find(function(t){return Math.abs(x-t.x)<=t.width/2 && Math.abs(y-t.y)<=t.height/2;});
+      if(chosen)selectFighter(chosen.side,chosen.id);
+    }, this);
     this.battleInfo = this.add.text(240, 27, '', {fontFamily:'Georgia, serif',fontSize:'17px',color:'#f3d8a4',align:'center'}).setOrigin(0.5);
     this.footer = this.add.text(24, 505, '', {fontFamily:'Arial, sans-serif',fontSize:'15px',color:'#ece6d7',wordWrap:{width:425}});
     this.sync();
@@ -166,12 +174,10 @@
       ring.strokeEllipse(0,-28,76,112);
       node.add(ring);
     }
-    if (canClick) {
-      var hit = this.add.zone(x, y - 32, Math.max(84, spacing || 105), 116)
-        .setInteractive({useHandCursor:true});
-      hit.on('pointerdown',function(){selectFighter(isEnemy?'enemy':'hero',isEnemy?unit.uid:unit.id);});
-      this.units.add(hit);
-    }
+    if (canClick) this.hitTargets.push({
+      x:x,y:y-32,width:Math.max(84,spacing||105),height:116,
+      side:isEnemy?'enemy':'hero',id:isEnemy?unit.uid:unit.id
+    });
     this.units.add(node);
     return {x:x, y:y-45};
   };
@@ -182,6 +188,7 @@
     var old = previous;
     var next = {};
     this.units.removeAll(true);
+    this.hitTargets=[];
     var allEnemies = b.foes;
     var cols = Math.min(allEnemies.length, 4);
     var current = b.active ? S.heroes[b.active] : null;
