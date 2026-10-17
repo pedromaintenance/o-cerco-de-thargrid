@@ -64,11 +64,17 @@ const address = 'http://127.0.0.1:4173';
     await page.waitForSelector('.beta-targeting');
     const selectedSpell=await page.$eval('.beta-targeting',el=>el.textContent);
     assert.match(selectedSpell,/Dardo arcano/);
-    const spellBefore=await page.evaluate(()=>({hp:S.battle.foes[0].hp,mp:S.heroes.eirik.mp}));
+    const spellBefore=await page.evaluate(()=>{
+      const foes=S.battle.foes,index=foes.findIndex(e=>e.hp>0),cols=Math.min(foes.length,4);
+      if(index<0)throw Error('No living enemy for spell target smoke');
+      return {index,uid:foes[index].uid,hp:foes[index].hp,mp:S.heroes.eirik.mp,
+        x:cols===1?240:57+(index%cols)*365/(cols-1),
+        y:(foes.length>4?157+Math.floor(index/cols)*97:192)-32};
+    });
     await page.$eval('#phaser-surface canvas',el=>el.scrollIntoView({block:'center'}));
     const enemyBox=await page.$eval('#phaser-surface canvas',el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height};});
-    await page.mouse.click(enemyBox.x+57*enemyBox.width/480,enemyBox.y+158*enemyBox.height/560);
-    await page.waitForFunction(hp=>S.battle.foes[0].hp<hp,{timeout:10000},spellBefore.hp);
+    await page.mouse.click(enemyBox.x+spellBefore.x*enemyBox.width/480,enemyBox.y+spellBefore.y*enemyBox.height/560);
+    await page.waitForFunction(o=>S.battle.foes[o.index].hp<o.hp,{timeout:10000},spellBefore);
     assert.ok(await page.evaluate(mp=>S.heroes.eirik.mp<mp,spellBefore.mp));
     assert.equal(await page.$('.beta-targeting'),null);
 
