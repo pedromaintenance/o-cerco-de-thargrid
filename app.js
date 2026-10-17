@@ -1,6 +1,8 @@
 'use strict';
 /* Motor próprio: PWA estático, sem dependências de rede. */
-const SAVE_KEY='thargrid_siege_save_v1';const META_KEY='thargrid_siege_meta_v1';
+const IS_PHASER_PREVIEW=document.documentElement.dataset.phaserPreview==='true';
+const SAVE_KEY=IS_PHASER_PREVIEW?'thargrid_phaser_preview_save_v1':'thargrid_siege_save_v1';
+const META_KEY=IS_PHASER_PREVIEW?'thargrid_phaser_preview_meta_v1':'thargrid_siege_meta_v1';
 const $=id=>document.getElementById(id);const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));const rnd=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
 const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);const fmtObj=obj=>Object.entries(obj).map(([k,v])=>`${RESN[k]?.[0]||k} ${v}`).join(' · ');
@@ -229,5 +231,5 @@ function handle(a,v){switch(a){
  case 'newgame':S=fresh(S?.difficulty||startDifficulty);screen='game';save();closeModal();render();break;
  }}
 document.addEventListener('click',e=>{const bt=e.target.closest('[data-a]');if(!bt||bt.disabled)return;let a=bt.dataset.a,v=bt.dataset.v||'';try{handle(a,v)}catch(err){console.error(err);notify('Erro detectado: '+err.message)}});
-function registerOffline(){if(!('serviceWorker' in navigator)){return}navigator.serviceWorker.register('./sw.js',{scope:'./'}).then(async r=>{await navigator.serviceWorker.ready;let cache=await caches.open('thargrid-pwa-v1.0.0');const required=['./','./index.html','./style.css','./data.js','./app.js','./manifest.webmanifest','./icons/icon-192.png','./icons/icon-512.png'];let ready=(await Promise.all(required.map(s=>cache.match(new URL(s,location.href))))).every(Boolean);availableOffline=ready;let el=document.querySelector('#offline-note');if(el&&ready)el.textContent='✓ INSTALADO PARA USO OFFLINE · O app já pode funcionar sem internet.'}).catch(e=>console.warn('offline',e))}
+function registerOffline(){if(IS_PHASER_PREVIEW||!('serviceWorker' in navigator)){return}navigator.serviceWorker.register('./sw.js',{scope:'./'}).then(async r=>{await navigator.serviceWorker.ready;let cache=await caches.open('thargrid-pwa-v1.0.2');const required=['./','./index.html','./style.css','./data.js','./app.js','./manifest.webmanifest','./icons/icon-192.png','./icons/icon-512.png'];let ready=(await Promise.all(required.map(s=>cache.match(new URL(s,location.href))))).every(Boolean);availableOffline=ready;let el=document.querySelector('#offline-note');if(el&&ready)el.textContent='✓ INSTALADO PARA USO OFFLINE · O app já pode funcionar sem internet.'}).catch(e=>console.warn('offline',e))}
 load();render();registerOffline();
