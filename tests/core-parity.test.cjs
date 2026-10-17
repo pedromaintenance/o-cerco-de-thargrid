@@ -9,6 +9,7 @@ const ROOT=path.resolve(__dirname,'..');
 const content=fs.readFileSync(path.join(ROOT,'data.js'),'utf8');
 const coreSource=fs.readFileSync(path.join(ROOT,'core/combat.js'),'utf8');
 const actionsSource=fs.readFileSync(path.join(ROOT,'core/actions.js'),'utf8');
+const effectsSource=fs.readFileSync(path.join(ROOT,'core/effects.js'),'utf8');
 const appSource=fs.readFileSync(path.join(ROOT,'app.js'),'utf8');
 const golden=JSON.parse(fs.readFileSync(path.join(__dirname,'fixtures/raid-golden-v1.json'),'utf8'));
 
@@ -27,7 +28,7 @@ function runtime(seed=42, initialStorage) {
     getItem:k=>saved.get(k)||null,setItem:(k,v)=>saved.set(k,v),removeItem:k=>saved.delete(k)
   },navigator:{},console:{warn(){},error(){},log(){}},
   setTimeout(){},clearTimeout(){},Blob:class{},URL:class{}});
-  for(const [file,source] of [['data.js',content],['core/combat.js',coreSource],['core/actions.js',actionsSource],['app.js',appSource]]){
+  for(const [file,source] of [['data.js',content],['core/combat.js',coreSource],['core/actions.js',actionsSource],['core/effects.js',effectsSource],['app.js',appSource]]){
     vm.runInContext(source,ctx,{filename:file});
   }
   const exec=code=>vm.runInContext(code,ctx);
