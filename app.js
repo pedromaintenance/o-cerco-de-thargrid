@@ -72,7 +72,13 @@ function beginBattle(){publishCombatFeedback([]);if((S.day-1)%6===0&&!S.flags['c
  createRound();advanceTurn();save();render()}
 function fighter(side,id){return side==='hero'?hero(id):S.battle.foes.find(e=>e.uid===id)}
 function aliveUnit(side,id){let x=fighter(side,id);return !!x&&(side==='hero'?x.alive&&x.hp>0:x.hp>0&&!x.dead)}
-function createRound(){const b=S.battle;b.round++;if(b.round>1&&b.round%3===0){const event=RAIDS[b.event-1],survivors=b.party.map(id=>hero(id)).filter(h=>h.hp>0);if(survivors.length){const v=survivors[rnd(0,survivors.length-1)];const hazard=event.hazard;if(hazard==='cold'){v.mp=Math.max(0,v.mp-4);combatLog(`Nevasca: ${v.name} perde 4 MP.`)}else if(hazard==='poison'){v.status.poison=2;combatLog(`Esporos venenosos contaminam ${v.name}.`)}else if(hazard==='shadow'||hazard==='court'){v.status.weak=2;combatLog(`Sombra da Corte enfraquece ${v.name}.`)}else if(hazard==='machine'){S.battle.foes.filter(f=>f.hp>0).forEach(f=>f.barrier+=5);combatLog('Engrenagens do cerco reforçam a hoste inimiga.')}else if(hazard==='water'){v.status.slow=2;combatLog(`Correnteza atrasa ${v.name}.`)}else if(hazard==='fire'){v.status.burn=2;combatLog(`Faíscas do cerco queimam ${v.name}.`)}else if(hazard==='stone'||hazard==='siege'){v.barrier=Math.max(0,v.barrier-8);combatLog('Estilhaços atingem as defesas da companhia.')}}}let arr=[...b.party.filter(id=>aliveUnit('hero',id)).map(id=>({side:'hero',id,spd:stat(hero(id),'spd')-injuryLoss(hero(id))+(hero(id).status.slow?-7:0)})),...b.foes.filter(e=>aliveUnit('enemy',e.uid)).map(e=>({side:'enemy',id:e.uid,spd:e.spd+(e.status.slow?-6:0)}))];b.queue=ThargridCore.initiativeOrder(arr);b.ptr=0;b.logs.push(`— Rodada ${b.round} —`)}
+function createRound(){
+ const result=ThargridRounds.applyRoundStart(S,RAIDS[S.battle.event-1].hazard,{
+   core:ThargridCore,effects:ThargridEffects,heroes:HEROES,classes:CLASSES
+ });
+ S=result.state;
+ publishCombatFeedback(result.events,true);
+}
 function combatLog(s){let b=S.battle;if(!b)return;b.logs.unshift(s);b.logs=b.logs.slice(0,26)}
 function effectStart(unit,side){
  const id=side==='hero'?unit.id:unit.uid;
@@ -81,7 +87,7 @@ function effectStart(unit,side){
 }
 function checkBattle(){let b=S.battle;if(!b)return true;if(!b.party.some(id=>hero(id).hp>0&&hero(id).alive)){gameOver(`Todos os defensores enviados para ${raid().front} morreram. A Rainha atravessou o setor e o Reino Sob a Montanha foi invadido no dia ${S.day}.`);return true}
  if(!b.foes.some(f=>f.hp>0)){victory();return true}return false}
-function advanceTurn(){let b=S.battle;if(!b||b.finished)return;let guard=0;while(guard++<90){if(checkBattle())return;if(b.ptr>=b.queue.length){createRound();if(b.round>65){combatLog('O cerco se prolonga e as tropas inimigas entram em fúria.')}}
+function advanceTurn(){let b=S.battle;if(!b||b.finished)return;let guard=0;while(guard++<90){if(checkBattle())return;if(b.ptr>=b.queue.length){createRound();b=S.battle;if(b.round>65){combatLog('O cerco se prolonga e as tropas inimigas entram em fúria.')}}
  const it=b.queue[b.ptr++];if(!aliveUnit(it.side,it.id))continue;let u=fighter(it.side,it.id);let wasStunned=!!u.status.stun;effectStart(u,it.side);b=S.battle;u=fighter(it.side,it.id);if(!aliveUnit(it.side,it.id)){if(checkBattle())return;continue}
  if(wasStunned){combatLog(`${u.name} perde a vez por atordoamento.`);delete u.status.stun;continue}
  if(it.side==='hero'){b.active=it.id;b.logs=b.logs.slice(0,25);return}else{enemyAction(u);b=S.battle;if(checkBattle())return}}
@@ -233,5 +239,5 @@ function handle(a,v){switch(a){
  case 'newgame':S=fresh(S?.difficulty||startDifficulty);screen='game';save();closeModal();render();break;
  }}
 document.addEventListener('click',e=>{const bt=e.target.closest('[data-a]');if(!bt||bt.disabled)return;let a=bt.dataset.a,v=bt.dataset.v||'';try{handle(a,v)}catch(err){console.error(err);notify('Erro detectado: '+err.message)}});
-function registerOffline(){if(IS_PHASER_PREVIEW||!('serviceWorker' in navigator)){return}navigator.serviceWorker.register('./sw.js',{scope:'./'}).then(async r=>{await navigator.serviceWorker.ready;let cache=await caches.open('thargrid-pwa-v1.0.6');const required=['./','./index.html','./style.css','./data.js','./core/combat.js','./core/actions.js','./core/effects.js','./app.js','./manifest.webmanifest','./icons/icon-192.png','./icons/icon-512.png'];let ready=(await Promise.all(required.map(s=>cache.match(new URL(s,location.href))))).every(Boolean);availableOffline=ready;let el=document.querySelector('#offline-note');if(el&&ready)el.textContent='✓ INSTALADO PARA USO OFFLINE · O app já pode funcionar sem internet.'}).catch(e=>console.warn('offline',e))}
+function registerOffline(){if(IS_PHASER_PREVIEW||!('serviceWorker' in navigator)){return}navigator.serviceWorker.register('./sw.js',{scope:'./'}).then(async r=>{await navigator.serviceWorker.ready;let cache=await caches.open('thargrid-pwa-v1.0.7');const required=['./','./index.html','./style.css','./data.js','./core/combat.js','./core/actions.js','./core/effects.js','./app.js','./manifest.webmanifest','./icons/icon-192.png','./icons/icon-512.png'];let ready=(await Promise.all(required.map(s=>cache.match(new URL(s,location.href))))).every(Boolean);availableOffline=ready;let el=document.querySelector('#offline-note');if(el&&ready)el.textContent='✓ INSTALADO PARA USO OFFLINE · O app já pode funcionar sem internet.'}).catch(e=>console.warn('offline',e))}
 load();render();registerOffline();

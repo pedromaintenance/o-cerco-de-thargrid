@@ -1,0 +1,2672 @@
+{
+  "source_commit": "9758dc92eac35901f3b3cd758734845b1e2f258c",
+  "description": "Original M1d createRound/advanceTurn golden snapshots, with deterministic per-case Math source and original RAIDS hazards. Values must not be recreated from the refactored module.",
+  "fixtures": [
+    {
+      "scenario": {
+        "id": "first-day",
+        "day": 1,
+        "round": 0,
+        "seed": 11
+      },
+      "expected": {
+        "day": 1,
+        "mode": "battle",
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 113,
+            "mp": 12,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "mp": 16,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "serena",
+            "hp": 76,
+            "mp": 45,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          }
+        ],
+        "battle": {
+          "round": 1,
+          "event": 1,
+          "queue": [
+            {
+              "side": "hero",
+              "id": "dara",
+              "spd": 22.657849952112883
+            },
+            {
+              "side": "enemy",
+              "id": "e1",
+              "spd": 20.07976215099916
+            },
+            {
+              "side": "enemy",
+              "id": "e0",
+              "spd": 15.291237237863243
+            },
+            {
+              "side": "hero",
+              "id": "eirik",
+              "spd": 15.107948534190655
+            },
+            {
+              "side": "hero",
+              "id": "serena",
+              "spd": 11.450281536672264
+            },
+            {
+              "side": "hero",
+              "id": "brunna",
+              "spd": 7.441986297257245
+            }
+          ],
+          "ptr": 0,
+          "active": null,
+          "logs": [
+            "Registro de partida.",
+            "— Rodada 1 —"
+          ],
+          "foes": [
+            {
+              "uid": "e0",
+              "id": "fixture0",
+              "name": "Vigia Sombrio",
+              "icon": "☠",
+              "hp": 79,
+              "maxhp": 90,
+              "atk": 23,
+              "spd": 11,
+              "ai": "poison",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            },
+            {
+              "uid": "e1",
+              "id": "fixture1",
+              "name": "Arcanista da Corte",
+              "icon": "🗡",
+              "hp": 65,
+              "maxhp": 75,
+              "atk": 19,
+              "spd": 15,
+              "ai": "mage",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            }
+          ],
+          "finished": false
+        },
+        "history": [],
+        "victories": 0
+      }
+    },
+    {
+      "scenario": {
+        "id": "boss-day-6",
+        "day": 6,
+        "round": 0,
+        "seed": 17
+      },
+      "expected": {
+        "day": 6,
+        "mode": "battle",
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 113,
+            "mp": 12,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "mp": 16,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "serena",
+            "hp": 76,
+            "mp": 45,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          }
+        ],
+        "battle": {
+          "round": 1,
+          "event": 6,
+          "queue": [
+            {
+              "side": "hero",
+              "id": "dara",
+              "spd": 25.923185497988015
+            },
+            {
+              "side": "enemy",
+              "id": "e1",
+              "spd": 16.997353366110474
+            },
+            {
+              "side": "hero",
+              "id": "eirik",
+              "spd": 15.757446338422596
+            },
+            {
+              "side": "enemy",
+              "id": "e0",
+              "spd": 15.284022517502308
+            },
+            {
+              "side": "hero",
+              "id": "serena",
+              "spd": 12.782870709430426
+            },
+            {
+              "side": "hero",
+              "id": "brunna",
+              "spd": 7.455938184633851
+            }
+          ],
+          "ptr": 0,
+          "active": null,
+          "logs": [
+            "Registro de partida.",
+            "— Rodada 1 —"
+          ],
+          "foes": [
+            {
+              "uid": "e0",
+              "id": "fixture0",
+              "name": "Vigia Sombrio",
+              "icon": "☠",
+              "hp": 79,
+              "maxhp": 90,
+              "atk": 23,
+              "spd": 11,
+              "ai": "poison",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            },
+            {
+              "uid": "e1",
+              "id": "fixture1",
+              "name": "Arcanista da Corte",
+              "icon": "🗡",
+              "hp": 65,
+              "maxhp": 75,
+              "atk": 19,
+              "spd": 15,
+              "ai": "mage",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            }
+          ],
+          "finished": false
+        },
+        "history": [],
+        "victories": 0
+      }
+    },
+    {
+      "scenario": {
+        "id": "boss-day-30",
+        "day": 30,
+        "round": 0,
+        "seed": 22
+      },
+      "expected": {
+        "day": 30,
+        "mode": "battle",
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 113,
+            "mp": 12,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "mp": 16,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "serena",
+            "hp": 76,
+            "mp": 45,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          }
+        ],
+        "battle": {
+          "round": 1,
+          "event": 30,
+          "queue": [
+            {
+              "side": "hero",
+              "id": "dara",
+              "spd": 22.64429845288396
+            },
+            {
+              "side": "hero",
+              "id": "eirik",
+              "spd": 18.29869450861588
+            },
+            {
+              "side": "enemy",
+              "id": "e1",
+              "spd": 15.428679378703237
+            },
+            {
+              "side": "hero",
+              "id": "serena",
+              "spd": 13.893361686728895
+            },
+            {
+              "side": "enemy",
+              "id": "e0",
+              "spd": 11.278010250534862
+            },
+            {
+              "side": "hero",
+              "id": "brunna",
+              "spd": 7.46756475744769
+            }
+          ],
+          "ptr": 0,
+          "active": null,
+          "logs": [
+            "Registro de partida.",
+            "— Rodada 1 —"
+          ],
+          "foes": [
+            {
+              "uid": "e0",
+              "id": "fixture0",
+              "name": "Vigia Sombrio",
+              "icon": "☠",
+              "hp": 79,
+              "maxhp": 90,
+              "atk": 23,
+              "spd": 11,
+              "ai": "poison",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            },
+            {
+              "uid": "e1",
+              "id": "fixture1",
+              "name": "Arcanista da Corte",
+              "icon": "🗡",
+              "hp": 65,
+              "maxhp": 75,
+              "atk": 19,
+              "spd": 15,
+              "ai": "mage",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            }
+          ],
+          "finished": false
+        },
+        "history": [],
+        "victories": 0
+      }
+    },
+    {
+      "scenario": {
+        "id": "final-day-60",
+        "day": 60,
+        "round": 0,
+        "seed": 31
+      },
+      "expected": {
+        "day": 60,
+        "mode": "battle",
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 113,
+            "mp": 12,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "mp": 16,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "serena",
+            "hp": 76,
+            "mp": 45,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          }
+        ],
+        "battle": {
+          "round": 1,
+          "event": 60,
+          "queue": [
+            {
+              "side": "hero",
+              "id": "dara",
+              "spd": 21.542301771696657
+            },
+            {
+              "side": "enemy",
+              "id": "e1",
+              "spd": 19.80506620137021
+            },
+            {
+              "side": "hero",
+              "id": "serena",
+              "spd": 15.892245445866138
+            },
+            {
+              "side": "hero",
+              "id": "eirik",
+              "spd": 13.272941214963794
+            },
+            {
+              "side": "enemy",
+              "id": "e0",
+              "spd": 11.26718816999346
+            },
+            {
+              "side": "hero",
+              "id": "brunna",
+              "spd": 7.4884925885125995
+            }
+          ],
+          "ptr": 0,
+          "active": null,
+          "logs": [
+            "Registro de partida.",
+            "— Rodada 1 —"
+          ],
+          "foes": [
+            {
+              "uid": "e0",
+              "id": "fixture0",
+              "name": "Vigia Sombrio",
+              "icon": "☠",
+              "hp": 79,
+              "maxhp": 90,
+              "atk": 23,
+              "spd": 11,
+              "ai": "poison",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            },
+            {
+              "uid": "e1",
+              "id": "fixture1",
+              "name": "Arcanista da Corte",
+              "icon": "🗡",
+              "hp": 65,
+              "maxhp": 75,
+              "atk": 19,
+              "spd": 15,
+              "ai": "mage",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            }
+          ],
+          "finished": false
+        },
+        "history": [],
+        "victories": 0
+      }
+    },
+    {
+      "scenario": {
+        "id": "poison",
+        "day": 2,
+        "round": 2,
+        "seed": 42
+      },
+      "expected": {
+        "day": 2,
+        "mode": "battle",
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 113,
+            "mp": 12,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "mp": 16,
+            "alive": true,
+            "status": {
+              "poison": 2
+            },
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "serena",
+            "hp": 76,
+            "mp": 45,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          }
+        ],
+        "battle": {
+          "round": 3,
+          "event": 2,
+          "queue": [
+            {
+              "side": "hero",
+              "id": "dara",
+              "spd": 24.46368718938902
+            },
+            {
+              "side": "enemy",
+              "id": "e1",
+              "spd": 17.683687715325505
+            },
+            {
+              "side": "hero",
+              "id": "eirik",
+              "spd": 14.335325595922768
+            },
+            {
+              "side": "hero",
+              "id": "serena",
+              "spd": 13.25396118266508
+            },
+            {
+              "side": "enemy",
+              "id": "e0",
+              "spd": 11.153983429074287
+            },
+            {
+              "side": "hero",
+              "id": "brunna",
+              "spd": 6.528750272467732
+            }
+          ],
+          "ptr": 0,
+          "active": null,
+          "logs": [
+            "Esporos venenosos contaminam Dara Passo-de-Folha.",
+            "Registro de partida.",
+            "— Rodada 3 —"
+          ],
+          "foes": [
+            {
+              "uid": "e0",
+              "id": "fixture0",
+              "name": "Vigia Sombrio",
+              "icon": "☠",
+              "hp": 79,
+              "maxhp": 90,
+              "atk": 23,
+              "spd": 11,
+              "ai": "poison",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            },
+            {
+              "uid": "e1",
+              "id": "fixture1",
+              "name": "Arcanista da Corte",
+              "icon": "🗡",
+              "hp": 65,
+              "maxhp": 75,
+              "atk": 19,
+              "spd": 15,
+              "ai": "mage",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            }
+          ],
+          "finished": false
+        },
+        "history": [],
+        "victories": 0
+      }
+    },
+    {
+      "scenario": {
+        "id": "siege",
+        "day": 3,
+        "round": 2,
+        "seed": 43
+      },
+      "expected": {
+        "day": 3,
+        "mode": "battle",
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 113,
+            "mp": 12,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "mp": 16,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "serena",
+            "hp": 76,
+            "mp": 45,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          }
+        ],
+        "battle": {
+          "round": 3,
+          "event": 3,
+          "queue": [
+            {
+              "side": "hero",
+              "id": "dara",
+              "spd": 22.571936823427677
+            },
+            {
+              "side": "enemy",
+              "id": "e1",
+              "spd": 20.269909908995032
+            },
+            {
+              "side": "enemy",
+              "id": "e0",
+              "spd": 15.64024863159284
+            },
+            {
+              "side": "hero",
+              "id": "eirik",
+              "spd": 14.557423791382462
+            },
+            {
+              "side": "hero",
+              "id": "serena",
+              "spd": 11.25275872927159
+            },
+            {
+              "side": "hero",
+              "id": "brunna",
+              "spd": 7.072972863446921
+            }
+          ],
+          "ptr": 0,
+          "active": null,
+          "logs": [
+            "Estilhaços atingem as defesas da companhia.",
+            "Registro de partida.",
+            "— Rodada 3 —"
+          ],
+          "foes": [
+            {
+              "uid": "e0",
+              "id": "fixture0",
+              "name": "Vigia Sombrio",
+              "icon": "☠",
+              "hp": 79,
+              "maxhp": 90,
+              "atk": 23,
+              "spd": 11,
+              "ai": "poison",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            },
+            {
+              "uid": "e1",
+              "id": "fixture1",
+              "name": "Arcanista da Corte",
+              "icon": "🗡",
+              "hp": 65,
+              "maxhp": 75,
+              "atk": 19,
+              "spd": 15,
+              "ai": "mage",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            }
+          ],
+          "finished": false
+        },
+        "history": [],
+        "victories": 0
+      }
+    },
+    {
+      "scenario": {
+        "id": "cold",
+        "day": 4,
+        "round": 2,
+        "seed": 44
+      },
+      "expected": {
+        "day": 4,
+        "mode": "battle",
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 113,
+            "mp": 12,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "mp": 12,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "serena",
+            "hp": 76,
+            "mp": 45,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          }
+        ],
+        "battle": {
+          "round": 3,
+          "event": 4,
+          "queue": [
+            {
+              "side": "hero",
+              "id": "dara",
+              "spd": 26.680186457466334
+            },
+            {
+              "side": "enemy",
+              "id": "e1",
+              "spd": 16.85613210266456
+            },
+            {
+              "side": "hero",
+              "id": "serena",
+              "spd": 15.251556275878102
+            },
+            {
+              "side": "hero",
+              "id": "eirik",
+              "spd": 14.779521986842155
+            },
+            {
+              "side": "enemy",
+              "id": "e0",
+              "spd": 14.126513834111392
+            },
+            {
+              "side": "hero",
+              "id": "brunna",
+              "spd": 7.61719545442611
+            }
+          ],
+          "ptr": 0,
+          "active": null,
+          "logs": [
+            "Nevasca: Dara Passo-de-Folha perde 4 MP.",
+            "Registro de partida.",
+            "— Rodada 3 —"
+          ],
+          "foes": [
+            {
+              "uid": "e0",
+              "id": "fixture0",
+              "name": "Vigia Sombrio",
+              "icon": "☠",
+              "hp": 79,
+              "maxhp": 90,
+              "atk": 23,
+              "spd": 11,
+              "ai": "poison",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            },
+            {
+              "uid": "e1",
+              "id": "fixture1",
+              "name": "Arcanista da Corte",
+              "icon": "🗡",
+              "hp": 65,
+              "maxhp": 75,
+              "atk": 19,
+              "spd": 15,
+              "ai": "mage",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            }
+          ],
+          "finished": false
+        },
+        "history": [],
+        "victories": 0
+      }
+    },
+    {
+      "scenario": {
+        "id": "shadow",
+        "day": 5,
+        "round": 2,
+        "seed": 45
+      },
+      "expected": {
+        "day": 5,
+        "mode": "battle",
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 113,
+            "mp": 12,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "mp": 16,
+            "alive": true,
+            "status": {
+              "weak": 2
+            },
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "serena",
+            "hp": 76,
+            "mp": 45,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          }
+        ],
+        "battle": {
+          "round": 3,
+          "event": 5,
+          "queue": [
+            {
+              "side": "hero",
+              "id": "dara",
+              "spd": 24.78843609150499
+            },
+            {
+              "side": "enemy",
+              "id": "e1",
+              "spd": 19.442354296334088
+            },
+            {
+              "side": "hero",
+              "id": "eirik",
+              "spd": 15.00162018230185
+            },
+            {
+              "side": "hero",
+              "id": "serena",
+              "spd": 13.250353822484612
+            },
+            {
+              "side": "enemy",
+              "id": "e0",
+              "spd": 12.612779036629945
+            },
+            {
+              "side": "hero",
+              "id": "brunna",
+              "spd": 8.161418045405298
+            }
+          ],
+          "ptr": 0,
+          "active": null,
+          "logs": [
+            "Sombra da Corte enfraquece Dara Passo-de-Folha.",
+            "Registro de partida.",
+            "— Rodada 3 —"
+          ],
+          "foes": [
+            {
+              "uid": "e0",
+              "id": "fixture0",
+              "name": "Vigia Sombrio",
+              "icon": "☠",
+              "hp": 79,
+              "maxhp": 90,
+              "atk": 23,
+              "spd": 11,
+              "ai": "poison",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            },
+            {
+              "uid": "e1",
+              "id": "fixture1",
+              "name": "Arcanista da Corte",
+              "icon": "🗡",
+              "hp": 65,
+              "maxhp": 75,
+              "atk": 19,
+              "spd": 15,
+              "ai": "mage",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            }
+          ],
+          "finished": false
+        },
+        "history": [],
+        "victories": 0
+      }
+    },
+    {
+      "scenario": {
+        "id": "stone",
+        "day": 20,
+        "round": 2,
+        "seed": 46
+      },
+      "expected": {
+        "day": 20,
+        "mode": "battle",
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 113,
+            "mp": 12,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "mp": 16,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "serena",
+            "hp": 76,
+            "mp": 45,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          }
+        ],
+        "battle": {
+          "round": 3,
+          "event": 20,
+          "queue": [
+            {
+              "side": "hero",
+              "id": "dara",
+              "spd": 22.896685725543648
+            },
+            {
+              "side": "enemy",
+              "id": "e1",
+              "spd": 16.028576490003616
+            },
+            {
+              "side": "hero",
+              "id": "eirik",
+              "spd": 15.223718377761543
+            },
+            {
+              "side": "hero",
+              "id": "serena",
+              "spd": 11.249151369091123
+            },
+            {
+              "side": "enemy",
+              "id": "e0",
+              "spd": 11.099044239148498
+            },
+            {
+              "side": "hero",
+              "id": "brunna",
+              "spd": 8.705640636384487
+            }
+          ],
+          "ptr": 0,
+          "active": null,
+          "logs": [
+            "Estilhaços atingem as defesas da companhia.",
+            "Registro de partida.",
+            "— Rodada 3 —"
+          ],
+          "foes": [
+            {
+              "uid": "e0",
+              "id": "fixture0",
+              "name": "Vigia Sombrio",
+              "icon": "☠",
+              "hp": 79,
+              "maxhp": 90,
+              "atk": 23,
+              "spd": 11,
+              "ai": "poison",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            },
+            {
+              "uid": "e1",
+              "id": "fixture1",
+              "name": "Arcanista da Corte",
+              "icon": "🗡",
+              "hp": 65,
+              "maxhp": 75,
+              "atk": 19,
+              "spd": 15,
+              "ai": "mage",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            }
+          ],
+          "finished": false
+        },
+        "history": [],
+        "victories": 0
+      }
+    },
+    {
+      "scenario": {
+        "id": "water",
+        "day": 31,
+        "round": 2,
+        "seed": 47
+      },
+      "expected": {
+        "day": 31,
+        "mode": "battle",
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 113,
+            "mp": 12,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "mp": 16,
+            "alive": true,
+            "status": {
+              "slow": 2
+            },
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "serena",
+            "hp": 76,
+            "mp": 45,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          }
+        ],
+        "battle": {
+          "round": 3,
+          "event": 31,
+          "queue": [
+            {
+              "side": "enemy",
+              "id": "e1",
+              "spd": 18.614798683673143
+            },
+            {
+              "side": "enemy",
+              "id": "e0",
+              "spd": 15.58530944166705
+            },
+            {
+              "side": "hero",
+              "id": "eirik",
+              "spd": 15.445816573221236
+            },
+            {
+              "side": "hero",
+              "id": "serena",
+              "spd": 15.247948915697634
+            },
+            {
+              "side": "hero",
+              "id": "dara",
+              "spd": 14.004935359582305
+            },
+            {
+              "side": "hero",
+              "id": "brunna",
+              "spd": 9.249863227363676
+            }
+          ],
+          "ptr": 0,
+          "active": null,
+          "logs": [
+            "Correnteza atrasa Dara Passo-de-Folha.",
+            "Registro de partida.",
+            "— Rodada 3 —"
+          ],
+          "foes": [
+            {
+              "uid": "e0",
+              "id": "fixture0",
+              "name": "Vigia Sombrio",
+              "icon": "☠",
+              "hp": 79,
+              "maxhp": 90,
+              "atk": 23,
+              "spd": 11,
+              "ai": "poison",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            },
+            {
+              "uid": "e1",
+              "id": "fixture1",
+              "name": "Arcanista da Corte",
+              "icon": "🗡",
+              "hp": 65,
+              "maxhp": 75,
+              "atk": 19,
+              "spd": 15,
+              "ai": "mage",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            }
+          ],
+          "finished": false
+        },
+        "history": [],
+        "victories": 0
+      }
+    },
+    {
+      "scenario": {
+        "id": "fire",
+        "day": 40,
+        "round": 2,
+        "seed": 48
+      },
+      "expected": {
+        "day": 40,
+        "mode": "battle",
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 113,
+            "mp": 12,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "mp": 16,
+            "alive": true,
+            "status": {
+              "burn": 2
+            },
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "serena",
+            "hp": 76,
+            "mp": 45,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          }
+        ],
+        "battle": {
+          "round": 3,
+          "event": 40,
+          "queue": [
+            {
+              "side": "hero",
+              "id": "dara",
+              "spd": 25.113184993620962
+            },
+            {
+              "side": "hero",
+              "id": "eirik",
+              "spd": 15.66791476868093
+            },
+            {
+              "side": "enemy",
+              "id": "e1",
+              "spd": 15.201020877342671
+            },
+            {
+              "side": "enemy",
+              "id": "e0",
+              "spd": 14.071574644185603
+            },
+            {
+              "side": "hero",
+              "id": "serena",
+              "spd": 13.246746462304145
+            },
+            {
+              "side": "hero",
+              "id": "brunna",
+              "spd": 9.794085818342865
+            }
+          ],
+          "ptr": 0,
+          "active": null,
+          "logs": [
+            "Faíscas do cerco queimam Dara Passo-de-Folha.",
+            "Registro de partida.",
+            "— Rodada 3 —"
+          ],
+          "foes": [
+            {
+              "uid": "e0",
+              "id": "fixture0",
+              "name": "Vigia Sombrio",
+              "icon": "☠",
+              "hp": 79,
+              "maxhp": 90,
+              "atk": 23,
+              "spd": 11,
+              "ai": "poison",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            },
+            {
+              "uid": "e1",
+              "id": "fixture1",
+              "name": "Arcanista da Corte",
+              "icon": "🗡",
+              "hp": 65,
+              "maxhp": 75,
+              "atk": 19,
+              "spd": 15,
+              "ai": "mage",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            }
+          ],
+          "finished": false
+        },
+        "history": [],
+        "victories": 0
+      }
+    },
+    {
+      "scenario": {
+        "id": "machine",
+        "day": 43,
+        "round": 2,
+        "seed": 49
+      },
+      "expected": {
+        "day": 43,
+        "mode": "battle",
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 113,
+            "mp": 12,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "mp": 16,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "serena",
+            "hp": 76,
+            "mp": 45,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          }
+        ],
+        "battle": {
+          "round": 3,
+          "event": 43,
+          "queue": [
+            {
+              "side": "hero",
+              "id": "dara",
+              "spd": 23.22143462765962
+            },
+            {
+              "side": "enemy",
+              "id": "e1",
+              "spd": 17.7872430710122
+            },
+            {
+              "side": "hero",
+              "id": "eirik",
+              "spd": 15.890012964140624
+            },
+            {
+              "side": "enemy",
+              "id": "e0",
+              "spd": 12.557839846704155
+            },
+            {
+              "side": "hero",
+              "id": "serena",
+              "spd": 11.245544008910656
+            },
+            {
+              "side": "hero",
+              "id": "brunna",
+              "spd": 10.338308409322053
+            }
+          ],
+          "ptr": 0,
+          "active": null,
+          "logs": [
+            "Engrenagens do cerco reforçam a hoste inimiga.",
+            "Registro de partida.",
+            "— Rodada 3 —"
+          ],
+          "foes": [
+            {
+              "uid": "e0",
+              "id": "fixture0",
+              "name": "Vigia Sombrio",
+              "icon": "☠",
+              "hp": 79,
+              "maxhp": 90,
+              "atk": 23,
+              "spd": 11,
+              "ai": "poison",
+              "type": "shadow",
+              "status": {},
+              "barrier": 5,
+              "stage": 1,
+              "dead": false
+            },
+            {
+              "uid": "e1",
+              "id": "fixture1",
+              "name": "Arcanista da Corte",
+              "icon": "🗡",
+              "hp": 65,
+              "maxhp": 75,
+              "atk": 19,
+              "spd": 15,
+              "ai": "mage",
+              "type": "shadow",
+              "status": {},
+              "barrier": 5,
+              "stage": 1,
+              "dead": false
+            }
+          ],
+          "finished": false
+        },
+        "history": [],
+        "victories": 0
+      }
+    },
+    {
+      "scenario": {
+        "id": "court",
+        "day": 49,
+        "round": 2,
+        "seed": 50
+      },
+      "expected": {
+        "day": 49,
+        "mode": "battle",
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 113,
+            "mp": 12,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "mp": 16,
+            "alive": true,
+            "status": {
+              "weak": 2
+            },
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "serena",
+            "hp": 76,
+            "mp": 45,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          }
+        ],
+        "battle": {
+          "round": 3,
+          "event": 49,
+          "queue": [
+            {
+              "side": "hero",
+              "id": "dara",
+              "spd": 21.329684261698276
+            },
+            {
+              "side": "enemy",
+              "id": "e1",
+              "spd": 20.373465264681727
+            },
+            {
+              "side": "hero",
+              "id": "eirik",
+              "spd": 16.112111159600317
+            },
+            {
+              "side": "hero",
+              "id": "serena",
+              "spd": 15.244341555517167
+            },
+            {
+              "side": "enemy",
+              "id": "e0",
+              "spd": 11.044105049222708
+            },
+            {
+              "side": "hero",
+              "id": "brunna",
+              "spd": 10.882531000301242
+            }
+          ],
+          "ptr": 0,
+          "active": null,
+          "logs": [
+            "Sombra da Corte enfraquece Dara Passo-de-Folha.",
+            "Registro de partida.",
+            "— Rodada 3 —"
+          ],
+          "foes": [
+            {
+              "uid": "e0",
+              "id": "fixture0",
+              "name": "Vigia Sombrio",
+              "icon": "☠",
+              "hp": 79,
+              "maxhp": 90,
+              "atk": 23,
+              "spd": 11,
+              "ai": "poison",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            },
+            {
+              "uid": "e1",
+              "id": "fixture1",
+              "name": "Arcanista da Corte",
+              "icon": "🗡",
+              "hp": 65,
+              "maxhp": 75,
+              "atk": 19,
+              "spd": 15,
+              "ai": "mage",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            }
+          ],
+          "finished": false
+        },
+        "history": [],
+        "victories": 0
+      }
+    },
+    {
+      "scenario": {
+        "id": "non-third",
+        "day": 49,
+        "round": 3,
+        "seed": 51
+      },
+      "expected": {
+        "day": 49,
+        "mode": "battle",
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 113,
+            "mp": 12,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "mp": 16,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "serena",
+            "hp": 76,
+            "mp": 45,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          }
+        ],
+        "battle": {
+          "round": 4,
+          "event": 49,
+          "queue": [
+            {
+              "side": "hero",
+              "id": "dara",
+              "spd": 26.42675359128043
+            },
+            {
+              "side": "enemy",
+              "id": "e1",
+              "spd": 19.53037025174126
+            },
+            {
+              "side": "hero",
+              "id": "eirik",
+              "spd": 17.437933895736933
+            },
+            {
+              "side": "hero",
+              "id": "serena",
+              "spd": 14.334209355060011
+            },
+            {
+              "side": "enemy",
+              "id": "e0",
+              "spd": 13.243139102123678
+            },
+            {
+              "side": "hero",
+              "id": "brunna",
+              "spd": 7.534998879767954
+            }
+          ],
+          "ptr": 0,
+          "active": null,
+          "logs": [
+            "Registro de partida.",
+            "— Rodada 4 —"
+          ],
+          "foes": [
+            {
+              "uid": "e0",
+              "id": "fixture0",
+              "name": "Vigia Sombrio",
+              "icon": "☠",
+              "hp": 79,
+              "maxhp": 90,
+              "atk": 23,
+              "spd": 11,
+              "ai": "poison",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            },
+            {
+              "uid": "e1",
+              "id": "fixture1",
+              "name": "Arcanista da Corte",
+              "icon": "🗡",
+              "hp": 65,
+              "maxhp": 75,
+              "atk": 19,
+              "spd": 15,
+              "ai": "mage",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            }
+          ],
+          "finished": false
+        },
+        "history": [],
+        "victories": 0
+      }
+    },
+    {
+      "scenario": {
+        "id": "slow-fatigued",
+        "day": 43,
+        "round": 2,
+        "seed": 52,
+        "slow": true
+      },
+      "expected": {
+        "day": 43,
+        "mode": "battle",
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 113,
+            "mp": 12,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 2
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "mp": 16,
+            "alive": true,
+            "status": {
+              "slow": 3
+            },
+            "barrier": 0,
+            "fatigue": 69,
+            "injured": 0
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "serena",
+            "hp": 76,
+            "mp": 45,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          }
+        ],
+        "battle": {
+          "round": 3,
+          "event": 43,
+          "queue": [
+            {
+              "side": "enemy",
+              "id": "e1",
+              "spd": 19.545909652020782
+            },
+            {
+              "side": "hero",
+              "id": "eirik",
+              "spd": 16.556307550519705
+            },
+            {
+              "side": "hero",
+              "id": "dara",
+              "spd": 13.54618352977559
+            },
+            {
+              "side": "hero",
+              "id": "serena",
+              "spd": 11.241936648730189
+            },
+            {
+              "side": "hero",
+              "id": "brunna",
+              "spd": 8.97097618225962
+            },
+            {
+              "side": "enemy",
+              "id": "e0",
+              "spd": 8.016635454259813
+            }
+          ],
+          "ptr": 0,
+          "active": null,
+          "logs": [
+            "Engrenagens do cerco reforçam a hoste inimiga.",
+            "Registro de partida.",
+            "— Rodada 3 —"
+          ],
+          "foes": [
+            {
+              "uid": "e0",
+              "id": "fixture0",
+              "name": "Vigia Sombrio",
+              "icon": "☠",
+              "hp": 79,
+              "maxhp": 90,
+              "atk": 23,
+              "spd": 11,
+              "ai": "poison",
+              "type": "shadow",
+              "status": {
+                "slow": 2
+              },
+              "barrier": 5,
+              "stage": 1,
+              "dead": false
+            },
+            {
+              "uid": "e1",
+              "id": "fixture1",
+              "name": "Arcanista da Corte",
+              "icon": "🗡",
+              "hp": 65,
+              "maxhp": 75,
+              "atk": 19,
+              "spd": 15,
+              "ai": "mage",
+              "type": "shadow",
+              "status": {},
+              "barrier": 5,
+              "stage": 1,
+              "dead": false
+            }
+          ],
+          "finished": false
+        },
+        "history": [],
+        "victories": 0
+      }
+    },
+    {
+      "scenario": {
+        "id": "dead-foe",
+        "day": 20,
+        "round": 2,
+        "seed": 53,
+        "deadFoe": true
+      },
+      "expected": {
+        "day": 20,
+        "mode": "battle",
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 113,
+            "mp": 12,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "mp": 16,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "serena",
+            "hp": 76,
+            "mp": 45,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          }
+        ],
+        "battle": {
+          "round": 3,
+          "event": 20,
+          "queue": [
+            {
+              "side": "hero",
+              "id": "dara",
+              "spd": 21.654433163814247
+            },
+            {
+              "side": "hero",
+              "id": "eirik",
+              "spd": 16.7784057459794
+            },
+            {
+              "side": "enemy",
+              "id": "e1",
+              "spd": 16.502900656778365
+            },
+            {
+              "side": "hero",
+              "id": "serena",
+              "spd": 15.2407341953367
+            },
+            {
+              "side": "hero",
+              "id": "brunna",
+              "spd": 6.515198773238808
+            }
+          ],
+          "ptr": 0,
+          "active": null,
+          "logs": [
+            "Estilhaços atingem as defesas da companhia.",
+            "Registro de partida.",
+            "— Rodada 3 —"
+          ],
+          "foes": [
+            {
+              "uid": "e0",
+              "id": "fixture0",
+              "name": "Vigia Sombrio",
+              "icon": "☠",
+              "hp": 0,
+              "maxhp": 90,
+              "atk": 23,
+              "spd": 11,
+              "ai": "poison",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": true
+            },
+            {
+              "uid": "e1",
+              "id": "fixture1",
+              "name": "Arcanista da Corte",
+              "icon": "🗡",
+              "hp": 65,
+              "maxhp": 75,
+              "atk": 19,
+              "spd": 15,
+              "ai": "mage",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            }
+          ],
+          "finished": false
+        },
+        "history": [],
+        "victories": 0
+      }
+    },
+    {
+      "scenario": {
+        "id": "no-survivor",
+        "day": 2,
+        "round": 2,
+        "seed": 54,
+        "noSurvivor": true
+      },
+      "expected": {
+        "day": 2,
+        "mode": "battle",
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 0,
+            "mp": 12,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "dara",
+            "hp": 0,
+            "mp": 16,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "eirik",
+            "hp": 0,
+            "mp": 49,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "serena",
+            "hp": 0,
+            "mp": 45,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          }
+        ],
+        "battle": {
+          "round": 3,
+          "event": 2,
+          "queue": [
+            {
+              "side": "enemy",
+              "id": "e1",
+              "spd": 16.059421364217997
+            },
+            {
+              "side": "enemy",
+              "id": "e0",
+              "spd": 12.541974823456258
+            }
+          ],
+          "ptr": 0,
+          "active": null,
+          "logs": [
+            "Registro de partida.",
+            "— Rodada 3 —"
+          ],
+          "foes": [
+            {
+              "uid": "e0",
+              "id": "fixture0",
+              "name": "Vigia Sombrio",
+              "icon": "☠",
+              "hp": 79,
+              "maxhp": 90,
+              "atk": 23,
+              "spd": 11,
+              "ai": "poison",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            },
+            {
+              "uid": "e1",
+              "id": "fixture1",
+              "name": "Arcanista da Corte",
+              "icon": "🗡",
+              "hp": 65,
+              "maxhp": 75,
+              "atk": 19,
+              "spd": 15,
+              "ai": "mage",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            }
+          ],
+          "finished": false
+        },
+        "history": [],
+        "victories": 0
+      }
+    },
+    {
+      "scenario": {
+        "id": "advance-with-hazard",
+        "day": 43,
+        "round": 2,
+        "seed": 55,
+        "advance": true
+      },
+      "expected": {
+        "day": 43,
+        "mode": "battle",
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 113,
+            "mp": 12,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "mp": 16,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "serena",
+            "hp": 76,
+            "mp": 45,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          }
+        ],
+        "battle": {
+          "round": 3,
+          "event": 43,
+          "queue": [
+            {
+              "side": "hero",
+              "id": "dara",
+              "spd": 23.87093243189156
+            },
+            {
+              "side": "hero",
+              "id": "eirik",
+              "spd": 17.222602136898786
+            },
+            {
+              "side": "enemy",
+              "id": "e0",
+              "spd": 15.47543106181547
+            },
+            {
+              "side": "enemy",
+              "id": "e1",
+              "spd": 15.304576233029366
+            },
+            {
+              "side": "hero",
+              "id": "serena",
+              "spd": 11.238329288549721
+            },
+            {
+              "side": "hero",
+              "id": "brunna",
+              "spd": 7.603643955197185
+            }
+          ],
+          "ptr": 1,
+          "active": "dara",
+          "logs": [
+            "Engrenagens do cerco reforçam a hoste inimiga.",
+            "Registro de partida.",
+            "— Rodada 3 —"
+          ],
+          "foes": [
+            {
+              "uid": "e0",
+              "id": "fixture0",
+              "name": "Vigia Sombrio",
+              "icon": "☠",
+              "hp": 79,
+              "maxhp": 90,
+              "atk": 23,
+              "spd": 11,
+              "ai": "poison",
+              "type": "shadow",
+              "status": {},
+              "barrier": 5,
+              "stage": 1,
+              "dead": false
+            },
+            {
+              "uid": "e1",
+              "id": "fixture1",
+              "name": "Arcanista da Corte",
+              "icon": "🗡",
+              "hp": 65,
+              "maxhp": 75,
+              "atk": 19,
+              "spd": 15,
+              "ai": "mage",
+              "type": "shadow",
+              "status": {},
+              "barrier": 5,
+              "stage": 1,
+              "dead": false
+            }
+          ],
+          "finished": false
+        },
+        "history": [],
+        "victories": 0
+      }
+    },
+    {
+      "scenario": {
+        "id": "advance-boss-60",
+        "day": 60,
+        "round": 2,
+        "seed": 56,
+        "advance": true
+      },
+      "expected": {
+        "day": 60,
+        "mode": "battle",
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 113,
+            "mp": 12,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "mp": 16,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "serena",
+            "hp": 76,
+            "mp": 45,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          }
+        ],
+        "battle": {
+          "round": 3,
+          "event": 60,
+          "queue": [
+            {
+              "side": "hero",
+              "id": "dara",
+              "spd": 21.979182065930218
+            },
+            {
+              "side": "enemy",
+              "id": "e1",
+              "spd": 17.890798426698893
+            },
+            {
+              "side": "hero",
+              "id": "eirik",
+              "spd": 17.44470033235848
+            },
+            {
+              "side": "hero",
+              "id": "serena",
+              "spd": 15.237126835156232
+            },
+            {
+              "side": "enemy",
+              "id": "e0",
+              "spd": 13.961696264334023
+            },
+            {
+              "side": "hero",
+              "id": "brunna",
+              "spd": 8.147866546176374
+            }
+          ],
+          "ptr": 1,
+          "active": "dara",
+          "logs": [
+            "Registro de partida.",
+            "— Rodada 3 —"
+          ],
+          "foes": [
+            {
+              "uid": "e0",
+              "id": "fixture0",
+              "name": "Vigia Sombrio",
+              "icon": "☠",
+              "hp": 79,
+              "maxhp": 90,
+              "atk": 23,
+              "spd": 11,
+              "ai": "poison",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            },
+            {
+              "uid": "e1",
+              "id": "fixture1",
+              "name": "Arcanista da Corte",
+              "icon": "🗡",
+              "hp": 65,
+              "maxhp": 75,
+              "atk": 19,
+              "spd": 15,
+              "ai": "mage",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            }
+          ],
+          "finished": false
+        },
+        "history": [],
+        "victories": 0
+      }
+    },
+    {
+      "scenario": {
+        "id": "inactive-hazard",
+        "day": 60,
+        "round": 2,
+        "seed": 57
+      },
+      "expected": {
+        "day": 60,
+        "mode": "battle",
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 113,
+            "mp": 12,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "mp": 16,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          },
+          {
+            "id": "serena",
+            "hp": 76,
+            "mp": 45,
+            "alive": true,
+            "status": {},
+            "barrier": 0,
+            "fatigue": 0,
+            "injured": 0
+          }
+        ],
+        "battle": {
+          "round": 3,
+          "event": 60,
+          "queue": [
+            {
+              "side": "hero",
+              "id": "dara",
+              "spd": 26.087431699968874
+            },
+            {
+              "side": "enemy",
+              "id": "e1",
+              "spd": 20.47702062036842
+            },
+            {
+              "side": "hero",
+              "id": "eirik",
+              "spd": 17.666798527818173
+            },
+            {
+              "side": "hero",
+              "id": "serena",
+              "spd": 13.235924381762743
+            },
+            {
+              "side": "enemy",
+              "id": "e0",
+              "spd": 12.447961466852576
+            },
+            {
+              "side": "hero",
+              "id": "brunna",
+              "spd": 8.692089137155563
+            }
+          ],
+          "ptr": 0,
+          "active": null,
+          "logs": [
+            "Registro de partida.",
+            "— Rodada 3 —"
+          ],
+          "foes": [
+            {
+              "uid": "e0",
+              "id": "fixture0",
+              "name": "Vigia Sombrio",
+              "icon": "☠",
+              "hp": 79,
+              "maxhp": 90,
+              "atk": 23,
+              "spd": 11,
+              "ai": "poison",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            },
+            {
+              "uid": "e1",
+              "id": "fixture1",
+              "name": "Arcanista da Corte",
+              "icon": "🗡",
+              "hp": 65,
+              "maxhp": 75,
+              "atk": 19,
+              "spd": 15,
+              "ai": "mage",
+              "type": "shadow",
+              "status": {},
+              "barrier": 0,
+              "stage": 1,
+              "dead": false
+            }
+          ],
+          "finished": false
+        },
+        "history": [],
+        "victories": 0
+      }
+    }
+  ]
+}

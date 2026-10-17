@@ -32,7 +32,18 @@ const address = 'http://127.0.0.1:4173';
     console.log((mobile?'MOBILE':'DESKTOP')+' BEFORE BATTLE', await page.evaluate(()=>({mode:S.mode,tab:S.tab,council:S.flags.council_0, toast:document.querySelector('.toast')?.textContent||'',hasFight:!!document.querySelector('[data-a="fight"]'),hasPrepare:!!document.querySelector('[data-a="prepare"]')})));
     await page.waitForSelector('[data-a="fight"]',{timeout:7000});
     await page.click('[data-a="fight"]');
-    await page.waitForSelector('#phaser-surface canvas',{timeout:25000});
+    try {
+      await page.waitForSelector('#phaser-surface canvas',{timeout:10000});
+    } catch(error) {
+      console.error('FIGHT BOOT DIAGNOSTICS',await page.evaluate(()=>({
+        mode:S?.mode,day:S?.day,battleEvent:S?.battle?.event,
+        battleRound:S?.battle?.round,
+        status:document.querySelector('#beta-status')?.textContent,
+        app:document.querySelector('#app')?.innerText?.slice(0,700),
+        core:typeof ThargridRounds,foes:S?.battle?.foes?.map(f=>({hp:f.hp,id:f.id}))
+      })),errors);
+      throw error;
+    }
     await page.waitForFunction(()=>document.body.classList.contains('phaser-live'));
     const before = await page.evaluate(()=> {
       const a=JSON.parse(localStorage.getItem('thargrid_phaser_preview_save_v1'));
@@ -103,6 +114,25 @@ const address = 'http://127.0.0.1:4173';
     assert.ok(enemySemantic.events.some(e=>e.type==='damage'&&e.side==='hero'&&e.source));
     assert.ok(enemySemantic.events.some(e=>e.type==='status'&&e.status==='burn'&&e.side==='hero'));
     assert.ok(enemySemantic.visual);
+
+    // Force a third round on a real environmental hazard day and verify
+    // the core emits the same structured events the Phaser scene consumes.
+    const roundEvents=await page.evaluate(()=>{
+      const oldDay=S.day,oldEvent=S.battle.event,oldRound=S.battle.round;
+      S.day=43;S.battle.event=43;S.battle.round=2;
+      const before=combatFeedback.seq;
+      createRound();render();
+      const snapshot={before,after:combatFeedback.seq,events:combatFeedback.events,
+        round:S.battle.round,canvas:!!document.querySelector('#phaser-surface canvas')};
+      S.day=oldDay;S.battle.event=oldEvent;S.battle.round=oldRound;
+      return snapshot;
+    });
+    assert.ok(roundEvents.after>roundEvents.before);
+    assert.equal(roundEvents.round,3);
+    assert.ok(roundEvents.events.some(e=>e.type==='round'&&e.round===3));
+    assert.ok(roundEvents.events.some(e=>e.type==='shield'&&e.source==='hazard'&&e.side==='enemy'));
+    assert.ok(roundEvents.canvas);
+    console.log((mobile?'MOBILE':'DESKTOP')+' PASS round + environmental hazard events');
 
     // Healing and reviving allies by touching their figures, not the old HTML list.
     await page.evaluate(()=>{S.battle.active='serena';S.heroes.brunna.hp=15;render();});
