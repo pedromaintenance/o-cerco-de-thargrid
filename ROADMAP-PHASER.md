@@ -363,3 +363,12 @@ Executar **M0b → M1a**: criar snapshots verificados de combates de chefes (esp
 ### Próximo marco M1d
 
 Extrair **efeitos de status e ataque inimigo** para uma transição pura e eventos, com fixtures multi-rodadas e simulações de chefes, mantendo os tempos e a ordem de sorteios. Em paralelo, experimentar efeitos visuais por categoria de magia, mas sem duplicar regras no Phaser.
+
+
+### Publicação M1c — resultado confirmado na `main`
+
+- **PR #5 integrado:** [alterações e revisão](https://github.com/pedromaintenance/o-cerco-de-thargrid/pull/5), commit squash `9feb1b888370087e8cabc433202c9521238e5a7c`.
+- **CI na `main`:** [execução #39035709045](https://github.com/pedromaintenance/o-cerco-de-thargrid/actions/runs/39035709045) **concluída com sucesso**; 46/46 testes Node passaram e os testes Chromium desktop e mobile confirmaram navegação, magia, cura, ressuscitação, cancelamento, lista de alvos, save/reload e isolamento do clássico.
+- **GitHub Pages:** [build/deploy #39035708712](https://github.com/pedromaintenance/o-cerco-de-thargrid/actions/runs/39035708712) concluído com sucesso. **[Testar beta Phaser M1c](https://pedromaintenance.github.io/o-cerco-de-thargrid/phaser-preview/?demo=1)**. A confirmação do deploy e dos navegadores é do GitHub Actions; ainda não constitui homologação em dispositivo físico.
+- **Regra de segurança:** jogo clássico mantém rota `/` e chave `thargrid_siege_save_v1`; beta mantém rota `/phaser-preview/` e `thargrid_phaser_preview_save_v1`. Não há cópia, sincronização ou conversão automática de saves.
+- **Próximo objetivo (M1d):** trazer turnos inimigos e efeitos de status para executor independente com eventos, ampliar testes de rodadas completas e chefes até a vitória e validar instalação/offline real.
