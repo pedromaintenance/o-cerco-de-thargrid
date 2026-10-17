@@ -1,0 +1,1604 @@
+{
+  "source_commit": "f59272a2dc7c4ead3ffb66acdf2602fbc1622e81",
+  "source": "classic app.js+data.js before M1a refactor",
+  "rng": "LCG seed=42 (Math.imul 1664525 + 1013904223)",
+  "note": "Snapshots saved from the actual legacy beginBattle(); not recalculated from extracted core.",
+  "fixtures": [
+    {
+      "scenario": {
+        "day": 1,
+        "difficulty": "story"
+      },
+      "expected": {
+        "day": 1,
+        "difficulty": "story",
+        "mode": "battle",
+        "foes": [
+          {
+            "uid": "e0",
+            "id": "goblin",
+            "name": "Batedor goblin",
+            "icon": "⚔️",
+            "hp": 26,
+            "maxhp": 26,
+            "atk": 8,
+            "spd": 5,
+            "ai": "skirmish",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e1",
+            "id": "elfScout",
+            "name": "Arqueiro da Corte",
+            "icon": "🏹",
+            "hp": 30,
+            "maxhp": 30,
+            "atk": 10,
+            "spd": 10,
+            "ai": "archer",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e2",
+            "id": "goblin",
+            "name": "Batedor goblin",
+            "icon": "⚔️",
+            "hp": 26,
+            "maxhp": 26,
+            "atk": 8,
+            "spd": 5,
+            "ai": "skirmish",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          }
+        ],
+        "round": 1,
+        "queue": [
+          {
+            "side": "hero",
+            "id": "dara",
+            "spd": 26.242882234510034
+          },
+          {
+            "side": "hero",
+            "id": "eirik",
+            "spd": 18.967805651947856
+          },
+          {
+            "side": "hero",
+            "id": "serena",
+            "spd": 16.119216341990978
+          },
+          {
+            "side": "enemy",
+            "id": "e1",
+            "spd": 13.852005678694695
+          },
+          {
+            "side": "enemy",
+            "id": "e2",
+            "spd": 10.16873712465167
+          },
+          {
+            "side": "enemy",
+            "id": "e0",
+            "spd": 7.998060368932784
+          },
+          {
+            "side": "hero",
+            "id": "brunna",
+            "spd": 6.710760022513568
+          }
+        ],
+        "ptr": 1,
+        "active": "dara",
+        "logs": [
+          "Dia 1: Sinos sob a neve",
+          "Goblins desarmados são empurrados à frente de batedores shadow fey. A Corte mede o tempo entre o alarme e a chegada da guarda.",
+          "A defesa do setor Passo Norte cede antes do combate: a companhia recebe danos na aproximação.",
+          "— Rodada 1 —"
+        ],
+        "party": [
+          {
+            "id": "brunna",
+            "hp": 110,
+            "barrier": 0,
+            "status": {}
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "barrier": 0,
+            "status": {}
+          },
+          {
+            "id": "eirik",
+            "hp": 46,
+            "barrier": 0,
+            "status": {}
+          },
+          {
+            "id": "serena",
+            "hp": 71,
+            "barrier": 0,
+            "status": {}
+          }
+        ]
+      }
+    },
+    {
+      "scenario": {
+        "day": 6,
+        "difficulty": "normal"
+      },
+      "expected": {
+        "day": 6,
+        "difficulty": "normal",
+        "mode": "battle",
+        "foes": [
+          {
+            "uid": "e0",
+            "id": "duelist",
+            "name": "Duelista shadow fey",
+            "icon": "🗡️",
+            "hp": 56,
+            "maxhp": 56,
+            "atk": 16,
+            "spd": 12,
+            "ai": "assassin",
+            "type": "shadow",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e1",
+            "id": "ogre",
+            "name": "Ogro mercenário",
+            "icon": "👹",
+            "hp": 93,
+            "maxhp": 93,
+            "atk": 18,
+            "spd": 3,
+            "ai": "brute",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e2",
+            "id": "elfMage",
+            "name": "Tecelã da Corte",
+            "icon": "🔮",
+            "hp": 42,
+            "maxhp": 42,
+            "atk": 15,
+            "spd": 9,
+            "ai": "mage",
+            "type": "arcane",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          }
+        ],
+        "round": 1,
+        "queue": [
+          {
+            "side": "hero",
+            "id": "dara",
+            "spd": 26.242882234510034
+          },
+          {
+            "side": "hero",
+            "id": "eirik",
+            "spd": 18.967805651947856
+          },
+          {
+            "side": "hero",
+            "id": "serena",
+            "spd": 16.119216341990978
+          },
+          {
+            "side": "enemy",
+            "id": "e0",
+            "spd": 14.998060368932784
+          },
+          {
+            "side": "enemy",
+            "id": "e2",
+            "spd": 14.16873712465167
+          },
+          {
+            "side": "enemy",
+            "id": "e1",
+            "spd": 6.852005678694695
+          },
+          {
+            "side": "hero",
+            "id": "brunna",
+            "spd": 6.710760022513568
+          }
+        ],
+        "ptr": 1,
+        "active": "dara",
+        "logs": [
+          "Dia 6: O capitão sem rosto",
+          "O estrategista que conduziu os ataques chega sem estandarte. Derrotá-lo é negar à Corte seu primeiro mapa da montanha.",
+          "A defesa do setor Passo Norte cede antes do combate: a companhia recebe danos na aproximação.",
+          "— Rodada 1 —"
+        ],
+        "party": [
+          {
+            "id": "brunna",
+            "hp": 110,
+            "barrier": 0,
+            "status": {}
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "barrier": 0,
+            "status": {}
+          },
+          {
+            "id": "eirik",
+            "hp": 46,
+            "barrier": 0,
+            "status": {}
+          },
+          {
+            "id": "serena",
+            "hp": 71,
+            "barrier": 0,
+            "status": {}
+          }
+        ]
+      }
+    },
+    {
+      "scenario": {
+        "day": 12,
+        "difficulty": "normal"
+      },
+      "expected": {
+        "day": 12,
+        "difficulty": "normal",
+        "mode": "battle",
+        "foes": [
+          {
+            "uid": "e0",
+            "id": "maskwight",
+            "name": "Máscara dos mortos",
+            "icon": "🎭",
+            "hp": 101,
+            "maxhp": 101,
+            "atk": 18,
+            "spd": 9,
+            "ai": "curse",
+            "type": "shadow",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e1",
+            "id": "lichhound",
+            "name": "Cão do lich",
+            "icon": "🐺",
+            "hp": 74,
+            "maxhp": 74,
+            "atk": 18,
+            "spd": 12,
+            "ai": "assassin",
+            "type": "shadow",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e2",
+            "id": "duelist",
+            "name": "Duelista shadow fey",
+            "icon": "🗡️",
+            "hp": 65,
+            "maxhp": 65,
+            "atk": 18,
+            "spd": 13,
+            "ai": "assassin",
+            "type": "shadow",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          }
+        ],
+        "round": 1,
+        "queue": [
+          {
+            "side": "hero",
+            "id": "dara",
+            "spd": 26.242882234510034
+          },
+          {
+            "side": "hero",
+            "id": "eirik",
+            "spd": 18.967805651947856
+          },
+          {
+            "side": "enemy",
+            "id": "e2",
+            "spd": 18.16873712465167
+          },
+          {
+            "side": "hero",
+            "id": "serena",
+            "spd": 16.119216341990978
+          },
+          {
+            "side": "enemy",
+            "id": "e1",
+            "spd": 15.852005678694695
+          },
+          {
+            "side": "enemy",
+            "id": "e0",
+            "spd": 11.998060368932784
+          },
+          {
+            "side": "hero",
+            "id": "brunna",
+            "spd": 6.710760022513568
+          }
+        ],
+        "ptr": 1,
+        "active": "dara",
+        "logs": [
+          "Dia 12: A escritura das correntes",
+          "Um administrador de Drakport ergue a escritura de propriedade de todos os refugiados e exige submissão. Os anões rasgam o documento.",
+          "A defesa do setor Portão de Ossos cede antes do combate: a companhia recebe danos na aproximação.",
+          "— Rodada 1 —"
+        ],
+        "party": [
+          {
+            "id": "brunna",
+            "hp": 110,
+            "barrier": 0,
+            "status": {}
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "barrier": 0,
+            "status": {}
+          },
+          {
+            "id": "eirik",
+            "hp": 45,
+            "barrier": 0,
+            "status": {}
+          },
+          {
+            "id": "serena",
+            "hp": 71,
+            "barrier": 0,
+            "status": {}
+          }
+        ]
+      }
+    },
+    {
+      "scenario": {
+        "day": 18,
+        "difficulty": "normal"
+      },
+      "expected": {
+        "day": 18,
+        "difficulty": "normal",
+        "mode": "battle",
+        "foes": [
+          {
+            "uid": "e0",
+            "id": "vinelord",
+            "name": "Senhor das Vinhas",
+            "icon": "🌳",
+            "hp": 212,
+            "maxhp": 212,
+            "atk": 26,
+            "spd": 7,
+            "ai": "regenerate",
+            "type": "nature",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e1",
+            "id": "redcap",
+            "name": "Redcap sanguinário",
+            "icon": "🩸",
+            "hp": 72,
+            "maxhp": 72,
+            "atk": 21,
+            "spd": 14,
+            "ai": "bleed",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e2",
+            "id": "mosslurker",
+            "name": "Emboscador de musgo",
+            "icon": "🍂",
+            "hp": 70,
+            "maxhp": 70,
+            "atk": 18,
+            "spd": 13,
+            "ai": "assassin",
+            "type": "nature",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          }
+        ],
+        "round": 1,
+        "queue": [
+          {
+            "side": "hero",
+            "id": "dara",
+            "spd": 26.242882234510034
+          },
+          {
+            "side": "hero",
+            "id": "eirik",
+            "spd": 18.967805651947856
+          },
+          {
+            "side": "enemy",
+            "id": "e2",
+            "spd": 18.16873712465167
+          },
+          {
+            "side": "enemy",
+            "id": "e1",
+            "spd": 17.852005678694695
+          },
+          {
+            "side": "hero",
+            "id": "serena",
+            "spd": 16.119216341990978
+          },
+          {
+            "side": "enemy",
+            "id": "e0",
+            "spd": 9.998060368932784
+          },
+          {
+            "side": "hero",
+            "id": "brunna",
+            "spd": 6.710760022513568
+          }
+        ],
+        "ptr": 1,
+        "active": "dara",
+        "logs": [
+          "Dia 18: A mão da floresta",
+          "Sylara não aparece. Em seu lugar, uma entidade ancestral de vinhas ergue um braço contra a montanha como se pudesse arrancá-la.",
+          "A defesa do setor Túneis das Raízes cede antes do combate: a companhia recebe danos na aproximação.",
+          "— Rodada 1 —"
+        ],
+        "party": [
+          {
+            "id": "brunna",
+            "hp": 110,
+            "barrier": 0,
+            "status": {}
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "barrier": 0,
+            "status": {}
+          },
+          {
+            "id": "eirik",
+            "hp": 45,
+            "barrier": 0,
+            "status": {}
+          },
+          {
+            "id": "serena",
+            "hp": 70,
+            "barrier": 0,
+            "status": {}
+          }
+        ]
+      }
+    },
+    {
+      "scenario": {
+        "day": 24,
+        "difficulty": "normal"
+      },
+      "expected": {
+        "day": 24,
+        "difficulty": "normal",
+        "mode": "battle",
+        "foes": [
+          {
+            "uid": "e0",
+            "id": "runewarden",
+            "name": "Arquimago rúnico",
+            "icon": "📜",
+            "hp": 265,
+            "maxhp": 265,
+            "atk": 30,
+            "spd": 10,
+            "ai": "mage",
+            "type": "arcane",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e1",
+            "id": "golem",
+            "name": "Golem pétreo",
+            "icon": "🪨",
+            "hp": 208,
+            "maxhp": 208,
+            "atk": 28,
+            "spd": 5,
+            "ai": "guard",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e2",
+            "id": "elfMage",
+            "name": "Tecelã da Corte",
+            "icon": "🔮",
+            "hp": 64,
+            "maxhp": 64,
+            "atk": 21,
+            "spd": 11,
+            "ai": "mage",
+            "type": "arcane",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          }
+        ],
+        "round": 1,
+        "queue": [
+          {
+            "side": "hero",
+            "id": "dara",
+            "spd": 26.242882234510034
+          },
+          {
+            "side": "hero",
+            "id": "eirik",
+            "spd": 18.967805651947856
+          },
+          {
+            "side": "enemy",
+            "id": "e2",
+            "spd": 16.16873712465167
+          },
+          {
+            "side": "hero",
+            "id": "serena",
+            "spd": 16.119216341990978
+          },
+          {
+            "side": "enemy",
+            "id": "e0",
+            "spd": 12.998060368932784
+          },
+          {
+            "side": "enemy",
+            "id": "e1",
+            "spd": 8.852005678694695
+          },
+          {
+            "side": "hero",
+            "id": "brunna",
+            "spd": 6.710760022513568
+          }
+        ],
+        "ptr": 1,
+        "active": "dara",
+        "logs": [
+          "Dia 24: A assinatura de Varys",
+          "Um alto emissário de Garganta tenta gravar o nome da Rainha na pedra mais antiga da fortaleza. A inscrição é uma arma.",
+          "A defesa do setor Portão de Ossos cede antes do combate: a companhia recebe danos na aproximação.",
+          "— Rodada 1 —"
+        ],
+        "party": [
+          {
+            "id": "brunna",
+            "hp": 110,
+            "barrier": 0,
+            "status": {}
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "barrier": 0,
+            "status": {}
+          },
+          {
+            "id": "eirik",
+            "hp": 44,
+            "barrier": 0,
+            "status": {}
+          },
+          {
+            "id": "serena",
+            "hp": 70,
+            "barrier": 0,
+            "status": {}
+          }
+        ]
+      }
+    },
+    {
+      "scenario": {
+        "day": 30,
+        "difficulty": "normal"
+      },
+      "expected": {
+        "day": 30,
+        "difficulty": "normal",
+        "mode": "battle",
+        "foes": [
+          {
+            "uid": "e0",
+            "id": "deathknight",
+            "name": "Executor funerário",
+            "icon": "⚰️",
+            "hp": 313,
+            "maxhp": 313,
+            "atk": 36,
+            "spd": 9,
+            "ai": "boss",
+            "type": "shadow",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e1",
+            "id": "lichhound",
+            "name": "Cão do lich",
+            "icon": "🐺",
+            "hp": 108,
+            "maxhp": 108,
+            "atk": 24,
+            "spd": 13,
+            "ai": "assassin",
+            "type": "shadow",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e2",
+            "id": "banshee",
+            "name": "Lamento da tumba",
+            "icon": "👻",
+            "hp": 110,
+            "maxhp": 110,
+            "atk": 24,
+            "spd": 12,
+            "ai": "curse",
+            "type": "shadow",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          }
+        ],
+        "round": 1,
+        "queue": [
+          {
+            "side": "hero",
+            "id": "dara",
+            "spd": 26.242882234510034
+          },
+          {
+            "side": "hero",
+            "id": "eirik",
+            "spd": 18.967805651947856
+          },
+          {
+            "side": "enemy",
+            "id": "e2",
+            "spd": 17.16873712465167
+          },
+          {
+            "side": "enemy",
+            "id": "e1",
+            "spd": 16.852005678694695
+          },
+          {
+            "side": "hero",
+            "id": "serena",
+            "spd": 16.119216341990978
+          },
+          {
+            "side": "enemy",
+            "id": "e0",
+            "spd": 11.998060368932784
+          },
+          {
+            "side": "hero",
+            "id": "brunna",
+            "spd": 6.710760022513568
+          }
+        ],
+        "ptr": 1,
+        "active": "dara",
+        "logs": [
+          "Dia 30: Lorde Damaris cobra",
+          "Damaris Blackthorn envia seu executor para cobrar impostos sobre os ossos dos trabalhadores mortos. Os túmulos se abrem.",
+          "A defesa do setor Portão de Ossos cede antes do combate: a companhia recebe danos na aproximação.",
+          "— Rodada 1 —"
+        ],
+        "party": [
+          {
+            "id": "brunna",
+            "hp": 110,
+            "barrier": 0,
+            "status": {}
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "barrier": 0,
+            "status": {}
+          },
+          {
+            "id": "eirik",
+            "hp": 44,
+            "barrier": 0,
+            "status": {}
+          },
+          {
+            "id": "serena",
+            "hp": 70,
+            "barrier": 0,
+            "status": {}
+          }
+        ]
+      }
+    },
+    {
+      "scenario": {
+        "day": 36,
+        "difficulty": "normal"
+      },
+      "expected": {
+        "day": 36,
+        "difficulty": "normal",
+        "mode": "battle",
+        "foes": [
+          {
+            "uid": "e0",
+            "id": "tidepriest",
+            "name": "Sacerdote lunar das marés",
+            "icon": "🌊",
+            "hp": 372,
+            "maxhp": 372,
+            "atk": 36,
+            "spd": 11,
+            "ai": "mage",
+            "type": "water",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e1",
+            "id": "seaDrake",
+            "name": "Draco do rio",
+            "icon": "🐉",
+            "hp": 217,
+            "maxhp": 217,
+            "atk": 31,
+            "spd": 12,
+            "ai": "brute",
+            "type": "water",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e2",
+            "id": "rusalka",
+            "name": "Rusalka",
+            "icon": "🧜",
+            "hp": 153,
+            "maxhp": 153,
+            "atk": 26,
+            "spd": 14,
+            "ai": "curse",
+            "type": "water",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          }
+        ],
+        "round": 1,
+        "queue": [
+          {
+            "side": "hero",
+            "id": "dara",
+            "spd": 26.242882234510034
+          },
+          {
+            "side": "enemy",
+            "id": "e2",
+            "spd": 19.16873712465167
+          },
+          {
+            "side": "hero",
+            "id": "eirik",
+            "spd": 18.967805651947856
+          },
+          {
+            "side": "hero",
+            "id": "serena",
+            "spd": 16.119216341990978
+          },
+          {
+            "side": "enemy",
+            "id": "e1",
+            "spd": 15.852005678694695
+          },
+          {
+            "side": "enemy",
+            "id": "e0",
+            "spd": 13.998060368932784
+          },
+          {
+            "side": "hero",
+            "id": "brunna",
+            "spd": 6.710760022513568
+          }
+        ],
+        "ptr": 1,
+        "active": "dara",
+        "logs": [
+          "Dia 36: Lua nas comportas",
+          "Severina ordena que um sacerdote das marés rompa a comporta ancestral. A cidade vencerá ou afundará.",
+          "A defesa do setor Portão de Ossos cede antes do combate: a companhia recebe danos na aproximação.",
+          "— Rodada 1 —"
+        ],
+        "party": [
+          {
+            "id": "brunna",
+            "hp": 110,
+            "barrier": 0,
+            "status": {}
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "barrier": 0,
+            "status": {}
+          },
+          {
+            "id": "eirik",
+            "hp": 44,
+            "barrier": 0,
+            "status": {}
+          },
+          {
+            "id": "serena",
+            "hp": 69,
+            "barrier": 0,
+            "status": {}
+          }
+        ]
+      }
+    },
+    {
+      "scenario": {
+        "day": 42,
+        "difficulty": "normal"
+      },
+      "expected": {
+        "day": 42,
+        "difficulty": "normal",
+        "mode": "battle",
+        "foes": [
+          {
+            "uid": "e0",
+            "id": "voidbeast",
+            "name": "Devorador do Véu",
+            "icon": "🪐",
+            "hp": 435,
+            "maxhp": 435,
+            "atk": 46,
+            "spd": 11,
+            "ai": "boss",
+            "type": "shadow",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e1",
+            "id": "voidling",
+            "name": "Cria do Vazio",
+            "icon": "🕳️",
+            "hp": 143,
+            "maxhp": 143,
+            "atk": 28,
+            "spd": 13,
+            "ai": "drain",
+            "type": "shadow",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e2",
+            "id": "fext",
+            "name": "Fext da Corte",
+            "icon": "🦴",
+            "hp": 216,
+            "maxhp": 216,
+            "atk": 30,
+            "spd": 14,
+            "ai": "assassin",
+            "type": "shadow",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          }
+        ],
+        "round": 1,
+        "queue": [
+          {
+            "side": "hero",
+            "id": "dara",
+            "spd": 26.242882234510034
+          },
+          {
+            "side": "enemy",
+            "id": "e2",
+            "spd": 19.16873712465167
+          },
+          {
+            "side": "hero",
+            "id": "eirik",
+            "spd": 18.967805651947856
+          },
+          {
+            "side": "enemy",
+            "id": "e1",
+            "spd": 16.852005678694695
+          },
+          {
+            "side": "hero",
+            "id": "serena",
+            "spd": 16.119216341990978
+          },
+          {
+            "side": "enemy",
+            "id": "e0",
+            "spd": 13.998060368932784
+          },
+          {
+            "side": "hero",
+            "id": "brunna",
+            "spd": 6.710760022513568
+          }
+        ],
+        "ptr": 1,
+        "active": "dara",
+        "logs": [
+          "Dia 42: A criatura entre os mundos",
+          "Uma monstruosidade do vazio força a brecha mais antiga do véu. Seus ataques dobram o espaço ao redor dos defensores.",
+          "A defesa do setor Passo Norte cede antes do combate: a companhia recebe danos na aproximação.",
+          "— Rodada 1 —"
+        ],
+        "party": [
+          {
+            "id": "brunna",
+            "hp": 110,
+            "barrier": 0,
+            "status": {}
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "barrier": 0,
+            "status": {}
+          },
+          {
+            "id": "eirik",
+            "hp": 44,
+            "barrier": 0,
+            "status": {}
+          },
+          {
+            "id": "serena",
+            "hp": 69,
+            "barrier": 0,
+            "status": {}
+          }
+        ]
+      }
+    },
+    {
+      "scenario": {
+        "day": 48,
+        "difficulty": "normal"
+      },
+      "expected": {
+        "day": 48,
+        "difficulty": "normal",
+        "mode": "battle",
+        "foes": [
+          {
+            "uid": "e0",
+            "id": "abomination",
+            "name": "Abominação mecânica",
+            "icon": "🦾",
+            "hp": 513,
+            "maxhp": 513,
+            "atk": 51,
+            "spd": 8,
+            "ai": "boss",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e1",
+            "id": "eyegolem",
+            "name": "Golem de Olhos",
+            "icon": "👁️",
+            "hp": 322,
+            "maxhp": 322,
+            "atk": 39,
+            "spd": 10,
+            "ai": "mage",
+            "type": "arcane",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e2",
+            "id": "clockwork",
+            "name": "Autômato de cerco",
+            "icon": "⚙️",
+            "hp": 216,
+            "maxhp": 216,
+            "atk": 34,
+            "spd": 9,
+            "ai": "guard",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          }
+        ],
+        "round": 1,
+        "queue": [
+          {
+            "side": "hero",
+            "id": "dara",
+            "spd": 26.242882234510034
+          },
+          {
+            "side": "hero",
+            "id": "eirik",
+            "spd": 18.967805651947856
+          },
+          {
+            "side": "hero",
+            "id": "serena",
+            "spd": 16.119216341990978
+          },
+          {
+            "side": "enemy",
+            "id": "e2",
+            "spd": 14.16873712465167
+          },
+          {
+            "side": "enemy",
+            "id": "e1",
+            "spd": 13.852005678694695
+          },
+          {
+            "side": "enemy",
+            "id": "e0",
+            "spd": 10.998060368932784
+          },
+          {
+            "side": "hero",
+            "id": "brunna",
+            "spd": 6.710760022513568
+          }
+        ],
+        "ptr": 1,
+        "active": "dara",
+        "logs": [
+          "Dia 48: O coração da abominação",
+          "A engrenagem principal, alimentada por corações roubados, tenta escalar a muralha. Thargrid escolhe desmantelá-la peça por peça.",
+          "A defesa do setor Portão de Ossos cede antes do combate: a companhia recebe danos na aproximação.",
+          "— Rodada 1 —"
+        ],
+        "party": [
+          {
+            "id": "brunna",
+            "hp": 110,
+            "barrier": 0,
+            "status": {}
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "barrier": 0,
+            "status": {}
+          },
+          {
+            "id": "eirik",
+            "hp": 43,
+            "barrier": 0,
+            "status": {}
+          },
+          {
+            "id": "serena",
+            "hp": 69,
+            "barrier": 0,
+            "status": {}
+          }
+        ]
+      }
+    },
+    {
+      "scenario": {
+        "day": 54,
+        "difficulty": "normal"
+      },
+      "expected": {
+        "day": 54,
+        "difficulty": "normal",
+        "mode": "battle",
+        "foes": [
+          {
+            "uid": "e0",
+            "id": "nightmarshal",
+            "name": "Marechal da Noite",
+            "icon": "♜",
+            "hp": 627,
+            "maxhp": 627,
+            "atk": 58,
+            "spd": 14,
+            "ai": "boss",
+            "type": "shadow",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e1",
+            "id": "shadowfey",
+            "name": "Lorde shadow fey",
+            "icon": "🦇",
+            "hp": 306,
+            "maxhp": 306,
+            "atk": 46,
+            "spd": 17,
+            "ai": "assassin",
+            "type": "shadow",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e2",
+            "id": "enchantress",
+            "name": "Encantadora feérica",
+            "icon": "🪄",
+            "hp": 306,
+            "maxhp": 306,
+            "atk": 38,
+            "spd": 16,
+            "ai": "mage",
+            "type": "arcane",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          }
+        ],
+        "round": 1,
+        "queue": [
+          {
+            "side": "hero",
+            "id": "dara",
+            "spd": 26.242882234510034
+          },
+          {
+            "side": "enemy",
+            "id": "e2",
+            "spd": 21.16873712465167
+          },
+          {
+            "side": "enemy",
+            "id": "e1",
+            "spd": 20.852005678694695
+          },
+          {
+            "side": "hero",
+            "id": "eirik",
+            "spd": 18.967805651947856
+          },
+          {
+            "side": "enemy",
+            "id": "e0",
+            "spd": 16.998060368932784
+          },
+          {
+            "side": "hero",
+            "id": "serena",
+            "spd": 16.119216341990978
+          },
+          {
+            "side": "hero",
+            "id": "brunna",
+            "spd": 6.710760022513568
+          }
+        ],
+        "ptr": 1,
+        "active": "dara",
+        "logs": [
+          "Dia 54: O baile das espadas",
+          "A Casa da Noite vem pessoalmente executar o ultimato. O portão vira palco para o duelo mais cruel do cerco.",
+          "A defesa do setor Portão de Ossos cede antes do combate: a companhia recebe danos na aproximação.",
+          "— Rodada 1 —"
+        ],
+        "party": [
+          {
+            "id": "brunna",
+            "hp": 110,
+            "barrier": 0,
+            "status": {}
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "barrier": 0,
+            "status": {}
+          },
+          {
+            "id": "eirik",
+            "hp": 43,
+            "barrier": 0,
+            "status": {}
+          },
+          {
+            "id": "serena",
+            "hp": 69,
+            "barrier": 0,
+            "status": {}
+          }
+        ]
+      }
+    },
+    {
+      "scenario": {
+        "day": 60,
+        "difficulty": "normal"
+      },
+      "expected": {
+        "day": 60,
+        "difficulty": "normal",
+        "mode": "battle",
+        "foes": [
+          {
+            "uid": "e0",
+            "id": "nightavatar",
+            "name": "Manifestação da Rainha",
+            "icon": "👑",
+            "hp": 1075,
+            "maxhp": 1075,
+            "atk": 72,
+            "spd": 17,
+            "ai": "final",
+            "type": "shadow",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e1",
+            "id": "nightmarshal",
+            "name": "Marechal da Noite",
+            "icon": "♜",
+            "hp": 682,
+            "maxhp": 682,
+            "atk": 62,
+            "spd": 15,
+            "ai": "boss",
+            "type": "shadow",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e2",
+            "id": "voidbeast",
+            "name": "Devorador do Véu",
+            "icon": "🪐",
+            "hp": 567,
+            "maxhp": 567,
+            "atk": 55,
+            "spd": 13,
+            "ai": "boss",
+            "type": "shadow",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          }
+        ],
+        "round": 1,
+        "queue": [
+          {
+            "side": "hero",
+            "id": "dara",
+            "spd": 26.242882234510034
+          },
+          {
+            "side": "enemy",
+            "id": "e0",
+            "spd": 19.998060368932784
+          },
+          {
+            "side": "hero",
+            "id": "eirik",
+            "spd": 18.967805651947856
+          },
+          {
+            "side": "enemy",
+            "id": "e1",
+            "spd": 18.852005678694695
+          },
+          {
+            "side": "enemy",
+            "id": "e2",
+            "spd": 18.16873712465167
+          },
+          {
+            "side": "hero",
+            "id": "serena",
+            "spd": 16.119216341990978
+          },
+          {
+            "side": "hero",
+            "id": "brunna",
+            "spd": 6.710760022513568
+          }
+        ],
+        "ptr": 1,
+        "active": "dara",
+        "logs": [
+          "Dia 60: A Noite à Porta de Thargrid",
+          "A Rainha não abandona seu trono. Envia sua manifestação de cerco, feita de juramentos quebrados e sangue feérico. O destino do Reino Sob a Montanha será decidido por quatro defensores exaustos.",
+          "A defesa do setor Portão de Ossos cede antes do combate: a companhia recebe danos na aproximação.",
+          "— Rodada 1 —"
+        ],
+        "party": [
+          {
+            "id": "brunna",
+            "hp": 109,
+            "barrier": 0,
+            "status": {}
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "barrier": 0,
+            "status": {}
+          },
+          {
+            "id": "eirik",
+            "hp": 43,
+            "barrier": 0,
+            "status": {}
+          },
+          {
+            "id": "serena",
+            "hp": 68,
+            "barrier": 0,
+            "status": {}
+          }
+        ]
+      }
+    },
+    {
+      "scenario": {
+        "day": 60,
+        "difficulty": "hard"
+      },
+      "expected": {
+        "day": 60,
+        "difficulty": "hard",
+        "mode": "battle",
+        "foes": [
+          {
+            "uid": "e0",
+            "id": "nightavatar",
+            "name": "Manifestação da Rainha",
+            "icon": "👑",
+            "hp": 1312,
+            "maxhp": 1312,
+            "atk": 88,
+            "spd": 17,
+            "ai": "final",
+            "type": "shadow",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e1",
+            "id": "nightmarshal",
+            "name": "Marechal da Noite",
+            "icon": "♜",
+            "hp": 832,
+            "maxhp": 832,
+            "atk": 75,
+            "spd": 15,
+            "ai": "boss",
+            "type": "shadow",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e2",
+            "id": "voidbeast",
+            "name": "Devorador do Véu",
+            "icon": "🪐",
+            "hp": 692,
+            "maxhp": 692,
+            "atk": 67,
+            "spd": 13,
+            "ai": "boss",
+            "type": "shadow",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          }
+        ],
+        "round": 1,
+        "queue": [
+          {
+            "side": "hero",
+            "id": "dara",
+            "spd": 26.242882234510034
+          },
+          {
+            "side": "enemy",
+            "id": "e0",
+            "spd": 19.998060368932784
+          },
+          {
+            "side": "hero",
+            "id": "eirik",
+            "spd": 18.967805651947856
+          },
+          {
+            "side": "enemy",
+            "id": "e1",
+            "spd": 18.852005678694695
+          },
+          {
+            "side": "enemy",
+            "id": "e2",
+            "spd": 18.16873712465167
+          },
+          {
+            "side": "hero",
+            "id": "serena",
+            "spd": 16.119216341990978
+          },
+          {
+            "side": "hero",
+            "id": "brunna",
+            "spd": 6.710760022513568
+          }
+        ],
+        "ptr": 1,
+        "active": "dara",
+        "logs": [
+          "Dia 60: A Noite à Porta de Thargrid",
+          "A Rainha não abandona seu trono. Envia sua manifestação de cerco, feita de juramentos quebrados e sangue feérico. O destino do Reino Sob a Montanha será decidido por quatro defensores exaustos.",
+          "A defesa do setor Portão de Ossos cede antes do combate: a companhia recebe danos na aproximação.",
+          "— Rodada 1 —"
+        ],
+        "party": [
+          {
+            "id": "brunna",
+            "hp": 109,
+            "barrier": 0,
+            "status": {}
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "barrier": 0,
+            "status": {}
+          },
+          {
+            "id": "eirik",
+            "hp": 43,
+            "barrier": 0,
+            "status": {}
+          },
+          {
+            "id": "serena",
+            "hp": 68,
+            "barrier": 0,
+            "status": {}
+          }
+        ]
+      }
+    }
+  ]
+}
