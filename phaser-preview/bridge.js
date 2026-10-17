@@ -130,6 +130,11 @@
     }, this);
     this.battleInfo = this.add.text(240, 27, '', {fontFamily:'Georgia, serif',fontSize:'17px',color:'#f3d8a4',align:'center'}).setOrigin(0.5);
     this.footer = this.add.text(24, 505, '', {fontFamily:'Arial, sans-serif',fontSize:'15px',color:'#ece6d7',wordWrap:{width:425}});
+    this.feedbackSeq=0;
+    this.effectCue=this.add.text(240, 91, '', {
+      fontFamily:'Arial, sans-serif',fontSize:'16px',fontStyle:'bold',
+      color:'#f7e5b7',stroke:'#0e1019',strokeThickness:4,align:'center'
+    }).setOrigin(.5).setAlpha(0);
     this.sync();
   };
 
@@ -230,6 +235,26 @@
       self.tweens.add({targets:label,y:label.y-35,alpha:0,duration:850,onComplete:function(){label.destroy();}});
     });
     previous = next;
+    // Semantic effects are emitted by the pure combat reducer. This cue never
+    // recalculates a hit, status or resource; enemy actions still use HP diffs.
+    if(typeof combatFeedback!=='undefined' && combatFeedback.seq>this.feedbackSeq) {
+      this.feedbackSeq=combatFeedback.seq;
+      var details=combatFeedback.events.filter(function(e){
+        return ['damage','heal','revive','shield','status','phase','cleanse'].includes(e.type);
+      }).slice(0,2).map(function(e){
+        var name=(SKILLS[e.key]&&SKILLS[e.key].name)||(STORE[e.key]&&STORE[e.key].name)||'Ação';
+        var sign=e.type==='damage'?'−':'+';
+        var detail=e.type==='phase'?'FASE II':e.type==='status'?e.status:
+          e.type==='cleanse'?'PURIFICADO':e.type==='revive'?'RESSUSCITOU':
+          sign+(e.amount||0);
+        return name+' · '+detail;
+      });
+      if(details.length) {
+        this.tweens.killTweensOf(this.effectCue);
+        this.effectCue.setText(details.join('  •  ')).setAlpha(1);
+        this.tweens.add({targets:this.effectCue,alpha:0,duration:1500,delay:350});
+      }
+    }
   };
 
   function start() {
