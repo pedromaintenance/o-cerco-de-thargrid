@@ -7,7 +7,9 @@
   var engineReady = false, loading = false, game = null, host = null;
   var originalRender = render;
   var originalBattle = renderBattle;
+  var originalTargets = showTargets;
   var previous = {};
+  var pending = null;
   var RENDER_W = 480, RENDER_H = 560;
 
   function info(message, warning) {
@@ -17,11 +19,52 @@
 
   renderBattle = function () {
     var html = originalBattle();
+    var prompt = pending ? '<div class="beta-targeting" role="status"><strong>' +
+      esc('Selecione no cenário: ' + pending.label) +
+      '</strong><button type="button" data-beta-cancel="1">Cancelar</button></div>' : '';
     return html.replace('<div class="battle-wrap">',
       '<div class="battle-wrap"><section class="beta-battle" aria-label="Campo de batalha em Phaser">' +
-      '<div class="beta-caption"><strong>CAMPO DE BATALHA · PHASER 4</strong><span>Toque no inimigo para atacar no turno do herói</span></div>' +
+      '<div class="beta-caption"><strong>CAMPO DE BATALHA · PHASER 4</strong><span>' +
+      (pending ? 'Escolha o alvo destacado no campo' : 'Toque no inimigo para atacar no turno do herói') +
+      '</span></div>' + prompt +
       '<div id="phaser-mount-slot"></div></section>');
   };
+
+  // Legacy HTML menus still choose the spell/item; Phaser chooses its target.
+  // Auto/self/team actions remain immediate through the original game dispatcher.
+  showTargets = function (kind, key) {
+    if (!S || S.mode !== 'battle' || !S.battle || !S.battle.active) return originalTargets(kind,key);
+    var type = kind === 'skill' ? ThargridActions.skillTargetType(key,SKILLS) :
+      ThargridActions.itemTargetType(key);
+    if (!['enemy','ally','fallen'].includes(type)) return originalTargets(kind,key);
+    var list = ThargridActions.selectableTargets(S,type);
+    if (!list.length) return originalTargets(kind,key);
+    pending = {kind:kind, key:key, type:type, actor:S.battle.active,
+      label:kind==='skill' ? SKILLS[key].name : STORE[key].name};
+    closeModal();
+    render();
+  };
+
+  function selectFighter(side,id) {
+    if (!S || S.mode!=='battle' || !S.battle || !S.battle.active) return;
+    if (pending && pending.actor !== S.battle.active) pending=null;
+    if (pending) {
+      var isEnemy = pending.type==='enemy';
+      if ((isEnemy ? 'enemy':'hero')!==side) return;
+      if (!ThargridActions.selectableTargets(S,pending.type).includes(id)) return;
+      var action=pending;
+      pending=null;
+      handle('perform',action.kind+':'+action.key+':'+id);
+      return;
+    }
+    if (side==='enemy') handle('targetenemy',id);
+  }
+
+  document.addEventListener('click',function(event){
+    if (!event.target.closest('[data-beta-cancel]')) return;
+    pending=null;
+    render();
+  });
 
   function stateOf() {
     if (!S || S.mode !== 'battle' || !S.battle) return null;
@@ -113,11 +156,20 @@
     if (unit.barrier) node.add(this.add.text(37, -55, '◆' + unit.barrier, {fontSize:'11px',color:'#c5dfff'}).setOrigin(0.5));
     var effects = Object.keys(unit.status || {}).filter(function (k) { return !!unit.status[k]; }).slice(0, 3).join(' · ');
     if (effects) node.add(this.add.text(0, isEnemy ? 49 : 58, effects, {fontSize:'10px',color:'#ebc485'}).setOrigin(0.5));
-    if (isEnemy && !dead) {
-      var hit = this.add.zone(x, y - 32, Math.max(84, spacing || 105), 116).setInteractive({useHandCursor:true});
-      hit.on('pointerdown', function () {
-        if (S && S.mode === 'battle' && S.battle && S.battle.active) handle('targetenemy', unit.uid);
-      });
+    var canClick = isEnemy ? !dead : !!(pending && pending.type==='fallen' ? dead :
+      pending && pending.type==='ally' && !dead);
+    var highlighted = !!pending && (isEnemy ? pending.type==='enemy'&&!dead :
+      (pending.type==='fallen' ? dead : pending.type==='ally'&&!dead));
+    if (highlighted) {
+      var ring=this.add.graphics();
+      ring.lineStyle(3,0xe9c375,1);
+      ring.strokeEllipse(0,-28,76,112);
+      node.add(ring);
+    }
+    if (canClick) {
+      var hit = this.add.zone(x, y - 32, Math.max(84, spacing || 105), 116)
+        .setInteractive({useHandCursor:true});
+      hit.on('pointerdown',function(){selectFighter(isEnemy?'enemy':'hero',isEnemy?unit.uid:unit.id);});
       this.units.add(hit);
     }
     this.units.add(node);
@@ -182,6 +234,7 @@
   }
 
   function wrapRender() {
+    if (pending && (!S || S.mode!=='battle' || !S.battle || S.battle.active!==pending.actor)) pending=null;
     if (host && host.isConnected) host.remove();
     originalRender();
     var slot = document.getElementById('phaser-mount-slot');
@@ -199,7 +252,7 @@
       }
     } else {
       if (game) { game.destroy(true); game = null; }
-      host = null; previous = {};
+      host = null; previous = {}; pending=null;
       document.body.classList.remove('phaser-live');
     }
   }
