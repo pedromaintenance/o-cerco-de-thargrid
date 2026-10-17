@@ -282,3 +282,12 @@ Executar **M0b → M1a**: criar snapshots verificados de combates de chefes (esp
 **Limitação importante:** os testes dos dez chefes verificam seus estados iniciais — **não** garantem que todas as dez batalhas foram vencidas nem o percurso completo de 60 dias. Mudanças de balanceamento devem ser explícitas.
 
 **Próxima etapa M1b:** extrair planejamento, validação e execução de comandos para funções puras; assegurar o contrato estado + comando → novo estado e eventos. Comparar efeitos reais de magias, itens, status e vitórias nos dias 1, 6 e 60 antes de migrar mais telas.
+
+
+### Publicação M0b/M1a — homologação CI (17/10/2026)
+
+- **PR #3:** [integrado à `main`](https://github.com/pedromaintenance/o-cerco-de-thargrid/pull/3), commit de merge squash `9ac70fda7ae3f92d6484e7b94214768b33228459`.
+- **23/23 testes Node aprovados** (seis originais + dezesseis cenários da nova suíte, incluindo 12 snapshots, e um teste extra): [CI da PR #39029177872](https://github.com/pedromaintenance/o-cerco-de-thargrid/actions/runs/39029177872).
+- **Chromium desktop e mobile aprovados**: ataques Phaser, recuperação de save no meio do combate e abertura da rota clássica com namespace próprio. A confirmação também ocorreu na [CI da main #39029331344](https://github.com/pedromaintenance/o-cerco-de-thargrid/actions/runs/39029331344) após o merge.
+- **GitHub Pages:** [build e deploy #39029331015](https://github.com/pedromaintenance/o-cerco-de-thargrid/actions/runs/39029331015) concluídos com sucesso; **[jogar a beta](https://pedromaintenance.github.io/o-cerco-de-thargrid/phaser-preview/?demo=1)**. O acesso HTTP público não foi verificável por uma segunda fonte nesta sessão; build/deploy atestados pelo próprio GitHub.
+- **Não homologado:** gameplay completo dos dias 1–60, todos os chefes até a vitória, importação de campanhas legadas, offline em dispositivo real, geração de cena Phaser para todo o jogo e reducer/dispatcher puro completo. Permanecem M1b/M3 futuros.
