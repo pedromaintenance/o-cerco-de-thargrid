@@ -459,3 +459,14 @@ Isolar resultado de combate (vitória, derrota, segunda fase, saque, experiênci
 - **Validação:** [CI #39046122835](https://github.com/pedromaintenance/o-cerco-de-thargrid/actions/runs/39046122835) passou com 88/88 testes Node e teste de retomada repetida desktop/mobile.
 
 **Limite:** essa verificação automatizada reduz a chance de regressão, mas não substitui QA em aparelhos físicos nem garante o comportamento de instalação/offline de todos os navegadores.
+
+
+### Publicação e homologação do M1e no GitHub Pages
+
+- **M1e:** [PR #7 integrado](https://github.com/pedromaintenance/o-cerco-de-thargrid/pull/7), squash `ef05f214f9868df9dcd2ddf51dc87ae567982afd`.
+- **Hotfix de retomada:** [PR #8 integrado](https://github.com/pedromaintenance/o-cerco-de-thargrid/pull/8), squash `79b6e648e121bcfb4a6df1a6f34658b14e30835b`. Evita reconstruir a tela de título durante a carga da ponte Phaser.
+- **CI pós-hotfix na `main`:** [execução #39046212881](https://github.com/pedromaintenance/o-cerco-de-thargrid/actions/runs/39046212881), concluída com sucesso: **88/88 testes Node**, Chromium desktop e mobile aprovados, com **três ciclos de recarregar/Continuar por sessão**, eventos de perigo ambiental, seleção de alvo, cura, ressurreição, isolamento de saves e engine local.
+- **Deploy GitHub Pages:** [execução #39046212333](https://github.com/pedromaintenance/o-cerco-de-thargrid/actions/runs/39046212333), concluída com sucesso. **[Testar Beta Phaser M1e](https://pedromaintenance.github.io/o-cerco-de-thargrid/phaser-preview/?demo=1)**.
+- **Segurança da publicação:** rota clássica `/` e save `thargrid_siege_save_v1` preservados; rota beta `/phaser-preview/` e save `thargrid_phaser_preview_save_v1` continuam separados.
+
+**Limites da homologação:** CI desktop/mobile usa Chromium emulado, não celulares físicos. Nem os 88 testes nem as 20 fixtures cobrem vitórias/derrotas de toda a campanha ou a instalação offline real. O próximo marco continua M1f (resultado do combate e simulações completas de chefes).
