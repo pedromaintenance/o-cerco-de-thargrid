@@ -1,8 +1,8 @@
 /* Isolated beta PWA scope: /phaser-preview/. Root production SW never captures this path. */
-const CACHE='thargrid-phaser-beta-v3';
+const CACHE='thargrid-phaser-beta-v4';
 const ASSETS=[
  './','./index.html','./preview.css','./bridge.js','./manifest.webmanifest',
- './vendor/phaser.min.js','../data.js','../core/combat.js','../core/actions.js','../app.js','../style.css',
+ './vendor/phaser.min.js','../data.js','../core/combat.js','../core/actions.js','../core/effects.js','../app.js','../style.css',
  '../icons/icon-192.png','../icons/icon-512.png'
 ];
 self.addEventListener('install',event=>{
