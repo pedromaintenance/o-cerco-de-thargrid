@@ -68,7 +68,10 @@ const address = 'http://127.0.0.1:4173';
       await page.waitForSelector('#phaser-surface canvas',{timeout:12000});
     }catch(error){
       console.error('RESUME DIAGNOSTICS',await page.evaluate(()=>({
-        mode:S?.mode,day:S?.day,round:S?.battle?.round,
+        mode:S?.mode,screen:screen,day:S?.day,round:S?.battle?.round,
+        notification:document.querySelector('.toast')?.innerText||document.querySelector('#toast')?.innerText,
+        continueButton:{exists:!!document.querySelector('[data-a=continue]'),disabled:document.querySelector('[data-a=continue]')?.disabled},
+        renderType:typeof render,modal:document.querySelector('#modal')?.innerText?.slice(0,150),
         active:S?.battle?.active,party:S?.battle?.party,
         foes:S?.battle?.foes?.map(f=>({uid:f.uid,hp:f.hp})),
         betaStatus:document.querySelector('#beta-status')?.textContent,
