@@ -60,14 +60,30 @@ const address = 'http://127.0.0.1:4173';
     assert.equal(after.version,1);
     assert.equal(await page.evaluate(()=>localStorage.getItem('thargrid_siege_save_v1')),null);
     assert.equal(await page.evaluate(()=>typeof ThargridCore),'object');
-    // Resume the actual Phaser battle from its saved snapshot after browser reload.
-    await page.reload({waitUntil:'domcontentloaded'});
-    await page.waitForSelector('[data-a="continue"]',{timeout:12000});
-    await page.click('[data-a="continue"]');
-    await page.waitForSelector('#phaser-surface canvas',{timeout:25000});
-    await page.waitForFunction(()=>document.body.classList.contains('phaser-live'));
-    const resumed=await page.evaluate(()=>JSON.parse(localStorage.getItem('thargrid_phaser_preview_save_v1')));
-    assert.deepEqual(resumed,after,'Reload must not change any battle or campaign state');
+    // Stress quick Continue clicks across three reloads. This used to race with
+    // the bridge's initial title redraw and silently discard a user's click.
+    for (let attempt=1;attempt<=3;attempt++) {
+      await page.reload({waitUntil:'domcontentloaded'});
+      await page.waitForSelector('[data-a="continue"]',{timeout:12000});
+      await page.click('[data-a="continue"]');
+      try {
+        await page.waitForSelector('#phaser-surface canvas',{timeout:12000});
+      }catch(error){
+        console.error('RESUME DIAGNOSTICS attempt '+attempt,await page.evaluate(()=>({
+          mode:S?.mode,screen:screen,day:S?.day,round:S?.battle?.round,
+          active:S?.battle?.active,
+          betaStatus:document.querySelector('#beta-status')?.textContent,
+          phaserPresent:typeof Phaser,corePresent:typeof ThargridRounds,
+          titleVisible:!!document.querySelector('[data-a=continue]'),
+          app:document.querySelector('#app')?.innerText?.slice(0,200),
+          isLive:document.body.classList.contains('phaser-live')
+        })),errors);
+        throw error;
+      }
+      await page.waitForFunction(()=>document.body.classList.contains('phaser-live'));
+      const resumed=await page.evaluate(()=>JSON.parse(localStorage.getItem('thargrid_phaser_preview_save_v1')));
+      assert.deepEqual(resumed,after,'Reload must not change the saved battle, attempt '+attempt);
+    }
     // Controlled in-battle fixture: verify skill and item menus dispatch to canvas targets.
     await page.evaluate(()=>{S.battle.active='eirik';render();});
     await page.click('[data-a="battleSkills"]');

@@ -448,3 +448,14 @@ Separar perigo ambiental e geração da fila de iniciativas por rodada, preserva
 ### Próximo marco M1f
 
 Isolar resultado de combate (vitória, derrota, segunda fase, saque, experiência e continuidade do dia) de `app.js` em um núcleo testável por estados/eventos. Adicionar simulações controladas de **chefes até a vitória ou derrota**, começando pelos dias 6, 30 e 60, antes de substituir mais componentes de interface.
+
+
+### Correção de estabilidade na retomada da beta Phaser (17/10/2026)
+
+- **PR #8:** [correção da tela Continuar](https://github.com/pedromaintenance/o-cerco-de-thargrid/pull/8) após observar falha intermitente em Chromium na retomada do combate. A partida e o save permaneciam válidos; o canvas não era exibido em algumas tentativas.
+- **Causa provável identificada na inicialização:** a ponte Phaser redesenhava a tela de título logo após `app.js` criá-la. Quando o usuário clicava em **Continuar** durante o carregamento, a substituição do botão podia descartar o clique. O `bridge.js` agora só faz a renderização inicial adicional se a tela já não for `title`.
+- **Status de carregamento aprimorado:** engine pronta mostra aviso mesmo quando não há batalha em tela.
+- **Teste ampliado:** o Chromium executa três ciclos completos de reload → Continuar → canvas por sessão em desktop e mobile, exigindo que o JSON salvo permaneça idêntico em todos. Na falha, imprime tela atual, modo e estado de bridge para diagnóstico.
+- **Validação:** [CI #39046122835](https://github.com/pedromaintenance/o-cerco-de-thargrid/actions/runs/39046122835) passou com 88/88 testes Node e teste de retomada repetida desktop/mobile.
+
+**Limite:** essa verificação automatizada reduz a chance de regressão, mas não substitui QA em aparelhos físicos nem garante o comportamento de instalação/offline de todos os navegadores.
