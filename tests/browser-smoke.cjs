@@ -48,8 +48,27 @@ const address = 'http://127.0.0.1:4173';
     const after=await page.evaluate(()=>JSON.parse(localStorage.getItem('thargrid_phaser_preview_save_v1')));
     assert.equal(after.version,1);
     assert.equal(await page.evaluate(()=>localStorage.getItem('thargrid_siege_save_v1')),null);
+    assert.equal(await page.evaluate(()=>typeof ThargridCore),'object');
+    // Resume the actual Phaser battle from its saved snapshot after browser reload.
+    await page.reload({waitUntil:'domcontentloaded'});
+    await page.waitForSelector('[data-a="continue"]',{timeout:12000});
+    await page.click('[data-a="continue"]');
+    await page.waitForSelector('#phaser-surface canvas',{timeout:25000});
+    await page.waitForFunction(()=>document.body.classList.contains('phaser-live'));
+    const resumed=await page.evaluate(()=>JSON.parse(localStorage.getItem('thargrid_phaser_preview_save_v1')));
+    assert.deepEqual(resumed,after,'Reload must not change any battle or campaign state');
+    // The classic route still starts independently even with a saved Phaser beta in this browser.
+    const classic=await context.newPage();
+    const classicErrors=[];
+    classic.on('pageerror',e=>classicErrors.push(e.message));
+    await classic.goto(address+'/index.html',{waitUntil:'domcontentloaded'});
+    await classic.waitForSelector('[data-a="start"]',{timeout:12000});
+    assert.equal(await classic.evaluate(()=>typeof ThargridCore),'object');
+    assert.equal(await classic.evaluate(()=>localStorage.getItem('thargrid_siege_save_v1')),null);
+    assert.ok(!classicErrors.length,'Classic errors: '+classicErrors.join(' | '));
+    await classic.close();
     assert.ok(!errors.length,'Page errors: '+errors.join(' | '));
-    console.log((mobile?'MOBILE':'DESKTOP')+' PASS Phaser canvas + council + battle + touch + isolated save');
+    console.log((mobile?'MOBILE':'DESKTOP')+' PASS Phaser canvas + council + battle + touch + reload + classic isolation');
     await page.close();
     await context.close();
   }

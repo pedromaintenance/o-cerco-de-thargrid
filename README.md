@@ -2,7 +2,7 @@
 
 PWA completo e estático, projetado para tela de celular e para funcionar totalmente offline após a primeira instalação.
 
-**Migração Phaser 4 em desenvolvimento:** [ROADMAP-PHASER.md](ROADMAP-PHASER.md) — auditoria, referências, marcos M0–M8 e registro da execução. **Prévia de batalha em Phaser:** [Abrir a beta separada](https://pedromaintenance.github.io/o-cerco-de-thargrid/phaser-preview/?demo=1). A versão clássica da raiz segue em produção e o save da beta é separado. A beta ainda não possui paridade certificada nem teste em dispositivo físico.
+**Migração Phaser 4 em desenvolvimento:** [ROADMAP-PHASER.md](ROADMAP-PHASER.md) — auditoria, referências, marcos M0–M8 e registro da execução. **Prévia de batalha em Phaser:** [Abrir a beta separada](https://pedromaintenance.github.io/o-cerco-de-thargrid/phaser-preview/?demo=1). A versão clássica da raiz segue em produção e o save da beta é separado. A beta ainda não possui paridade certificada nem teste em dispositivo físico. O núcleo `core/combat.js` passa a ser compartilhado entre ambas as versões, com doze snapshots de regressão das batalhas iniciais dos chefes; detalhes no roadmap.
 
 ## Publicar no GitHub Pages
 1. Extraia este ZIP. Envie **todos os arquivos** (inclusive `icons/`) para a **raiz** de um repositório público no GitHub. O arquivo inicial precisa se chamar `index.html`.
