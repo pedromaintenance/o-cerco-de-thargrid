@@ -322,3 +322,12 @@ Executar **M0b → M1a**: criar snapshots verificados de combates de chefes (esp
 **Escopo não homologado:** fim a fim dos dez chefes, campanha completa de 60 dias, execução totalmente pura das regras, navegador físico Android/iOS e instalação PWA offline. A beta ainda usa menus HTML para escolher habilidades/itens.
 
 **Próximo M1c:** extrair a execução de efeitos de combate e publicar eventos observáveis para Phaser sem recalcular regras. Depois, validar cenários completos de chefes e retomar persistência de RNG.
+
+
+### Publicação confirmada do M1b/M3b — GitHub Pages
+
+- **PR #4 integrado à `main`:** [comparar entrega](https://github.com/pedromaintenance/o-cerco-de-thargrid/pull/4), squash `ea77a4bbab08a1cef3c84894daf8388ae964e9ea`.
+- **Validação pré-merge:** [CI #39033872977](https://github.com/pedromaintenance/o-cerco-de-thargrid/actions/runs/39033872977) — 41/41 testes Node, Chromium desktop e mobile aprovados com alvos Phaser e lista alternativa.
+- **Validação na main:** [CI #39034015796](https://github.com/pedromaintenance/o-cerco-de-thargrid/actions/runs/39034015796) — sucesso.
+- **GitHub Pages:** [deploy #39034015663](https://github.com/pedromaintenance/o-cerco-de-thargrid/actions/runs/39034015663) concluído com sucesso. [**Abrir beta Phaser**](https://pedromaintenance.github.io/o-cerco-de-thargrid/phaser-preview/?demo=1). A confirmação é do GitHub Actions; QA em dispositivo físico continua pendente.
+- **Rollback:** a versão clássica em `/` mantém save `thargrid_siege_save_v1` e permanece separada; beta em `/phaser-preview/` usa `thargrid_phaser_preview_save_v1`.
