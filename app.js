@@ -73,7 +73,7 @@ function beginBattle(){publishCombatFeedback([]);if((S.day-1)%6===0&&!S.flags['c
 function fighter(side,id){return side==='hero'?hero(id):S.battle.foes.find(e=>e.uid===id)}
 function aliveUnit(side,id){let x=fighter(side,id);return !!x&&(side==='hero'?x.alive&&x.hp>0:x.hp>0&&!x.dead)}
 function createRound(){
- const result=ThargridRounds.applyRoundStart(S,raid().hazard,{
+ const result=ThargridRounds.applyRoundStart(S,RAIDS[S.battle.event-1].hazard,{
    core:ThargridCore,effects:ThargridEffects,heroes:HEROES,classes:CLASSES
  });
  S=result.state;
