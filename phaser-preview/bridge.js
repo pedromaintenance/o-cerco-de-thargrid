@@ -28,11 +28,7 @@
     return S.battle;
   }
 
-  function BattleScene() {
-    Phaser.Scene.call(this, { key: 'SiegeBattle' });
-  }
-  BattleScene.prototype = Object.create(Phaser.Scene.prototype);
-  BattleScene.prototype.constructor = BattleScene;
+  function BattleScene() { /* shared scene methods; instantiated only after Phaser loads */ }
 
   BattleScene.prototype.create = function () {
     var g = this.add.graphics();
@@ -164,12 +160,18 @@
   function start() {
     if (game || !host || !host.isConnected || !engineReady || !stateOf()) return;
     try {
+      class SiegeBattleScene extends Phaser.Scene {
+        constructor() { super({key:'SiegeBattle'}); }
+        create() { return BattleScene.prototype.create.call(this); }
+        sync() { return BattleScene.prototype.sync.call(this); }
+        fighterNode(...args) { return BattleScene.prototype.fighterNode.apply(this,args); }
+      }
       game = new Phaser.Game({
         type:Phaser.AUTO, parent:host, width:RENDER_W, height:RENDER_H,
         backgroundColor:'#090e16',
         render:{pixelArt:true,antialias:false},
         scale:{mode:Phaser.Scale.FIT,autoCenter:Phaser.Scale.CENTER_BOTH},
-        scene:[BattleScene]
+        scene:[SiegeBattleScene]
       });
       document.body.classList.add('phaser-live');
       info('Phaser 4.2.1 ativo · ações calculadas pelo motor original');
