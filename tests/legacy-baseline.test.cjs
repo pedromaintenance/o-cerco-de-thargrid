@@ -10,6 +10,7 @@ const vm = require('node:vm');
 const ROOT = path.resolve(__dirname, '..');
 const data = fs.readFileSync(path.join(ROOT,'data.js'),'utf8');
 const core = fs.readFileSync(path.join(ROOT,'core/combat.js'),'utf8');
+const actions = fs.readFileSync(path.join(ROOT,'core/actions.js'),'utf8');
 const app = fs.readFileSync(path.join(ROOT,'app.js'),'utf8');
 const serviceWorker = fs.readFileSync(path.join(ROOT,'sw.js'),'utf8');
 const betaWorker = fs.readFileSync(path.join(ROOT,'phaser-preview/sw.js'),'utf8');
@@ -37,6 +38,7 @@ function runtime(seed=7, preview=false) {
     Blob:class {}, URL:class {}});
   vm.runInContext(data,ctx,{filename:'data.js'});
   vm.runInContext(core,ctx,{filename:'core/combat.js'});
+  vm.runInContext(actions,ctx,{filename:'core/actions.js'});
   vm.runInContext(app,ctx,{filename:'app.js'});
   const exec = code => vm.runInContext(code,ctx);
   return {exec,saved};
@@ -95,10 +97,10 @@ test('replayed first siege with seeded random is deterministic and persists its 
  assert.equal(a.state.version,1);
 });
 test('root and beta cache versions are distinct; root excludes preview path',()=>{
- assert.match(serviceWorker,/thargrid-pwa-v1\.0\.3/);
- assert.match(app,/caches\.open\('thargrid-pwa-v1\.0\.3'\)/);
+ assert.match(serviceWorker,/thargrid-pwa-v1\.0\.4/);
+ assert.match(app,/caches\.open\('thargrid-pwa-v1\.0\.4'\)/);
  assert.match(serviceWorker,/u\.pathname\.startsWith\(previewPath\)/);
- assert.match(betaWorker,/thargrid-phaser-beta-v2/);
+ assert.match(betaWorker,/thargrid-phaser-beta-v3/);
  assert.match(betaWorker,/\.\/vendor\/phaser\.min\.js/);
 });
 test('Phaser adapter never changes damage, status, battle turns or saves',()=>{

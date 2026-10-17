@@ -1,0 +1,1615 @@
+{
+  "source_commit": "9ac70fda7ae3f92d6484e7b94214768b33228459",
+  "seed": 555,
+  "description": "Action snapshots from the production classic M1a app.js, before pure action planning; includes damage, guard, ally healing, four items and invalid target.",
+  "fixtures": [
+    {
+      "scenario": {
+        "key": "attack",
+        "day": 1,
+        "actor": "dara",
+        "target": "e0",
+        "kind": "skill"
+      },
+      "expected": {
+        "day": 1,
+        "mode": "battle",
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 113,
+            "mp": 12,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "mp": 16,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          },
+          {
+            "id": "serena",
+            "hp": 72,
+            "mp": 45,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          }
+        ],
+        "foes": [
+          {
+            "uid": "e0",
+            "id": "goblin",
+            "name": "Batedor goblin",
+            "icon": "⚔️",
+            "hp": 0,
+            "maxhp": 26,
+            "atk": 8,
+            "spd": 5,
+            "ai": "skirmish",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": true
+          },
+          {
+            "uid": "e1",
+            "id": "elfScout",
+            "name": "Arqueiro da Corte",
+            "icon": "🏹",
+            "hp": 30,
+            "maxhp": 30,
+            "atk": 10,
+            "spd": 10,
+            "ai": "archer",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e2",
+            "id": "goblin",
+            "name": "Batedor goblin",
+            "icon": "⚔️",
+            "hp": 26,
+            "maxhp": 26,
+            "atk": 8,
+            "spd": 5,
+            "ai": "skirmish",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          }
+        ],
+        "active": "serena",
+        "round": 1,
+        "logs": [
+          "Dara Passo-de-Folha usa Ataque: Batedor goblin −27 PV.",
+          "Batedor goblin foi derrotado.",
+          "Dia 1: Sinos sob a neve",
+          "Goblins desarmados são empurrados à frente de batedores shadow fey. A Corte mede o tempo entre o alarme e a chegada da guarda.",
+          "A defesa do setor Passo Norte cede antes do combate: a companhia recebe danos na aproximação.",
+          "— Rodada 1 —"
+        ],
+        "inventory": {
+          "tonic": 6,
+          "ether": 4,
+          "phoenix": 2,
+          "antidote": 2
+        },
+        "history": [],
+        "victories": 0
+      }
+    },
+    {
+      "scenario": {
+        "key": "aim",
+        "day": 1,
+        "actor": "dara",
+        "target": "e0",
+        "kind": "skill"
+      },
+      "expected": {
+        "day": 1,
+        "mode": "battle",
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 113,
+            "mp": 12,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "mp": 13,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          },
+          {
+            "id": "serena",
+            "hp": 72,
+            "mp": 45,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          }
+        ],
+        "foes": [
+          {
+            "uid": "e0",
+            "id": "goblin",
+            "name": "Batedor goblin",
+            "icon": "⚔️",
+            "hp": 0,
+            "maxhp": 26,
+            "atk": 8,
+            "spd": 5,
+            "ai": "skirmish",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": true
+          },
+          {
+            "uid": "e1",
+            "id": "elfScout",
+            "name": "Arqueiro da Corte",
+            "icon": "🏹",
+            "hp": 30,
+            "maxhp": 30,
+            "atk": 10,
+            "spd": 10,
+            "ai": "archer",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e2",
+            "id": "goblin",
+            "name": "Batedor goblin",
+            "icon": "⚔️",
+            "hp": 26,
+            "maxhp": 26,
+            "atk": 8,
+            "spd": 5,
+            "ai": "skirmish",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          }
+        ],
+        "active": "serena",
+        "round": 1,
+        "logs": [
+          "Dara Passo-de-Folha usa Flecha certeira: Batedor goblin −40 PV.",
+          "Batedor goblin foi derrotado.",
+          "Dia 1: Sinos sob a neve",
+          "Goblins desarmados são empurrados à frente de batedores shadow fey. A Corte mede o tempo entre o alarme e a chegada da guarda.",
+          "A defesa do setor Passo Norte cede antes do combate: a companhia recebe danos na aproximação.",
+          "— Rodada 1 —"
+        ],
+        "inventory": {
+          "tonic": 6,
+          "ether": 4,
+          "phoenix": 2,
+          "antidote": 2
+        },
+        "history": [],
+        "victories": 0
+      }
+    },
+    {
+      "scenario": {
+        "key": "shieldBash",
+        "day": 6,
+        "actor": "brunna",
+        "target": "e0",
+        "kind": "skill"
+      },
+      "expected": {
+        "day": 6,
+        "mode": "battle",
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 113,
+            "mp": 9,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "mp": 16,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          },
+          {
+            "id": "serena",
+            "hp": 72,
+            "mp": 45,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          }
+        ],
+        "foes": [
+          {
+            "uid": "e0",
+            "id": "duelist",
+            "name": "Duelista shadow fey",
+            "icon": "🗡️",
+            "hp": 22,
+            "maxhp": 45,
+            "atk": 13,
+            "spd": 12,
+            "ai": "assassin",
+            "type": "shadow",
+            "status": {
+              "stun": 1
+            },
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e1",
+            "id": "ogre",
+            "name": "Ogro mercenário",
+            "icon": "👹",
+            "hp": 74,
+            "maxhp": 74,
+            "atk": 14,
+            "spd": 3,
+            "ai": "brute",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e2",
+            "id": "elfMage",
+            "name": "Tecelã da Corte",
+            "icon": "🔮",
+            "hp": 33,
+            "maxhp": 33,
+            "atk": 12,
+            "spd": 9,
+            "ai": "mage",
+            "type": "arcane",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          }
+        ],
+        "active": "serena",
+        "round": 1,
+        "logs": [
+          "Brunna Rompeferro usa Golpe de escudo: Duelista shadow fey −23 PV.",
+          "Dia 6: O capitão sem rosto",
+          "O estrategista que conduziu os ataques chega sem estandarte. Derrotá-lo é negar à Corte seu primeiro mapa da montanha.",
+          "A defesa do setor Passo Norte cede antes do combate: a companhia recebe danos na aproximação.",
+          "— Rodada 1 —"
+        ],
+        "inventory": {
+          "tonic": 6,
+          "ether": 4,
+          "phoenix": 2,
+          "antidote": 2
+        },
+        "history": [],
+        "victories": 0
+      }
+    },
+    {
+      "scenario": {
+        "key": "arcaneBolt",
+        "day": 1,
+        "actor": "eirik",
+        "target": "e0",
+        "kind": "skill"
+      },
+      "expected": {
+        "day": 1,
+        "mode": "battle",
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 113,
+            "mp": 12,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "mp": 16,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 45,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          },
+          {
+            "id": "serena",
+            "hp": 72,
+            "mp": 45,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          }
+        ],
+        "foes": [
+          {
+            "uid": "e0",
+            "id": "goblin",
+            "name": "Batedor goblin",
+            "icon": "⚔️",
+            "hp": 0,
+            "maxhp": 26,
+            "atk": 8,
+            "spd": 5,
+            "ai": "skirmish",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": true
+          },
+          {
+            "uid": "e1",
+            "id": "elfScout",
+            "name": "Arqueiro da Corte",
+            "icon": "🏹",
+            "hp": 30,
+            "maxhp": 30,
+            "atk": 10,
+            "spd": 10,
+            "ai": "archer",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e2",
+            "id": "goblin",
+            "name": "Batedor goblin",
+            "icon": "⚔️",
+            "hp": 26,
+            "maxhp": 26,
+            "atk": 8,
+            "spd": 5,
+            "ai": "skirmish",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          }
+        ],
+        "active": "serena",
+        "round": 1,
+        "logs": [
+          "Eirik Sigilano usa Dardo arcano: Batedor goblin −52 PV.",
+          "Batedor goblin foi derrotado.",
+          "Dia 1: Sinos sob a neve",
+          "Goblins desarmados são empurrados à frente de batedores shadow fey. A Corte mede o tempo entre o alarme e a chegada da guarda.",
+          "A defesa do setor Passo Norte cede antes do combate: a companhia recebe danos na aproximação.",
+          "— Rodada 1 —"
+        ],
+        "inventory": {
+          "tonic": 6,
+          "ether": 4,
+          "phoenix": 2,
+          "antidote": 2
+        },
+        "history": [],
+        "victories": 0
+      }
+    },
+    {
+      "scenario": {
+        "key": "guard",
+        "day": 1,
+        "actor": "brunna",
+        "target": null,
+        "kind": "skill"
+      },
+      "expected": {
+        "day": 1,
+        "mode": "battle",
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 113,
+            "mp": 12,
+            "barrier": 32,
+            "status": {},
+            "injured": 0
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "mp": 16,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          },
+          {
+            "id": "serena",
+            "hp": 72,
+            "mp": 45,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          }
+        ],
+        "foes": [
+          {
+            "uid": "e0",
+            "id": "goblin",
+            "name": "Batedor goblin",
+            "icon": "⚔️",
+            "hp": 26,
+            "maxhp": 26,
+            "atk": 8,
+            "spd": 5,
+            "ai": "skirmish",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e1",
+            "id": "elfScout",
+            "name": "Arqueiro da Corte",
+            "icon": "🏹",
+            "hp": 30,
+            "maxhp": 30,
+            "atk": 10,
+            "spd": 10,
+            "ai": "archer",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e2",
+            "id": "goblin",
+            "name": "Batedor goblin",
+            "icon": "⚔️",
+            "hp": 26,
+            "maxhp": 26,
+            "atk": 8,
+            "spd": 5,
+            "ai": "skirmish",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          }
+        ],
+        "active": "serena",
+        "round": 1,
+        "logs": [
+          "Brunna Rompeferro usa Defender: assume posição defensiva.",
+          "Dia 1: Sinos sob a neve",
+          "Goblins desarmados são empurrados à frente de batedores shadow fey. A Corte mede o tempo entre o alarme e a chegada da guarda.",
+          "A defesa do setor Passo Norte cede antes do combate: a companhia recebe danos na aproximação.",
+          "— Rodada 1 —"
+        ],
+        "inventory": {
+          "tonic": 6,
+          "ether": 4,
+          "phoenix": 2,
+          "antidote": 2
+        },
+        "history": [],
+        "victories": 0
+      }
+    },
+    {
+      "scenario": {
+        "key": "heal",
+        "day": 1,
+        "actor": "serena",
+        "target": "brunna",
+        "kind": "skill",
+        "setup": "injured"
+      },
+      "expected": {
+        "day": 1,
+        "mode": "battle",
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 100,
+            "mp": 12,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "mp": 16,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          },
+          {
+            "id": "serena",
+            "hp": 72,
+            "mp": 38,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          }
+        ],
+        "foes": [
+          {
+            "uid": "e0",
+            "id": "goblin",
+            "name": "Batedor goblin",
+            "icon": "⚔️",
+            "hp": 26,
+            "maxhp": 26,
+            "atk": 8,
+            "spd": 5,
+            "ai": "skirmish",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e1",
+            "id": "elfScout",
+            "name": "Arqueiro da Corte",
+            "icon": "🏹",
+            "hp": 30,
+            "maxhp": 30,
+            "atk": 10,
+            "spd": 10,
+            "ai": "archer",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e2",
+            "id": "goblin",
+            "name": "Batedor goblin",
+            "icon": "⚔️",
+            "hp": 26,
+            "maxhp": 26,
+            "atk": 8,
+            "spd": 5,
+            "ai": "skirmish",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          }
+        ],
+        "active": "serena",
+        "round": 1,
+        "logs": [
+          "Serena da Forja Clara usa Curar ferimentos: Brunna Rompeferro +77 PV.",
+          "Dia 1: Sinos sob a neve",
+          "Goblins desarmados são empurrados à frente de batedores shadow fey. A Corte mede o tempo entre o alarme e a chegada da guarda.",
+          "A defesa do setor Passo Norte cede antes do combate: a companhia recebe danos na aproximação.",
+          "— Rodada 1 —"
+        ],
+        "inventory": {
+          "tonic": 6,
+          "ether": 4,
+          "phoenix": 2,
+          "antidote": 2
+        },
+        "history": [],
+        "victories": 0
+      }
+    },
+    {
+      "scenario": {
+        "key": "blessing",
+        "day": 1,
+        "actor": "serena",
+        "target": "brunna",
+        "kind": "skill"
+      },
+      "expected": {
+        "day": 1,
+        "mode": "battle",
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 113,
+            "mp": 12,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "mp": 16,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          },
+          {
+            "id": "serena",
+            "hp": 72,
+            "mp": 45,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          }
+        ],
+        "foes": [
+          {
+            "uid": "e0",
+            "id": "goblin",
+            "name": "Batedor goblin",
+            "icon": "⚔️",
+            "hp": 26,
+            "maxhp": 26,
+            "atk": 8,
+            "spd": 5,
+            "ai": "skirmish",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e1",
+            "id": "elfScout",
+            "name": "Arqueiro da Corte",
+            "icon": "🏹",
+            "hp": 30,
+            "maxhp": 30,
+            "atk": 10,
+            "spd": 10,
+            "ai": "archer",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e2",
+            "id": "goblin",
+            "name": "Batedor goblin",
+            "icon": "⚔️",
+            "hp": 26,
+            "maxhp": 26,
+            "atk": 8,
+            "spd": 5,
+            "ai": "skirmish",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          }
+        ],
+        "active": "serena",
+        "round": 1,
+        "logs": [
+          "Dia 1: Sinos sob a neve",
+          "Goblins desarmados são empurrados à frente de batedores shadow fey. A Corte mede o tempo entre o alarme e a chegada da guarda.",
+          "A defesa do setor Passo Norte cede antes do combate: a companhia recebe danos na aproximação.",
+          "— Rodada 1 —"
+        ],
+        "inventory": {
+          "tonic": 6,
+          "ether": 4,
+          "phoenix": 2,
+          "antidote": 2
+        },
+        "history": [],
+        "victories": 0
+      }
+    },
+    {
+      "scenario": {
+        "key": "attack",
+        "day": 60,
+        "actor": "dara",
+        "target": "e0",
+        "kind": "skill"
+      },
+      "expected": {
+        "day": 60,
+        "mode": "battle",
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 76,
+            "mp": 12,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "mp": 16,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          },
+          {
+            "id": "serena",
+            "hp": 0,
+            "mp": 45,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          }
+        ],
+        "foes": [
+          {
+            "uid": "e0",
+            "id": "nightavatar",
+            "name": "Manifestação da Rainha",
+            "icon": "👑",
+            "hp": 839,
+            "maxhp": 860,
+            "atk": 58,
+            "spd": 17,
+            "ai": "final",
+            "type": "shadow",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e1",
+            "id": "nightmarshal",
+            "name": "Marechal da Noite",
+            "icon": "♜",
+            "hp": 545,
+            "maxhp": 545,
+            "atk": 49,
+            "spd": 15,
+            "ai": "boss",
+            "type": "shadow",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e2",
+            "id": "voidbeast",
+            "name": "Devorador do Véu",
+            "icon": "🪐",
+            "hp": 454,
+            "maxhp": 454,
+            "atk": 44,
+            "spd": 13,
+            "ai": "boss",
+            "type": "shadow",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          }
+        ],
+        "active": "eirik",
+        "round": 1,
+        "logs": [
+          "🪐 Devorador do Véu atinge Brunna Rompeferro (37 dano).",
+          "♜ Marechal da Noite atinge Serena da Forja Clara (48 dano).",
+          "Serena da Forja Clara cai em batalha!",
+          "👑 Manifestação da Rainha atinge Serena da Forja Clara (57 dano).",
+          "Dara Passo-de-Folha usa Ataque: Manifestação da Rainha −21 PV.",
+          "Dia 60: A Noite à Porta de Thargrid",
+          "A Rainha não abandona seu trono. Envia sua manifestação de cerco, feita de juramentos quebrados e sangue feérico. O destino do Reino Sob a Montanha será decidido por quatro defensores exaustos.",
+          "A defesa do setor Portão de Ossos cede antes do combate: a companhia recebe danos na aproximação.",
+          "— Rodada 1 —"
+        ],
+        "inventory": {
+          "tonic": 6,
+          "ether": 4,
+          "phoenix": 2,
+          "antidote": 2
+        },
+        "history": [],
+        "victories": 0
+      }
+    },
+    {
+      "scenario": {
+        "key": "tonic",
+        "day": 1,
+        "actor": "eirik",
+        "target": "brunna",
+        "kind": "item",
+        "setup": "injured"
+      },
+      "expected": {
+        "day": 1,
+        "mode": "battle",
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 69,
+            "mp": 12,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "mp": 16,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          },
+          {
+            "id": "serena",
+            "hp": 72,
+            "mp": 45,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          }
+        ],
+        "foes": [
+          {
+            "uid": "e0",
+            "id": "goblin",
+            "name": "Batedor goblin",
+            "icon": "⚔️",
+            "hp": 26,
+            "maxhp": 26,
+            "atk": 8,
+            "spd": 5,
+            "ai": "skirmish",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e1",
+            "id": "elfScout",
+            "name": "Arqueiro da Corte",
+            "icon": "🏹",
+            "hp": 30,
+            "maxhp": 30,
+            "atk": 10,
+            "spd": 10,
+            "ai": "archer",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e2",
+            "id": "goblin",
+            "name": "Batedor goblin",
+            "icon": "⚔️",
+            "hp": 26,
+            "maxhp": 26,
+            "atk": 8,
+            "spd": 5,
+            "ai": "skirmish",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          }
+        ],
+        "active": "serena",
+        "round": 1,
+        "logs": [
+          "Eirik Sigilano usa Tônico de vida: Brunna Rompeferro recupera 46 PV.",
+          "Dia 1: Sinos sob a neve",
+          "Goblins desarmados são empurrados à frente de batedores shadow fey. A Corte mede o tempo entre o alarme e a chegada da guarda.",
+          "A defesa do setor Passo Norte cede antes do combate: a companhia recebe danos na aproximação.",
+          "— Rodada 1 —"
+        ],
+        "inventory": {
+          "tonic": 5,
+          "ether": 4,
+          "phoenix": 2,
+          "antidote": 2
+        },
+        "history": [],
+        "victories": 0
+      }
+    },
+    {
+      "scenario": {
+        "key": "ether",
+        "day": 1,
+        "actor": "eirik",
+        "target": "serena",
+        "kind": "item",
+        "setup": "outmp"
+      },
+      "expected": {
+        "day": 1,
+        "mode": "battle",
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 113,
+            "mp": 12,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "mp": 16,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          },
+          {
+            "id": "serena",
+            "hp": 72,
+            "mp": 25,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          }
+        ],
+        "foes": [
+          {
+            "uid": "e0",
+            "id": "goblin",
+            "name": "Batedor goblin",
+            "icon": "⚔️",
+            "hp": 26,
+            "maxhp": 26,
+            "atk": 8,
+            "spd": 5,
+            "ai": "skirmish",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e1",
+            "id": "elfScout",
+            "name": "Arqueiro da Corte",
+            "icon": "🏹",
+            "hp": 30,
+            "maxhp": 30,
+            "atk": 10,
+            "spd": 10,
+            "ai": "archer",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e2",
+            "id": "goblin",
+            "name": "Batedor goblin",
+            "icon": "⚔️",
+            "hp": 26,
+            "maxhp": 26,
+            "atk": 8,
+            "spd": 5,
+            "ai": "skirmish",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          }
+        ],
+        "active": "serena",
+        "round": 1,
+        "logs": [
+          "Eirik Sigilano usa Éter rúnico: Serena da Forja Clara recupera 24 MP.",
+          "Dia 1: Sinos sob a neve",
+          "Goblins desarmados são empurrados à frente de batedores shadow fey. A Corte mede o tempo entre o alarme e a chegada da guarda.",
+          "A defesa do setor Passo Norte cede antes do combate: a companhia recebe danos na aproximação.",
+          "— Rodada 1 —"
+        ],
+        "inventory": {
+          "tonic": 6,
+          "ether": 3,
+          "phoenix": 2,
+          "antidote": 2
+        },
+        "history": [],
+        "victories": 0
+      }
+    },
+    {
+      "scenario": {
+        "key": "phoenix",
+        "day": 1,
+        "actor": "serena",
+        "target": "brunna",
+        "kind": "item",
+        "setup": "fallen"
+      },
+      "expected": {
+        "day": 1,
+        "mode": "battle",
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 32,
+            "mp": 12,
+            "barrier": 0,
+            "status": {},
+            "injured": 2
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "mp": 16,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          },
+          {
+            "id": "serena",
+            "hp": 72,
+            "mp": 45,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          }
+        ],
+        "foes": [
+          {
+            "uid": "e0",
+            "id": "goblin",
+            "name": "Batedor goblin",
+            "icon": "⚔️",
+            "hp": 26,
+            "maxhp": 26,
+            "atk": 8,
+            "spd": 5,
+            "ai": "skirmish",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e1",
+            "id": "elfScout",
+            "name": "Arqueiro da Corte",
+            "icon": "🏹",
+            "hp": 30,
+            "maxhp": 30,
+            "atk": 10,
+            "spd": 10,
+            "ai": "archer",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e2",
+            "id": "goblin",
+            "name": "Batedor goblin",
+            "icon": "⚔️",
+            "hp": 26,
+            "maxhp": 26,
+            "atk": 8,
+            "spd": 5,
+            "ai": "skirmish",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          }
+        ],
+        "active": "serena",
+        "round": 1,
+        "logs": [
+          "Serena da Forja Clara usa Cinza da Chama: Brunna Rompeferro regressa ao combate.",
+          "Dia 1: Sinos sob a neve",
+          "Goblins desarmados são empurrados à frente de batedores shadow fey. A Corte mede o tempo entre o alarme e a chegada da guarda.",
+          "A defesa do setor Passo Norte cede antes do combate: a companhia recebe danos na aproximação.",
+          "— Rodada 1 —"
+        ],
+        "inventory": {
+          "tonic": 6,
+          "ether": 4,
+          "phoenix": 1,
+          "antidote": 2
+        },
+        "history": [],
+        "victories": 0
+      }
+    },
+    {
+      "scenario": {
+        "key": "antidote",
+        "day": 1,
+        "actor": "eirik",
+        "target": "brunna",
+        "kind": "item",
+        "setup": "poison"
+      },
+      "expected": {
+        "day": 1,
+        "mode": "battle",
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 113,
+            "mp": 12,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "mp": 16,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          },
+          {
+            "id": "serena",
+            "hp": 72,
+            "mp": 45,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          }
+        ],
+        "foes": [
+          {
+            "uid": "e0",
+            "id": "goblin",
+            "name": "Batedor goblin",
+            "icon": "⚔️",
+            "hp": 26,
+            "maxhp": 26,
+            "atk": 8,
+            "spd": 5,
+            "ai": "skirmish",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e1",
+            "id": "elfScout",
+            "name": "Arqueiro da Corte",
+            "icon": "🏹",
+            "hp": 30,
+            "maxhp": 30,
+            "atk": 10,
+            "spd": 10,
+            "ai": "archer",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e2",
+            "id": "goblin",
+            "name": "Batedor goblin",
+            "icon": "⚔️",
+            "hp": 26,
+            "maxhp": 26,
+            "atk": 8,
+            "spd": 5,
+            "ai": "skirmish",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          }
+        ],
+        "active": "serena",
+        "round": 1,
+        "logs": [
+          "Eirik Sigilano usa Erva purificadora: Brunna Rompeferro foi purificado.",
+          "Dia 1: Sinos sob a neve",
+          "Goblins desarmados são empurrados à frente de batedores shadow fey. A Corte mede o tempo entre o alarme e a chegada da guarda.",
+          "A defesa do setor Passo Norte cede antes do combate: a companhia recebe danos na aproximação.",
+          "— Rodada 1 —"
+        ],
+        "inventory": {
+          "tonic": 6,
+          "ether": 4,
+          "phoenix": 2,
+          "antidote": 1
+        },
+        "history": [],
+        "victories": 0
+      }
+    },
+    {
+      "scenario": {
+        "key": "attack",
+        "day": 1,
+        "actor": "dara",
+        "target": "absent",
+        "kind": "skill"
+      },
+      "expected": {
+        "day": 1,
+        "mode": "battle",
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 113,
+            "mp": 12,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "mp": 16,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          },
+          {
+            "id": "serena",
+            "hp": 72,
+            "mp": 45,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          }
+        ],
+        "foes": [
+          {
+            "uid": "e0",
+            "id": "goblin",
+            "name": "Batedor goblin",
+            "icon": "⚔️",
+            "hp": 26,
+            "maxhp": 26,
+            "atk": 8,
+            "spd": 5,
+            "ai": "skirmish",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e1",
+            "id": "elfScout",
+            "name": "Arqueiro da Corte",
+            "icon": "🏹",
+            "hp": 30,
+            "maxhp": 30,
+            "atk": 10,
+            "spd": 10,
+            "ai": "archer",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e2",
+            "id": "goblin",
+            "name": "Batedor goblin",
+            "icon": "⚔️",
+            "hp": 26,
+            "maxhp": 26,
+            "atk": 8,
+            "spd": 5,
+            "ai": "skirmish",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          }
+        ],
+        "active": "dara",
+        "round": 1,
+        "logs": [
+          "Dia 1: Sinos sob a neve",
+          "Goblins desarmados são empurrados à frente de batedores shadow fey. A Corte mede o tempo entre o alarme e a chegada da guarda.",
+          "A defesa do setor Passo Norte cede antes do combate: a companhia recebe danos na aproximação.",
+          "— Rodada 1 —"
+        ],
+        "inventory": {
+          "tonic": 6,
+          "ether": 4,
+          "phoenix": 2,
+          "antidote": 2
+        },
+        "history": [],
+        "victories": 0
+      }
+    },
+    {
+      "scenario": {
+        "key": "revive",
+        "day": 1,
+        "actor": "serena",
+        "target": "brunna",
+        "kind": "skill",
+        "setup": "fallen"
+      },
+      "expected": {
+        "day": 1,
+        "mode": "battle",
+        "heroes": [
+          {
+            "id": "brunna",
+            "hp": 0,
+            "mp": 12,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          },
+          {
+            "id": "dara",
+            "hp": 78,
+            "mp": 16,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          },
+          {
+            "id": "eirik",
+            "hp": 50,
+            "mp": 49,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          },
+          {
+            "id": "serena",
+            "hp": 72,
+            "mp": 45,
+            "barrier": 0,
+            "status": {},
+            "injured": 0
+          }
+        ],
+        "foes": [
+          {
+            "uid": "e0",
+            "id": "goblin",
+            "name": "Batedor goblin",
+            "icon": "⚔️",
+            "hp": 26,
+            "maxhp": 26,
+            "atk": 8,
+            "spd": 5,
+            "ai": "skirmish",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e1",
+            "id": "elfScout",
+            "name": "Arqueiro da Corte",
+            "icon": "🏹",
+            "hp": 30,
+            "maxhp": 30,
+            "atk": 10,
+            "spd": 10,
+            "ai": "archer",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          },
+          {
+            "uid": "e2",
+            "id": "goblin",
+            "name": "Batedor goblin",
+            "icon": "⚔️",
+            "hp": 26,
+            "maxhp": 26,
+            "atk": 8,
+            "spd": 5,
+            "ai": "skirmish",
+            "type": "physical",
+            "status": {},
+            "barrier": 0,
+            "stage": 1,
+            "dead": false
+          }
+        ],
+        "active": "serena",
+        "round": 1,
+        "logs": [
+          "Dia 1: Sinos sob a neve",
+          "Goblins desarmados são empurrados à frente de batedores shadow fey. A Corte mede o tempo entre o alarme e a chegada da guarda.",
+          "A defesa do setor Passo Norte cede antes do combate: a companhia recebe danos na aproximação.",
+          "— Rodada 1 —"
+        ],
+        "inventory": {
+          "tonic": 6,
+          "ether": 4,
+          "phoenix": 2,
+          "antidote": 2
+        },
+        "history": [],
+        "victories": 0
+      }
+    }
+  ]
+}

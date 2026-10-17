@@ -7,7 +7,9 @@
   var engineReady = false, loading = false, game = null, host = null;
   var originalRender = render;
   var originalBattle = renderBattle;
+  var originalTargets = showTargets;
   var previous = {};
+  var pending = null;
   var RENDER_W = 480, RENDER_H = 560;
 
   function info(message, warning) {
@@ -17,11 +19,60 @@
 
   renderBattle = function () {
     var html = originalBattle();
+    var prompt = pending ? '<div class="beta-targeting" role="status"><strong>' +
+      esc('Selecione no cenário: ' + pending.label) +
+      '</strong><span class="beta-target-controls"><button type="button" data-beta-list="1">Lista de alvos</button>' +
+      '<button type="button" data-beta-cancel="1">Cancelar</button></span></div>' : '';
     return html.replace('<div class="battle-wrap">',
       '<div class="battle-wrap"><section class="beta-battle" aria-label="Campo de batalha em Phaser">' +
-      '<div class="beta-caption"><strong>CAMPO DE BATALHA · PHASER 4</strong><span>Toque no inimigo para atacar no turno do herói</span></div>' +
+      '<div class="beta-caption"><strong>CAMPO DE BATALHA · PHASER 4</strong><span>' +
+      (pending ? 'Escolha o alvo destacado no campo' : 'Toque no inimigo para atacar no turno do herói') +
+      '</span></div>' + prompt +
       '<div id="phaser-mount-slot"></div></section>');
   };
+
+  // Legacy HTML menus still choose the spell/item; Phaser chooses its target.
+  // Auto/self/team actions remain immediate through the original game dispatcher.
+  showTargets = function (kind, key) {
+    if (!S || S.mode !== 'battle' || !S.battle || !S.battle.active) return originalTargets(kind,key);
+    var type = kind === 'skill' ? ThargridActions.skillTargetType(key,SKILLS) :
+      ThargridActions.itemTargetType(key);
+    if (!['enemy','ally','fallen'].includes(type)) return originalTargets(kind,key);
+    var list = ThargridActions.selectableTargets(S,type);
+    if (!list.length) return originalTargets(kind,key);
+    pending = {kind:kind, key:key, type:type, actor:S.battle.active,
+      label:kind==='skill' ? SKILLS[key].name : STORE[key].name};
+    closeModal();
+    render();
+  };
+
+  function selectFighter(side,id) {
+    if (!S || S.mode!=='battle' || !S.battle || !S.battle.active) return;
+    if (pending && pending.actor !== S.battle.active) pending=null;
+    if (pending) {
+      var isEnemy = pending.type==='enemy';
+      if ((isEnemy ? 'enemy':'hero')!==side) return;
+      if (!ThargridActions.selectableTargets(S,pending.type).includes(id)) return;
+      var action=pending;
+      pending=null;
+      handle('perform',action.kind+':'+action.key+':'+id);
+      return;
+    }
+    if (side==='enemy') handle('targetenemy',id);
+  }
+
+  document.addEventListener('click',function(event){
+    var list=event.target.closest('[data-beta-list]');
+    if(list && pending) {
+      var choice=pending;
+      pending=null;
+      render();
+      return originalTargets(choice.kind,choice.key); // Keyboard/screen-reader fallback
+    }
+    if (!event.target.closest('[data-beta-cancel]')) return;
+    pending=null;
+    render();
+  });
 
   function stateOf() {
     if (!S || S.mode !== 'battle' || !S.battle) return null;
@@ -61,6 +112,22 @@
     g.fillStyle(0x19202a, 0.9); g.fillRoundedRect(10, 486, 460, 63, 4);
     g.lineStyle(1, 0x786958, 0.6); g.strokeRoundedRect(10, 486, 460, 63, 4);
     this.units = this.add.container(0, 0);
+    this.hitTargets = [];
+    // One stable scene-level pointer listener. Per-unit zones were recreated during
+    // render and could miss the first mobile touch after a modal closed.
+    this.input.on('pointerdown', function(pointer){
+      // Mobile Chrome with a scrolled Phaser canvas may report pointer.y offset
+      // from the actual touch (observed ~77 game pixels). Normalize DOM coordinates
+      // against the live canvas bounds for both desktop and touch devices.
+      var rect=this.game.canvas.getBoundingClientRect();
+      var ev=pointer.event;
+      var x=ev&&typeof ev.clientX==='number'&&rect.width ?
+        (ev.clientX-rect.left)*RENDER_W/rect.width : pointer.x;
+      var y=ev&&typeof ev.clientY==='number'&&rect.height ?
+        (ev.clientY-rect.top)*RENDER_H/rect.height : pointer.y;
+      var chosen=this.hitTargets.find(function(t){return Math.abs(x-t.x)<=t.width/2 && Math.abs(y-t.y)<=t.height/2;});
+      if(chosen)selectFighter(chosen.side,chosen.id);
+    }, this);
     this.battleInfo = this.add.text(240, 27, '', {fontFamily:'Georgia, serif',fontSize:'17px',color:'#f3d8a4',align:'center'}).setOrigin(0.5);
     this.footer = this.add.text(24, 505, '', {fontFamily:'Arial, sans-serif',fontSize:'15px',color:'#ece6d7',wordWrap:{width:425}});
     this.sync();
@@ -113,13 +180,20 @@
     if (unit.barrier) node.add(this.add.text(37, -55, '◆' + unit.barrier, {fontSize:'11px',color:'#c5dfff'}).setOrigin(0.5));
     var effects = Object.keys(unit.status || {}).filter(function (k) { return !!unit.status[k]; }).slice(0, 3).join(' · ');
     if (effects) node.add(this.add.text(0, isEnemy ? 49 : 58, effects, {fontSize:'10px',color:'#ebc485'}).setOrigin(0.5));
-    if (isEnemy && !dead) {
-      var hit = this.add.zone(x, y - 32, Math.max(84, spacing || 105), 116).setInteractive({useHandCursor:true});
-      hit.on('pointerdown', function () {
-        if (S && S.mode === 'battle' && S.battle && S.battle.active) handle('targetenemy', unit.uid);
-      });
-      this.units.add(hit);
+    var canClick = isEnemy ? !dead : !!(pending && pending.type==='fallen' ? dead :
+      pending && pending.type==='ally' && !dead);
+    var highlighted = !!pending && (isEnemy ? pending.type==='enemy'&&!dead :
+      (pending.type==='fallen' ? dead : pending.type==='ally'&&!dead));
+    if (highlighted) {
+      var ring=this.add.graphics();
+      ring.lineStyle(3,0xe9c375,1);
+      ring.strokeEllipse(0,-28,76,112);
+      node.add(ring);
     }
+    if (canClick) this.hitTargets.push({
+      x:x,y:y-32,width:Math.max(84,spacing||105),height:116,
+      side:isEnemy?'enemy':'hero',id:isEnemy?unit.uid:unit.id
+    });
     this.units.add(node);
     return {x:x, y:y-45};
   };
@@ -130,6 +204,7 @@
     var old = previous;
     var next = {};
     this.units.removeAll(true);
+    this.hitTargets=[];
     var allEnemies = b.foes;
     var cols = Math.min(allEnemies.length, 4);
     var current = b.active ? S.heroes[b.active] : null;
@@ -182,6 +257,7 @@
   }
 
   function wrapRender() {
+    if (pending && (!S || S.mode!=='battle' || !S.battle || S.battle.active!==pending.actor)) pending=null;
     if (host && host.isConnected) host.remove();
     originalRender();
     var slot = document.getElementById('phaser-mount-slot');
@@ -199,7 +275,7 @@
       }
     } else {
       if (game) { game.destroy(true); game = null; }
-      host = null; previous = {};
+      host = null; previous = {}; pending=null;
       document.body.classList.remove('phaser-live');
     }
   }

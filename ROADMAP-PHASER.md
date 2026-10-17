@@ -291,3 +291,34 @@ Executar **M0b → M1a**: criar snapshots verificados de combates de chefes (esp
 - **Chromium desktop e mobile aprovados**: ataques Phaser, recuperação de save no meio do combate e abertura da rota clássica com namespace próprio. A confirmação também ocorreu na [CI da main #39029331344](https://github.com/pedromaintenance/o-cerco-de-thargrid/actions/runs/39029331344) após o merge.
 - **GitHub Pages:** [build e deploy #39029331015](https://github.com/pedromaintenance/o-cerco-de-thargrid/actions/runs/39029331015) concluídos com sucesso; **[jogar a beta](https://pedromaintenance.github.io/o-cerco-de-thargrid/phaser-preview/?demo=1)**. O acesso HTTP público não foi verificável por uma segunda fonte nesta sessão; build/deploy atestados pelo próprio GitHub.
 - **Não homologado:** gameplay completo dos dias 1–60, todos os chefes até a vitória, importação de campanhas legadas, offline em dispositivo real, geração de cena Phaser para todo o jogo e reducer/dispatcher puro completo. Permanecem M1b/M3 futuros.
+
+
+## Implementação M1b/M3b — seleção de ações e alvos no Phaser (17/10/2026)
+
+**PR:** [#4 — planejador puro e alvos Phaser](https://github.com/pedromaintenance/o-cerco-de-thargrid/pull/4)
+**CI do PR:** [GitHub Actions #39033872977](https://github.com/pedromaintenance/o-cerco-de-thargrid/actions/runs/39033872977) — **41/41 testes de regras e Chromium desktop/mobile aprovados**.
+**Rota após publicação:** [beta Phaser 4](https://pedromaintenance.github.io/o-cerco-de-thargrid/phaser-preview/?demo=1).
+
+### Entregas
+
+- [x] **Planejador puro `core/actions.js`:** `planSkill`, `planItem`, `selectableTargets`, `skillTargetType` e `itemTargetType`. Recebe estado e conteúdos; não lê DOM, não escreve save, não usa RNG e não altera objetos.
+- [x] **Validação compartilhada entre o clássico e o Phaser:** `app.js` usa o planejador para validar técnica aprendida, mana, inventário e alvos antes da execução antiga. Nenhum reequilíbrio de dano, IA ou progressão foi introduzido.
+- [x] **14 snapshots de resultados antes do refactor:** `tests/fixtures/actions-golden-m1a.json` extraído do commit `9ac70fda` da versão pré-M1b, incluindo ataque, proteção, magia, cura, itens e alvos inválidos. Testes de paridade e pureza em `tests/actions-parity.test.cjs`.
+- [x] **M3b: seleção de magias e itens no campo Phaser.** Após escolher o comando no menu HTML, o jogador toca no inimigo ou aliado; cura e ressurreição podem direcionar os membros da equipe no canvas.
+- [x] **Interface acessível:** destaques dos alvos válidos, indicação da técnica selecionada, Cancelar sem custo e botão **Lista de alvos** que mantém modal HTML utilizável por teclado/leitores de tela.
+- [x] **Correção real do input mobile:** depois de scroll e modal, `pointer.y` interno do Phaser apresentou deslocamento de aproximadamente 77 pixels lógicos no Chromium emulado. A seleção agora usa `pointer.event.clientX/Y` ajustados pelo `getBoundingClientRect()` do canvas e recebe eventos num handler estável da cena.
+- [x] **Caches PWA:** clássico `thargrid-pwa-v1.0.4`; beta `thargrid-phaser-beta-v3`, incluindo `core/actions.js` e `core/combat.js`. Chaves de salvamento separadas continuam preservadas.
+- [x] **Testes reais de navegador:** decisões do Conselho, preparação, batalha, ataque, reload/Continuar, magia ofensiva por toque, cura no canvas, ressurreição com Cinza da Chama, cancelamento sem MP gasto, lista alternativa e isolamento do clássico, tanto no desktop quanto no mobile.
+
+### Gates e limites
+
+| Marco | Estado | Pendente |
+|---|---|---|
+| M0 | **Parcial reforçado** — snapshots de chefes e de ações | Cobrir derrotas, decisões e campanha completa de 60 dias |
+| M1b | **Parcial** — validação/planejamento puros, efeitos ainda em `app.js` | Executor puro de efeitos, reducer de estado e eventos |
+| M3b | **Beta jogável** — mira por toque no canvas + lista acessível | Arte de personagens, efeitos, animações e interface inteiramente Phaser |
+| M2 | **CI e preview automatizados** | Homologar GitHub Pages em aparelhos físicos e offline real |
+
+**Escopo não homologado:** fim a fim dos dez chefes, campanha completa de 60 dias, execução totalmente pura das regras, navegador físico Android/iOS e instalação PWA offline. A beta ainda usa menus HTML para escolher habilidades/itens.
+
+**Próximo M1c:** extrair a execução de efeitos de combate e publicar eventos observáveis para Phaser sem recalcular regras. Depois, validar cenários completos de chefes e retomar persistência de RNG.
