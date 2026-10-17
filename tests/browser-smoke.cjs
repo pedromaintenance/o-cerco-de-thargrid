@@ -10,7 +10,8 @@ const address = 'http://127.0.0.1:4173';
  const browser = await puppeteer.launch({executablePath,headless:true,args:['--no-sandbox','--disable-dev-shm-usage']});
  try {
   for (const mobile of [false,true]) {
-    const page = await browser.newPage();
+    const context = await browser.createBrowserContext();
+    const page = await context.newPage();
     await page.setViewport(mobile ? {width:390,height:844,isMobile:true,hasTouch:true,deviceScaleFactor:2} : {width:1100,height:900});
     const errors=[];
     page.on('pageerror',e=>errors.push(e.message));
@@ -47,6 +48,7 @@ const address = 'http://127.0.0.1:4173';
     assert.ok(!errors.length,'Page errors: '+errors.join(' | '));
     console.log((mobile?'MOBILE':'DESKTOP')+' PASS Phaser canvas + council + battle + touch + isolated save');
     await page.close();
+    await context.close();
   }
  } finally { await browser.close(); }
 })().catch(e=>{console.error(e);process.exitCode=1;});
