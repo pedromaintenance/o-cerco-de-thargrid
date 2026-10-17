@@ -1,7 +1,7 @@
 # ROADMAP — O Cerco de Thargrid → Phaser 4.2.1
 
 **Data do diagnóstico:** 17/10/2026  
-**Situação:** planejamento documentado; migração ainda não iniciada  
+**Situação atual (17/10/2026):** migração incremental em andamento; M0b com fixtures e M1a parcial em validação, sem substituir o clássico  
 **Rota de produção:** [jogo clássico](https://pedromaintenance.github.io/o-cerco-de-thargrid/)  
 **Estratégia:** extração progressiva do motor de regras + prévia independente em `/phaser-preview/` + substituição apenas após paridade demonstrada.
 
@@ -9,7 +9,7 @@
 
 ## 1. Inventário verificado da versão clássica
 
-O repositório em `main` tem `index.html`, `style.css`, `data.js`, `app.js`, `sw.js`, `manifest.webmanifest`, ícones e documentação. Atualmente não tem `package.json`, Phaser, testes automatizados nem workflow de CI.
+No inventário inicial (antes dos PRs Phaser), o repositório em `main` tinha `index.html`, `style.css`, `data.js`, `app.js`, `sw.js`, `manifest.webmanifest`, ícones e documentação. Naquele inventário ainda não havia Phaser, testes automatizados nem workflow de CI. **Estado atual:** há prévia Phaser 4.2.1, workflow, testes e núcleo mecânico compartilhado. Consulte a seção de implementação.
 
 | Domínio | Fonte atual | Contrato a preservar |
 |---|---|---|
@@ -253,3 +253,32 @@ Executar **M0b → M1a**: criar snapshots verificados de combates de chefes (esp
 - **GitHub Pages:** [build/deploy #39026715979](https://github.com/pedromaintenance/o-cerco-de-thargrid/actions/runs/39026715979) concluído com sucesso incluindo o vendor. **[ABRIR BETA PHASER](https://pedromaintenance.github.io/o-cerco-de-thargrid/phaser-preview/?demo=1)**. A verificação independente do endereço por HTTP externo não foi possível nesta sessão; o resultado atesta a implantação reportada pelo GitHub, não uma certificação em aparelho físico.
 - **Escopo homologado:** MVP do primeiro combate visual e isolamento de saves. **Não** declarar M1, G3 completo, campanha de 60 dias ou offline físico concluídos.
 - **Próximo PR:** M0b/M1a — fixtures de 10 chefes e saves intercalados; extração de RNG e dispatcher sem DOM. Acrescentar QA real de toque e offline no Pages e validar mais que o dia 1.
+
+
+## Implementação — continuidade M0b/M1a (17/10/2026)
+
+**PR:** [#3 — núcleo determinístico de combate](https://github.com/pedromaintenance/o-cerco-de-thargrid/pull/3)  
+**Prévia:** [Beta Phaser no Pages](https://pedromaintenance.github.io/o-cerco-de-thargrid/phaser-preview/?demo=1)
+
+### Entregas
+
+- [x] Módulo compartilhado `core/combat.js`, independente de DOM, Phaser e salvamento.
+- [x] RNG injetável: `setRandomSource()` e `seededRandom()` para testes repetíveis; no jogo a fonte padrão permanece `Math.random()`.
+- [x] Extraídas escala dos inimigos, iniciativa, dano dos heróis, mitigação do dano inimigo, absorção de escudos e fase II de `nightavatar`. Orquestração segue no `app.js`.
+- [x] Doze snapshots canônicos capturados **antes** da extração, em `tests/fixtures/raid-golden-v1.json`, provenientes do commit clássico `f59272a2`: dia 1 em História, os dez chefes nos dias 6/12/18/24/30/36/42/48/54/60 em Normal e dia 60 em Difícil. Incluem inimigos, iniciativa, estado da companhia e logs iniciais.
+- [x] Testes de paridade exata dos snapshots, aleatoriedade injetável, escudos, segunda fase da Rainha, save em batalha e recuperação. A produção **não** persiste o estado interno do RNG; após recarregar, o resultado dos próximos sorteios pode ser diferente.
+- [x] Caches versionados: clássico `thargrid-pwa-v1.0.3` e beta `thargrid-phaser-beta-v2`, incluindo `core/combat.js` na instalação offline.
+- [x] CI sintático/Node e Chromium reforçado: desktop/mobile percorrem Conselho, batalha, ataque pelo canvas, reload no meio da luta, continuar e abertura independente do clássico.
+
+### Gates remanescentes
+
+| Marco | Estado nesta etapa | Pendente |
+|---|---|---|
+| M0b | **Parcial avançado:** snapshots da abertura das 10 lutas de chefe | Testes dos chefes até vitória, missões/decisões, efeitos ao longo das 60 ofensivas |
+| M1a | **Parcial:** fórmulas e RNG em core puro | Reducer/dispatcher completo de ações e eventos, sem DOM |
+| M2 | **Funcional na CI:** versão local de Phaser, preview e workers separados | Confirmação em dispositivo físico e instalação offline |
+| M3a | **Beta jogável** | Seleção Phaser de técnicas/aliados, efeitos e arte próprios, acessibilidade |
+
+**Limitação importante:** os testes dos dez chefes verificam seus estados iniciais — **não** garantem que todas as dez batalhas foram vencidas nem o percurso completo de 60 dias. Mudanças de balanceamento devem ser explícitas.
+
+**Próxima etapa M1b:** extrair planejamento, validação e execução de comandos para funções puras; assegurar o contrato estado + comando → novo estado e eventos. Comparar efeitos reais de magias, itens, status e vitórias nos dias 1, 6 e 60 antes de migrar mais telas.
