@@ -320,6 +320,7 @@
       if (!window.Phaser) { if (fallback) fallback(); else info('Biblioteca Phaser indisponível.', true); return; }
       engineReady = true;
       loading = false;
+      if (!stateOf()) info('Phaser 4.2.1 carregado · pronto para sua próxima batalha');
       start();
     };
     script.onerror = function () {
@@ -333,7 +334,11 @@
       !localStorage.getItem('thargrid_phaser_preview_save_v1')) {
     S = fresh('story'); screen = 'game'; save();
   }
-  wrapRender();
+  // Important resume race fix: app.js already drew the title, including its
+  // Continue button. Redrawing that title while a quick tap is in flight can
+  // detach the button before the delegated click reaches document. Defer the
+  // first redraw until navigation actually changes the screen.
+  if (screen !== 'title') wrapRender();
   // Dedicated preview scope. This does not register the production Service Worker.
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('./sw.js', {scope:'./'}).catch(function (error) {
