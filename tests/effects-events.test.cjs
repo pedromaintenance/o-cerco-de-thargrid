@@ -82,7 +82,7 @@ test('combat feedback sequence advances only when real effects complete',()=>{
  const run=runtime(39);prepared(run);
  run.exec("S.battle.active='eirik';doSkill('arcaneBolt','e0')");
  const seq=run.exec("combatFeedback.seq");
- assert.equal(seq,1);
+ assert.ok(seq>1,'enemy reactions and status ticks now publish their own effects');
  const events=snapshot(run.exec("combatFeedback.events"));
  assert.ok(events.some(x=>x.type==='damage'&&x.key==='arcaneBolt'));
  assert.ok(!events.some(x=>x.type==='log'));
