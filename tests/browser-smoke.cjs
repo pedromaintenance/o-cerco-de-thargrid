@@ -26,8 +26,10 @@ const address = 'http://127.0.0.1:4173';
     await page.waitForSelector('[data-a="policy"]');
     await page.click('[data-a="policy"]');
     await page.waitForSelector('[data-a="prepare"]');
+    // Mobile bottom tabs are fixed and may intercept a click near the viewport edge.
+    await page.$eval('[data-a="prepare"]',el=>el.scrollIntoView({block:'center',inline:'nearest'}));
     await page.click('[data-a="prepare"]');
-    console.log((mobile?'MOBILE':'DESKTOP')+' BEFORE BATTLE', await page.evaluate(()=>({mode:S.mode, council:S.flags.council_0, toast:document.querySelector('.toast')?.textContent||'',hasFight:!!document.querySelector('[data-a="fight"]'),hasPrepare:!!document.querySelector('[data-a="prepare"]')})));
+    console.log((mobile?'MOBILE':'DESKTOP')+' BEFORE BATTLE', await page.evaluate(()=>({mode:S.mode,tab:S.tab,council:S.flags.council_0, toast:document.querySelector('.toast')?.textContent||'',hasFight:!!document.querySelector('[data-a="fight"]'),hasPrepare:!!document.querySelector('[data-a="prepare"]')})));
     await page.waitForSelector('[data-a="fight"]',{timeout:7000});
     await page.click('[data-a="fight"]');
     await page.waitForSelector('#phaser-surface canvas',{timeout:25000});
