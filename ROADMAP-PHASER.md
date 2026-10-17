@@ -405,3 +405,12 @@ Extrair **efeitos de status e ataque inimigo** para uma transição pura e event
 ### Próximo marco M1e
 
 Separar perigo ambiental e geração da fila de iniciativas por rodada, preservar semântica de `checkBattle()` e realizar simulações guiadas de dias críticos (6, 30, 60) até o resultado. Depois, integrar sprites e animações de habilidades usando exclusivamente eventos de combate.
+
+
+### Publicação confirmada do M1d — GitHub Pages
+
+- **PR #6:** [M1d integrado à `main`](https://github.com/pedromaintenance/o-cerco-de-thargrid/pull/6), commit squash `f90a76e8f381b0a7c4808ce58b3368287cb2e536`.
+- **CI pós-merge:** [GitHub Actions #39038766793](https://github.com/pedromaintenance/o-cerco-de-thargrid/actions/runs/39038766793), concluído com sucesso. A suíte de 65 testes Node e os testes Chromium desktop/mobile de interação Phaser foram aprovados.
+- **GitHub Pages:** [build e deploy #39038766447](https://github.com/pedromaintenance/o-cerco-de-thargrid/actions/runs/39038766447) concluídos com sucesso. **[Abrir beta M1d](https://pedromaintenance.github.io/o-cerco-de-thargrid/phaser-preview/?demo=1)**. A publicação foi confirmada pelo GitHub; QA manual em dispositivo físico segue pendente.
+- **Compatibilidade:** rota clássica `/` continua usando `thargrid_siege_save_v1`; beta `/phaser-preview/` continua usando `thargrid_phaser_preview_save_v1`. Nenhum salvamento é migrado automaticamente.
+- **Próximo marco:** M1e — extrair geração de rodadas, perigos ambientais e iniciativa da camada de interface, então validar batalhas de chefes até o resultado.
