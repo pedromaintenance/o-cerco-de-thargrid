@@ -71,9 +71,19 @@ const address = 'http://127.0.0.1:4173';
         x:cols===1?240:57+(index%cols)*365/(cols-1),
         y:(foes.length>4?157+Math.floor(index/cols)*97:192)-32};
     });
-    await page.$eval('#phaser-surface canvas',el=>el.scrollIntoView({block:'center'}));
-    const enemyBox=await page.$eval('#phaser-surface canvas',el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height};});
-    await page.mouse.click(enemyBox.x+spellBefore.x*enemyBox.width/480,enemyBox.y+spellBefore.y*enemyBox.height/560);
+    const targetCanvas=await page.$('#phaser-surface canvas');
+    const enemyBox=await targetCanvas.boundingBox();
+    console.log((mobile?'MOBILE':'DESKTOP')+' SPELL PRE',spellBefore,await page.evaluate(()=>({
+      living:S.battle.foes.map(f=>({uid:f.uid,hp:f.hp})),pending:document.querySelector('.beta-targeting')?.textContent||'',scrollY,
+      canvas:document.querySelector('#phaser-surface canvas')?.getBoundingClientRect().toJSON()
+    })));
+    await targetCanvas.click({offset:{
+      x:spellBefore.x*enemyBox.width/480,y:spellBefore.y*enemyBox.height/560
+    }});
+    console.log((mobile?'MOBILE':'DESKTOP')+' SPELL POST',await page.evaluate(()=>({
+      living:S.battle.foes.map(f=>({uid:f.uid,hp:f.hp})),actor:S.battle.active,
+      pending:document.querySelector('.beta-targeting')?.textContent||'',scrollY
+    })));
     await page.waitForFunction(o=>S.battle.foes[o.index].hp<o.hp,{timeout:10000},spellBefore);
     assert.ok(await page.evaluate(mp=>S.heroes.eirik.mp<mp,spellBefore.mp));
     assert.equal(await page.$('.beta-targeting'),null);
@@ -83,9 +93,9 @@ const address = 'http://127.0.0.1:4173';
     await page.click('[data-a="battleSkills"]');
     await page.click('[data-a="battleSkill"][data-v="heal"]');
     await page.waitForSelector('.beta-targeting');
-    await page.$eval('#phaser-surface canvas',el=>el.scrollIntoView({block:'center'}));
-    const allyBox=await page.$eval('#phaser-surface canvas',el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height};});
-    await page.mouse.click(allyBox.x+57*allyBox.width/480,allyBox.y+377*allyBox.height/560);
+    const allyCanvas=await page.$('#phaser-surface canvas');
+    const allyBox=await allyCanvas.boundingBox();
+    await allyCanvas.click({offset:{x:57*allyBox.width/480,y:377*allyBox.height/560}});
     await page.waitForFunction(()=>S.heroes.brunna.hp>15,{timeout:10000});
 
     await page.evaluate(()=>{S.battle.active='serena';S.heroes.brunna.hp=0;save();render();});
@@ -93,9 +103,9 @@ const address = 'http://127.0.0.1:4173';
     await page.click('[data-a="battleItems"]');
     await page.click('[data-a="battleItem"][data-v="phoenix"]');
     await page.waitForSelector('.beta-targeting');
-    await page.$eval('#phaser-surface canvas',el=>el.scrollIntoView({block:'center'}));
-    const reviveBox=await page.$eval('#phaser-surface canvas',el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height};});
-    await page.mouse.click(reviveBox.x+57*reviveBox.width/480,reviveBox.y+377*reviveBox.height/560);
+    const reviveCanvas=await page.$('#phaser-surface canvas');
+    const reviveBox=await reviveCanvas.boundingBox();
+    await reviveCanvas.click({offset:{x:57*reviveBox.width/480,y:377*reviveBox.height/560}});
     await page.waitForFunction(()=>S.heroes.brunna.hp>0,{timeout:10000});
     assert.equal(await page.evaluate(()=>S.inventory.phoenix),phoenixBefore-1);
 
