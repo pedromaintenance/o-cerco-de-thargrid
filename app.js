@@ -101,12 +101,8 @@ function physicalHeroDamage(h,sk,t){
   forge:S.projects.forge||0,hazard:raid().hazard
  });
 }
-function doSkill(key,target){const b=S.battle;if(!b||b.finished||!b.active)return;const h=hero(b.active),sk=SKILLS[key];if(!h||h.hp<=0||!sk)return;
- let allowed=key==='attack'||key==='guard'||h.learned.includes(key)||CLASSES[h.klass].skills.includes(key)&&h.level>=(sk.level||1);if(!allowed)return notify('Técnica ainda não aprendida.');if(h.mp<sk.cost)return notify('Mana insuficiente.');
- const enemyList=b.foes.filter(e=>e.hp>0),allyList=b.party.map(id=>hero(id)).filter(x=>x.alive);
- let targets=[];
- if(sk.target==='self')targets=[h];else if(sk.target==='allEnemies')targets=enemyList;else if(sk.target==='allAllies')targets=allyList.filter(x=>x.hp>0);else if(sk.target==='enemy'){const e=b.foes.find(e=>e.uid===target&&e.hp>0);if(!e)return notify('Selecione um inimigo válido.');targets=[e]}else if(sk.target==='ally'){const x=allyList.find(x=>x.id===target&&x.hp>0);if(!x)return notify('Selecione um aliado vivo.');targets=[x]}else if(sk.target==='fallen'){const x=allyList.find(x=>x.id===target&&x.hp<=0);if(!x)return notify('Selecione um aliado caído.');targets=[x]}
- if(!targets.length)return notify('Não há alvo válido.');h.mp-=sk.cost;
+function doSkill(key,target){const plan=ThargridActions.planSkill(S,key,target,SKILLS,CLASSES);if(!plan.ok){if(plan.reason)notify(plan.reason);return}
+ const b=S.battle,h=hero(b.active),sk=SKILLS[key];const targets=plan.targets.map(id=>plan.type==='enemy'||plan.type==='allEnemies'?b.foes.find(e=>e.uid===id):hero(id));h.mp-=sk.cost;
  let parts=[];
  if(key==='guard'){h.barrier+=Math.round(19+stat(h,'def')*.7);h.mp=Math.min(maxMP(h),h.mp+3);parts.push('assume posição defensiva')}
  else if(sk.type==='heal'){targets.forEach(x=>{let heal=Math.max(7,Math.round((stat(h,'mag')*1.4+h.level*3+10)*(sk.power||1)));x.hp=Math.min(maxHP(x),x.hp+heal);if(sk.effect==='cleanse'){x.status={};}parts.push(`${x.name} +${heal} PV`)})}
@@ -116,9 +112,8 @@ function doSkill(key,target){const b=S.battle;if(!b||b.finished||!b.active)retur
  if(sk.type==='fire')delete t.status.regen;})}
  combatLog(`${h.name} usa ${sk.name}: ${parts.join(' · ')}.`);
  b.active=null;battleSelect=null;closeModal();if(checkBattle()){save();render();return}advanceTurn();save();render()}
-function useCombatItem(key,target){let b=S.battle;if(!b||!b.active||!(S.inventory[key]>0))return notify('Item indisponível.');let t=hero(target);if(!t||!b.party.includes(target)||!t.alive)return notify('Escolha um membro da equipe.');
- if(key==='tonic'&&t.hp<=0)return notify('Use a Cinza da Chama num aliado caído.');if(key==='ether'&&t.hp<=0)return notify('Aliado caído.');if(key==='phoenix'&&t.hp>0)return notify('O aliado não está caído.');if(key==='antidote'&&t.hp<=0)return notify('Não afeta aliados caídos.');
- S.inventory[key]--;let detail='';if(key==='tonic'){t.hp=Math.min(maxHP(t),t.hp+46);detail=`${t.name} recupera 46 PV`}if(key==='ether'){t.mp=Math.min(maxMP(t),t.mp+24);detail=`${t.name} recupera 24 MP`}if(key==='phoenix'){t.hp=Math.ceil(maxHP(t)*.28);t.status={};t.injured=2;detail=`${t.name} regressa ao combate`}if(key==='antidote'){t.status={};detail=`${t.name} foi purificado`}
+function useCombatItem(key,target){const plan=ThargridActions.planItem(S,key,target);if(!plan.ok){if(plan.reason)notify(plan.reason);return}
+ let b=S.battle,t=hero(plan.targets[0]);S.inventory[key]--;let detail='';if(key==='tonic'){t.hp=Math.min(maxHP(t),t.hp+46);detail=`${t.name} recupera 46 PV`}if(key==='ether'){t.mp=Math.min(maxMP(t),t.mp+24);detail=`${t.name} recupera 24 MP`}if(key==='phoenix'){t.hp=Math.ceil(maxHP(t)*.28);t.status={};t.injured=2;detail=`${t.name} regressa ao combate`}if(key==='antidote'){t.status={};detail=`${t.name} foi purificado`}
  combatLog(`${hero(b.active).name} usa ${STORE[key].name}: ${detail}.`);b.active=null;closeModal();advanceTurn();save();render()}
 function victory(){let b=S.battle;if(!b||b.finished)return;b.finished=true;S.mode='aftermath';S.victories++;let evt=raid();let gold=12+Math.floor(S.day*.90)+(S.projects.scouts||0)*4,ore=3+Math.floor(S.day/14);let reward={gold,ore,hope:evt.boss?5:1};grant(reward);
  let xp=23+S.day*2+(evt.boss?45:0);let dead=[];
@@ -227,5 +222,5 @@ function handle(a,v){switch(a){
  case 'newgame':S=fresh(S?.difficulty||startDifficulty);screen='game';save();closeModal();render();break;
  }}
 document.addEventListener('click',e=>{const bt=e.target.closest('[data-a]');if(!bt||bt.disabled)return;let a=bt.dataset.a,v=bt.dataset.v||'';try{handle(a,v)}catch(err){console.error(err);notify('Erro detectado: '+err.message)}});
-function registerOffline(){if(IS_PHASER_PREVIEW||!('serviceWorker' in navigator)){return}navigator.serviceWorker.register('./sw.js',{scope:'./'}).then(async r=>{await navigator.serviceWorker.ready;let cache=await caches.open('thargrid-pwa-v1.0.3');const required=['./','./index.html','./style.css','./data.js','./app.js','./manifest.webmanifest','./icons/icon-192.png','./icons/icon-512.png'];let ready=(await Promise.all(required.map(s=>cache.match(new URL(s,location.href))))).every(Boolean);availableOffline=ready;let el=document.querySelector('#offline-note');if(el&&ready)el.textContent='✓ INSTALADO PARA USO OFFLINE · O app já pode funcionar sem internet.'}).catch(e=>console.warn('offline',e))}
+function registerOffline(){if(IS_PHASER_PREVIEW||!('serviceWorker' in navigator)){return}navigator.serviceWorker.register('./sw.js',{scope:'./'}).then(async r=>{await navigator.serviceWorker.ready;let cache=await caches.open('thargrid-pwa-v1.0.4');const required=['./','./index.html','./style.css','./data.js','./core/combat.js','./core/actions.js','./app.js','./manifest.webmanifest','./icons/icon-192.png','./icons/icon-512.png'];let ready=(await Promise.all(required.map(s=>cache.match(new URL(s,location.href))))).every(Boolean);availableOffline=ready;let el=document.querySelector('#offline-note');if(el&&ready)el.textContent='✓ INSTALADO PARA USO OFFLINE · O app já pode funcionar sem internet.'}).catch(e=>console.warn('offline',e))}
 load();render();registerOffline();
