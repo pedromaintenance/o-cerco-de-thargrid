@@ -25,7 +25,9 @@ function runtime(seed=7, preview=false) {
     documentElement:{dataset:preview?{phaserPreview:'true'}:{}},
     getElementById(id){if(!nodes.has(id))nodes.set(id,element());return nodes.get(id);},
     querySelector(id){return this.getElementById(id);},
-    addEventListener(){}
+    addEventListener(){},
+    createElement(){return element();},
+    body:{append(){},appendChild(){}}
   };
   const ctx = vm.createContext({Math:math,document:doc,window:{},navigator:{},
     console:{warn(){},log(){},error(){}},
