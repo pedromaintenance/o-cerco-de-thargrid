@@ -32,7 +32,18 @@ const address = 'http://127.0.0.1:4173';
     console.log((mobile?'MOBILE':'DESKTOP')+' BEFORE BATTLE', await page.evaluate(()=>({mode:S.mode,tab:S.tab,council:S.flags.council_0, toast:document.querySelector('.toast')?.textContent||'',hasFight:!!document.querySelector('[data-a="fight"]'),hasPrepare:!!document.querySelector('[data-a="prepare"]')})));
     await page.waitForSelector('[data-a="fight"]',{timeout:7000});
     await page.click('[data-a="fight"]');
-    await page.waitForSelector('#phaser-surface canvas',{timeout:25000});
+    try {
+      await page.waitForSelector('#phaser-surface canvas',{timeout:10000});
+    } catch(error) {
+      console.error('FIGHT BOOT DIAGNOSTICS',await page.evaluate(()=>({
+        mode:S?.mode,day:S?.day,battleEvent:S?.battle?.event,
+        battleRound:S?.battle?.round,
+        status:document.querySelector('#beta-status')?.textContent,
+        app:document.querySelector('#app')?.innerText?.slice(0,700),
+        core:typeof ThargridRounds,foes:S?.battle?.foes?.map(f=>({hp:f.hp,id:f.id}))
+      })),errors);
+      throw error;
+    }
     await page.waitForFunction(()=>document.body.classList.contains('phaser-live'));
     const before = await page.evaluate(()=> {
       const a=JSON.parse(localStorage.getItem('thargrid_phaser_preview_save_v1'));
