@@ -4,6 +4,7 @@ on:
     branches: [main]
     paths:
       - 'app.js'
+      - 'core/**'
       - 'data.js'
       - 'sw.js'
       - 'tests/**'
@@ -31,6 +32,7 @@ jobs:
           node-version: '22'
       - name: Syntax
         run: |
+          node --check core/combat.js
           node --check app.js
           node --check data.js
           node --check sw.js
