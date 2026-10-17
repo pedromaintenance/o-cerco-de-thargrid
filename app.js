@@ -62,7 +62,7 @@ function questRun(qid,hid){let q=QUESTS.find(x=>x.id===qid);if(!q||!questAvailab
  save();closeModal();render()}
 function chooseParty(id){let h=hero(id);if(!isReady(h))return;let selected=S.party;let i=selected.indexOf(id);if(i>=0)selected.splice(i,1);else if(selected.length<4)selected.push(id);else return notify('A equipe aceita no máximo quatro heróis.');save();render()}
 function raid(){return RAIDS[S.day-1]||RAIDS[RAIDS.length-1]}
-function beginBattle(){if((S.day-1)%6===0&&!S.flags['council_'+Math.floor((S.day-1)/6)])return notify('O conselho precisa decidir o rumo do reino antes desta batalha.');if(!S.party.length)return notify('Escolha ao menos um defensor.');for(let id of S.party)if(!isReady(hero(id)))return notify('A equipe contém personagem indisponível.');let evt=raid();
+function beginBattle(){publishCombatFeedback([]);if((S.day-1)%6===0&&!S.flags['council_'+Math.floor((S.day-1)/6)])return notify('O conselho precisa decidir o rumo do reino antes desta batalha.');if(!S.party.length)return notify('Escolha ao menos um defensor.');for(let id of S.party)if(!isReady(hero(id)))return notify('A equipe contém personagem indisponível.');let evt=raid();
  const foes=evt.foes.map((id,n)=>ThargridCore.enemyStats(MONSTERS[id],S.day,S.difficulty,'e'+n,id));
  const b={event:evt.day,foes,party:[...S.party],round:0,queue:[],ptr:0,active:null,logs:[`Dia ${S.day}: ${evt.title}`,evt.story],finished:false,major:evt.boss};S.battle=b;S.mode='battle';
  S.party.forEach(id=>{let h=hero(id);h.status={};h.barrier=0;});
@@ -74,26 +74,23 @@ function fighter(side,id){return side==='hero'?hero(id):S.battle.foes.find(e=>e.
 function aliveUnit(side,id){let x=fighter(side,id);return !!x&&(side==='hero'?x.alive&&x.hp>0:x.hp>0&&!x.dead)}
 function createRound(){const b=S.battle;b.round++;if(b.round>1&&b.round%3===0){const event=RAIDS[b.event-1],survivors=b.party.map(id=>hero(id)).filter(h=>h.hp>0);if(survivors.length){const v=survivors[rnd(0,survivors.length-1)];const hazard=event.hazard;if(hazard==='cold'){v.mp=Math.max(0,v.mp-4);combatLog(`Nevasca: ${v.name} perde 4 MP.`)}else if(hazard==='poison'){v.status.poison=2;combatLog(`Esporos venenosos contaminam ${v.name}.`)}else if(hazard==='shadow'||hazard==='court'){v.status.weak=2;combatLog(`Sombra da Corte enfraquece ${v.name}.`)}else if(hazard==='machine'){S.battle.foes.filter(f=>f.hp>0).forEach(f=>f.barrier+=5);combatLog('Engrenagens do cerco reforçam a hoste inimiga.')}else if(hazard==='water'){v.status.slow=2;combatLog(`Correnteza atrasa ${v.name}.`)}else if(hazard==='fire'){v.status.burn=2;combatLog(`Faíscas do cerco queimam ${v.name}.`)}else if(hazard==='stone'||hazard==='siege'){v.barrier=Math.max(0,v.barrier-8);combatLog('Estilhaços atingem as defesas da companhia.')}}}let arr=[...b.party.filter(id=>aliveUnit('hero',id)).map(id=>({side:'hero',id,spd:stat(hero(id),'spd')-injuryLoss(hero(id))+(hero(id).status.slow?-7:0)})),...b.foes.filter(e=>aliveUnit('enemy',e.uid)).map(e=>({side:'enemy',id:e.uid,spd:e.spd+(e.status.slow?-6:0)}))];b.queue=ThargridCore.initiativeOrder(arr);b.ptr=0;b.logs.push(`— Rodada ${b.round} —`)}
 function combatLog(s){let b=S.battle;if(!b)return;b.logs.unshift(s);b.logs=b.logs.slice(0,26)}
-function effectStart(unit,side){if(unit.status.burn){let d=5+Math.floor(S.day/10);unit.hp=Math.max(0,unit.hp-d);combatLog(`${unit.name} sofre ${d} de queimadura.`)}if(unit.status.poison){let d=4+Math.floor(S.day/12);unit.hp=Math.max(0,unit.hp-d);combatLog(`${unit.name} sofre ${d} de veneno.`)}if(unit.status.bleed){let d=4+Math.floor(S.day/13);unit.hp=Math.max(0,unit.hp-d);combatLog(`${unit.name} sangra (${d}).`)}if(unit.status.regen&&unit.hp>0){unit.hp=Math.min(side==='hero'?maxHP(unit):unit.maxhp,unit.hp+6)}if(side==='enemy'&&unit.ai==='regenerate'&&unit.hp>0&&!unit.status.burn){unit.hp=Math.min(unit.maxhp,unit.hp+Math.ceil(unit.maxhp*.07));combatLog(`${unit.name} regenera ferimentos.`)}
- for(let key of Object.keys(unit.status))unit.status[key]--;Object.keys(unit.status).forEach(k=>{if(unit.status[k]<=0)delete unit.status[k]});
- if(unit.hp<=0){if(side==='enemy')unit.dead=true;combatLog(`${unit.name} cai.`)}
+function effectStart(unit,side){
+ const id=side==='hero'?unit.id:unit.uid;
+ const result=ThargridEffects.applyTurnStart(S,side,id,{heroes:HEROES,classes:CLASSES});
+ S=result.state;publishCombatFeedback(result.events,true);
 }
 function checkBattle(){let b=S.battle;if(!b)return true;if(!b.party.some(id=>hero(id).hp>0&&hero(id).alive)){gameOver(`Todos os defensores enviados para ${raid().front} morreram. A Rainha atravessou o setor e o Reino Sob a Montanha foi invadido no dia ${S.day}.`);return true}
  if(!b.foes.some(f=>f.hp>0)){victory();return true}return false}
-function advanceTurn(){const b=S.battle;if(!b||b.finished)return;let guard=0;while(guard++<90){if(checkBattle())return;if(b.ptr>=b.queue.length){createRound();if(b.round>65){combatLog('O cerco se prolonga e as tropas inimigas entram em fúria.')}}
- const it=b.queue[b.ptr++];if(!aliveUnit(it.side,it.id))continue;let u=fighter(it.side,it.id);let wasStunned=!!u.status.stun;effectStart(u,it.side);if(!aliveUnit(it.side,it.id)){if(checkBattle())return;continue}
+function advanceTurn(){let b=S.battle;if(!b||b.finished)return;let guard=0;while(guard++<90){if(checkBattle())return;if(b.ptr>=b.queue.length){createRound();if(b.round>65){combatLog('O cerco se prolonga e as tropas inimigas entram em fúria.')}}
+ const it=b.queue[b.ptr++];if(!aliveUnit(it.side,it.id))continue;let u=fighter(it.side,it.id);let wasStunned=!!u.status.stun;effectStart(u,it.side);b=S.battle;u=fighter(it.side,it.id);if(!aliveUnit(it.side,it.id)){if(checkBattle())return;continue}
  if(wasStunned){combatLog(`${u.name} perde a vez por atordoamento.`);delete u.status.stun;continue}
- if(it.side==='hero'){b.active=it.id;b.logs=b.logs.slice(0,25);return}else{enemyAction(u);if(checkBattle())return}}
+ if(it.side==='hero'){b.active=it.id;b.logs=b.logs.slice(0,25);return}else{enemyAction(u);b=S.battle;if(checkBattle())return}}
 }
-function enemyAction(e){let b=S.battle;let targets=b.party.map(id=>hero(id)).filter(h=>h.alive&&h.hp>0);if(!targets.length)return;
- let sorted=[...targets].sort((a,z)=>(a.hp/maxHP(a))-(z.hp/maxHP(z)));
- let t=sorted[ThargridCore.random()<.68?0:rnd(0,sorted.length-1)];let all=(e.ai==='boss'||e.ai==='mage'||e.ai==='final')&&b.round%3===0;
- let amt=ThargridCore.enemyBaseDamage(e.atk,b.round,all,rnd(-3,4));const effect=e.ai;
- const applyTo=x=>{let val=ThargridCore.enemyTakenDamage(amt,stat(x,'def'),x.status,x.klass,x.injured);if(x.barrier){const absorb=ThargridCore.absorbBarrier(val,x.barrier);x.barrier=absorb.barrier;val=absorb.damage}x.hp=Math.max(0,x.hp-val);if(!all&&x.hp<=0)combatLog(`${x.name} cai em batalha!`);return val};
- let list=all?targets:[t];let sum=0;list.forEach(x=>sum+=applyTo(x));combatLog(`${e.icon} ${e.name} ${all?'atinge a companhia inteira':'atinge '+t.name} (${sum} dano).`);
- if(effect==='poison'&&ThargridCore.random()<.5)t.status.poison=3;if(effect==='bleed'&&ThargridCore.random()<.4)t.status.bleed=3;if((effect==='curse'||effect==='mage')&&ThargridCore.random()<.33)t.status.weak=2;if(effect==='snare'&&ThargridCore.random()<.38)t.status.slow=2;if(effect==='drain'&&ThargridCore.random()<.4)t.mp=Math.max(0,t.mp-5);
- if(effect==='final'&&b.round%2===0){t.status.burn=2;combatLog('A manifestação da Rainha deixa fogo sombrio no campo.')}if(effect==='guard'&&ThargridCore.random()<.4)e.barrier+=8+Math.floor(S.day/10);
- if(effect==='regenerate'&&b.round%2===0)e.barrier+=4;
+function enemyAction(e){
+ const result=ThargridEffects.applyEnemyAction(S,e.uid,{
+   heroes:HEROES,classes:CLASSES,core:ThargridCore
+ });
+ S=result.state;publishCombatFeedback(result.events,true);
 }
 function physicalHeroDamage(h,sk,t){
  return ThargridCore.heroDamage({
@@ -103,8 +100,9 @@ function physicalHeroDamage(h,sk,t){
 }
 // Action validation and effect execution share the same save-compatible state.
 let combatFeedback={seq:0,events:[]};
-function publishCombatFeedback(events){
- combatFeedback={seq:combatFeedback.seq+1,events:events.filter(e=>e.type!=='log')};
+function publishCombatFeedback(events,append=false){
+ const visible=events.filter(e=>e.type!=='log');
+ combatFeedback={seq:combatFeedback.seq+1,events:append?[...combatFeedback.events,...visible].slice(-40):visible};
 }
 function doSkill(key,target){
  const plan=ThargridActions.planSkill(S,key,target,SKILLS,CLASSES);
@@ -235,5 +233,5 @@ function handle(a,v){switch(a){
  case 'newgame':S=fresh(S?.difficulty||startDifficulty);screen='game';save();closeModal();render();break;
  }}
 document.addEventListener('click',e=>{const bt=e.target.closest('[data-a]');if(!bt||bt.disabled)return;let a=bt.dataset.a,v=bt.dataset.v||'';try{handle(a,v)}catch(err){console.error(err);notify('Erro detectado: '+err.message)}});
-function registerOffline(){if(IS_PHASER_PREVIEW||!('serviceWorker' in navigator)){return}navigator.serviceWorker.register('./sw.js',{scope:'./'}).then(async r=>{await navigator.serviceWorker.ready;let cache=await caches.open('thargrid-pwa-v1.0.5');const required=['./','./index.html','./style.css','./data.js','./core/combat.js','./core/actions.js','./core/effects.js','./app.js','./manifest.webmanifest','./icons/icon-192.png','./icons/icon-512.png'];let ready=(await Promise.all(required.map(s=>cache.match(new URL(s,location.href))))).every(Boolean);availableOffline=ready;let el=document.querySelector('#offline-note');if(el&&ready)el.textContent='✓ INSTALADO PARA USO OFFLINE · O app já pode funcionar sem internet.'}).catch(e=>console.warn('offline',e))}
+function registerOffline(){if(IS_PHASER_PREVIEW||!('serviceWorker' in navigator)){return}navigator.serviceWorker.register('./sw.js',{scope:'./'}).then(async r=>{await navigator.serviceWorker.ready;let cache=await caches.open('thargrid-pwa-v1.0.6');const required=['./','./index.html','./style.css','./data.js','./core/combat.js','./core/actions.js','./core/effects.js','./app.js','./manifest.webmanifest','./icons/icon-192.png','./icons/icon-512.png'];let ready=(await Promise.all(required.map(s=>cache.match(new URL(s,location.href))))).every(Boolean);availableOffline=ready;let el=document.querySelector('#offline-note');if(el&&ready)el.textContent='✓ INSTALADO PARA USO OFFLINE · O app já pode funcionar sem internet.'}).catch(e=>console.warn('offline',e))}
 load();render();registerOffline();
