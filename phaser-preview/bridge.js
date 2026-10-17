@@ -109,6 +109,8 @@
     // render and could miss the first mobile touch after a modal closed.
     this.input.on('pointerdown', function(pointer){
       var x=pointer.x,y=pointer.y;
+      // Temporary pointer trace for browser smoke diagnosis; removed after mobile verification.
+      window.__thargridPointerTrace={x:x,y:y,targets:this.hitTargets.map(function(t){return {x:t.x,y:t.y,id:t.id,side:t.side}})};
       var chosen=this.hitTargets.find(function(t){return Math.abs(x-t.x)<=t.width/2 && Math.abs(y-t.y)<=t.height/2;});
       if(chosen)selectFighter(chosen.side,chosen.id);
     }, this);
